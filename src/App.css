@@ -1,38 +1,113 @@
-.App {
-  text-align: center;
+/* Reset básico para quitar márgenes por defecto */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0a192f; /* Fondo Azul Oscuro "Tech" */
+  color: #ccd6f6; /* Texto Gris Claro */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Estilos de la Hero Section */
+.hero-section {
+  height: 100vh; /* Ocupa el 100% de la altura de la pantalla */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center; /* Centrado vertical */
+  align-items: center; /* Centrado horizontal */
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+/* Tipografía */
+.greeting {
+  color: #64ffda; /* Verde menta para el acento */
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.name {
+  font-size: 4rem; /* Nombre muy grande */
+  color: #e6f1ff; /* Blanco brillante */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.role {
+  font-size: 2rem;
+  color: #8892b0; /* Gris azulado */
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #8892b0;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Botones */
+.hero-buttons {
+  margin-bottom: 40px;
+  display: flex;
+  gap: 20px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.btn {
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-primary {
+  background-color: transparent;
+  border: 2px solid #64ffda;
+  color: #64ffda;
+}
+
+.btn-primary:hover {
+  background-color: rgba(100, 255, 218, 0.1); /* Efecto sutil al pasar el mouse */
+}
+
+.btn-secondary {
+  background-color: #64ffda;
+  border: 2px solid #64ffda;
+  color: #0a192f;
+}
+
+.btn-secondary:hover {
+  background-color: #4cc9ac;
+  border-color: #4cc9ac;
+}
+
+/* Íconos Sociales */
+.social-icons {
+  font-size: 2rem;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.social-icons a {
+  color: #ccd6f6;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #64ffda;
+  transform: translateY(-5px); /* Pequeño salto hacia arriba */
 }

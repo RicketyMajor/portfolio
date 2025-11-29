@@ -276,16 +276,23 @@ body {
   transform: translateY(-7px);
 }
 
+.card-image {
+  overflow: hidden; /* IMPORTANTE: Para que el zoom no se salga del marco */
+}
+
 .card-image img {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  opacity: 0.8;
-  transition: 0.3s;
+  opacity: 0.85;
+  /* Animamos la escala y la opacidad */
+  transition: transform 0.5s ease, opacity 0.3s ease; 
 }
 
+/* Al pasar el mouse sobre la TARJETA, la IMAGEN crece */
 .project-card:hover .card-image img {
   opacity: 1;
+  transform: scale(1.1); /* Efecto Zoom sutil */
 }
 
 .card-content {

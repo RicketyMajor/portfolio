@@ -13,6 +13,9 @@ import {
   SiOracle, SiPytorch, SiTensorflow 
 } from 'react-icons/si';
 import profileImage from './perfil.png';
+import { TypeAnimation } from 'react-type-animation';
+import { motion } from 'framer-motion'; // Importamos motion para animaciones avanzadas
+import ScrollReveal from './components/ScrollReveal'; // Nuestro componente nuevo
 
 const ProjectCard = ({ project }) => {
   return (
@@ -151,7 +154,25 @@ function App() {
         <div className="hero-content">
           <h2 className="greeting">Hola, soy</h2>
           <h1 className="name">ALONSO VERA LARACH</h1>
-          <h3 className="role">Estudiante de Ingeniería Civil en Informática y Telecomunicaciones</h3>
+          {/* Reemplaza el <h3 className="role"> anterior con esto: */}
+          <div className="role">
+            <TypeAnimation
+              sequence={[
+                'Estudiante de Ingeniería Civil Informática',
+                1000, // Espera 1 segundo
+                'Futuro Especialista en Sistemas Distribuidos',
+                1000,
+                'Desarrollador Backend & Cloud',
+                1000,
+                'Entusiasta de la Inteligencia Artificial',
+                1000
+              ]}
+              wrapper="span"
+              speed={50}
+              style={{ fontSize: '1em', display: 'inline-block' }}
+              repeat={Infinity}
+            />
+          </div>
           <p className="description">
             Explorando la arquitectura de <strong>Sistemas Distribuidos</strong> y soluciones de <strong>Inteligencia Artificial</strong>.
           </p>
@@ -167,35 +188,58 @@ function App() {
       </section>
 
       <section id="projects" className="projects-section">
+        <ScrollReveal>
         <h2 className="section-title">Proyectos Destacados</h2>
         <div className="projects-grid">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+        </ScrollReveal>
       </section>
 
-      <section id="skills" className="skills-section">
-        <h2 className="section-title">Habilidades Técnicas</h2>
-        <p className="section-subtitle">Competencias enfocadas en Desarrollo de Software, IA y Procesos.</p>
-        <div className="skills-container">
-          {Object.entries(skills).map(([category, techList]) => (
-            <div key={category} className="skill-category">
-              <h3 className="category-title">{category}</h3>
-              <div className="tech-grid">
-                {techList.map((tech, index) => (
-                  <div key={index} className="tech-item">
-                    <span className="tech-icon">{tech.icon}</span>
-                    <span className="tech-name">{tech.name}</span>
-                  </div>
-                ))}
+<section id="skills" className="skills-section">
+  <ScrollReveal>
+    <h2 className="section-title">Habilidades Técnicas</h2>
+    <p className="section-subtitle">Competencias enfocadas en Desarrollo de Software, IA y Procesos.</p>
+    
+    {/* Contenedor con animación escalonada (Stagger) */}
+    <motion.div 
+      className="skills-container"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        visible: { transition: { staggerChildren: 0.1 } } // 0.1s de retraso entre cada hijo
+      }}
+    >
+      {Object.entries(skills).map(([category, techList]) => (
+        // Cada categoría es un item animado
+        <motion.div 
+          key={category} 
+          className="skill-category"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50 } }
+          }}
+        >
+          <h3 className="category-title">{category}</h3>
+          <div className="tech-grid">
+            {techList.map((tech, index) => (
+              <div key={index} className="tech-item">
+                <span className="tech-icon">{tech.icon}</span>
+                <span className="tech-name">{tech.name}</span>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </ScrollReveal>
+</section>
 
       <section id="about" className="about-section">
+        <ScrollReveal>
         <div className="about-container">
           <div className="about-image-wrapper">
             <img src={profileImage} alt="Alonso Vera Larach" className="about-image" />
@@ -208,9 +252,11 @@ function App() {
             <p>He complementado mi formación académica con una fuerte vocación docente, desempeñándome como ayudante en múltiples cátedras.</p>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       <section id="trajectory" className="education-section">
+        <ScrollReveal>
         <h2 className="section-title">Trayectoria y Experiencia</h2>
         <div className="timeline-container">
           {timeline.map((item) => (
@@ -228,10 +274,12 @@ function App() {
             </div>
           ))}
         </div>
+        </ScrollReveal>
       </section>
 
       {/* SECCIÓN CONTACTO (NUEVA) */}
       <section id="contact" className="contact-section">
+        <ScrollReveal>
         <div className="contact-container">
           <h2 className="section-title">¿Interesado en colaborar?</h2>
           <p className="contact-text">
@@ -266,6 +314,7 @@ function App() {
             <p className="copyright">© 2025 Alonso Vera Larach. Construido con React.</p>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
     </div>

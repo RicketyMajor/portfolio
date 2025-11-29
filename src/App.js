@@ -150,7 +150,7 @@ function App() {
       
       <Navbar />
 
-      <section className="hero-section">
+      <section id="hero-section" className="hero-section">
         <div className="hero-content">
           <h2 className="greeting">Hola, soy</h2>
           <h1 className="name">ALONSO VERA LARACH</h1>

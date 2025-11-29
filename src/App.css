@@ -55,19 +55,26 @@ body {
   background-color: var(--accent);
 }
 
-/* --- NAVBAR --- */
+/* --- NAVBAR AVANZADO --- */
 .navbar {
-  background: rgba(10, 25, 47, 0.85);
+  background: transparent; /* Por defecto transparente */
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  position: sticky;
+  position: fixed; /* Fixed para que siempre esté ahí */
   top: 0;
+  width: 100%;
   z-index: 999;
+  transition: all 0.3s ease-in-out; /* Transición suave del color de fondo */
+}
+
+/* Estado cuando se hace scroll (Vidrio) */
+.navbar.scrolled {
+  background: rgba(10, 25, 47, 0.95);
+  box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .navbar-container {
@@ -80,13 +87,13 @@ body {
   padding: 0 24px;
 }
 
-.navbar-logo a {
+.navbar-logo {
   color: var(--accent);
   font-size: 1.8rem;
-  font-weight: 800; /* Más grueso con Montserrat */
-  text-decoration: none;
-  font-family: var(--font-title); /* Cambio a Montserrat */
+  font-weight: 800;
+  font-family: var(--font-title);
   letter-spacing: -1px;
+  z-index: 1000; /* Para que quede sobre el menú móvil */
 }
 
 .nav-menu {
@@ -96,17 +103,74 @@ body {
   gap: 30px;
 }
 
+/* Enlaces Desktop */
 .nav-links {
   color: var(--text-primary);
   text-decoration: none;
   font-size: 0.9rem;
-  font-family: var(--font-code); 
+  font-family: var(--font-code);
   cursor: pointer;
   transition: color 0.3s;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent; /* Preparamos la línea de abajo */
 }
 
 .nav-links:hover {
   color: var(--accent);
+}
+
+/* Clase Active automática (ScrollSpy) */
+.nav-links.active {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent); /* Subrayado cuando estás en la sección */
+}
+
+/* --- MENÚ MÓVIL --- */
+.menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--accent);
+  z-index: 1000;
+}
+
+.nav-menu-mobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--bg-secondary); /* Fondo sólido para el menú móvil */
+  gap: 40px;
+  box-shadow: -10px 0px 30px -15px rgba(2, 12, 27, 0.7);
+}
+
+.nav-links-mobile-item {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-family: var(--font-code);
+  cursor: pointer;
+}
+
+.nav-links-mobile-item:hover,
+.nav-links-mobile-item.active {
+  color: var(--accent);
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 960px) {
+  .nav-menu {
+    display: none; /* Ocultamos el menú desktop */
+  }
+
+  .menu-icon {
+    display: block; /* Mostramos el icono */
+  }
 }
 
 /* --- HERO SECTION --- */
@@ -253,9 +317,13 @@ body {
 
 /* --- PROYECTOS --- */
 .projects-section {
-  padding: 100px 50px;
+  padding: 120px 50px; /* Aumentamos padding vertical */
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh; /* CAMBIO CLAVE: Ocupa al menos toda la pantalla */
+  display: flex;     /* Para centrar verticalmente si hay pocos proyectos */
+  flex-direction: column;
+  justify-content: center;
 }
 
 .projects-grid {
@@ -347,9 +415,13 @@ body {
 
 /* --- SKILLS --- */
 .skills-section {
-  padding: 100px 50px;
+  padding: 120px 50px;
   max-width: 1000px;
   margin: 0 auto;
+  min-height: 90vh; /* 90% de la pantalla (un poco menos para dar ritmo) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .skills-container {
@@ -386,9 +458,13 @@ body {
 
 /* --- SOBRE MÍ --- */
 .about-section {
-  padding: 100px 50px;
+  padding: 120px 50px;
   max-width: 1000px;
   margin: 0 auto;
+  min-height: 90vh; /* Ocupa casi toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .about-container {
@@ -445,9 +521,13 @@ body {
 
 /* --- TRAYECTORIA --- */
 .education-section {
-  padding: 100px 50px;
+  padding: 120px 50px;
   max-width: 900px;
   margin: 0 auto;
+  min-height: 100vh; /* Trayectoria suele ser larga, así que 100vh mínimo está bien */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .timeline-item {
@@ -509,10 +589,14 @@ body {
 
 /* --- CONTACTO (Con tus correcciones) --- */
 .contact-section {
-  padding: 100px 20px 50px;
+  padding: 120px 20px 50px;
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
+  min-height: 80vh; /* Un poco menos para que el footer no quede tan lejos */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .contact-section .section-title {

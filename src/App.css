@@ -111,3 +111,301 @@ body {
   color: #64ffda;
   transform: translateY(-5px); /* Pequeño salto hacia arriba */
 }
+
+/* --- SECCIÓN DE PROYECTOS --- */
+.projects-section {
+  padding: 80px 20px;
+  background-color: #0a192f; /* Mismo fondo para continuidad */
+  min-height: 100vh;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #e6f1ff;
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #64ffda;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* GRID LAYOUT (La magia para que sea responsivo) */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- ESTILOS DE LA TARJETA (CARD) --- */
+.project-card {
+  background-color: #112240; /* Un tono más claro que el fondo principal */
+  border-radius: 10px;
+  overflow: hidden; /* Para que la imagen no se salga de los bordes redondeados */
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-10px); /* Efecto de elevación al pasar el mouse */
+}
+
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .card-image img {
+  opacity: 1;
+}
+
+.card-content {
+  padding: 25px;
+}
+
+.card-title {
+  color: #e6f1ff;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-description {
+  color: #8892b0;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* Etiquetas (Tags) */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.tag {
+  font-size: 0.85rem;
+  color: #64ffda;
+  font-family: 'Roboto Mono', monospace; /* Fuente estilo código si la tienes, o default */
+}
+
+/* Botones de la tarjeta */
+.card-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; /* Empuja los botones al final */
+}
+
+.btn-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.btn-card.demo {
+  color: #e6f1ff;
+}
+
+.btn-card.repo {
+  color: #e6f1ff;
+}
+
+.btn-card:hover {
+  color: #64ffda;
+}
+
+/* --- SECCIÓN SKILLS --- */
+.skills-section {
+  padding: 80px 20px;
+  background-color: #0f172a; /* Un tono ligeramente diferente para separar secciones visualmente */
+  color: #ccd6f6;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #8892b0;
+  max-width: 600px;
+  margin: -40px auto 60px; /* Ajuste para acercarlo al título */
+  font-size: 1.1rem;
+}
+
+.skills-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas automáticas */
+  gap: 40px;
+}
+
+.skill-category {
+  background-color: #112240;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid rgba(100, 255, 218, 0.1); /* Borde sutil verde/cian */
+  transition: transform 0.3s ease;
+}
+
+.skill-category:hover {
+  transform: translateY(-5px);
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+.category-title {
+  color: #64ffda; /* Color de acento */
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+  padding-bottom: 10px;
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* La píldora/chip de cada tecnología */
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(100, 255, 218, 0.05); /* Fondo muy transparente */
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: 'Roboto Mono', monospace; /* Fuente de código */
+  font-size: 0.9rem;
+  color: #e6f1ff;
+  transition: background-color 0.2s;
+}
+
+.tech-item:hover {
+  background-color: rgba(100, 255, 218, 0.15);
+}
+
+.tech-icon {
+  font-size: 1.2rem;
+  display: flex; /* Para centrar el icono verticalmente */
+  color: #64ffda;
+}
+
+/* --- SECCIÓN SOBRE MÍ --- */
+.about-section {
+  padding: 100px 20px;
+  background-color: #0a192f; /* Volvemos al fondo oscuro original para contraste */
+  color: #8892b0;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex; /* Layout flexible: lado a lado */
+  align-items: center;
+  gap: 50px;
+}
+
+/* Texto */
+.about-text {
+  flex: 1; /* Ocupa el espacio disponible */
+}
+
+.about-text p {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.about-text strong {
+  color: #64ffda; /* Resalta las palabras clave */
+}
+
+.about-text .section-title {
+  text-align: left; /* Título alineado a la izquierda aquí */
+  margin-left: 0;
+}
+
+.about-text .section-title::after {
+  margin: 10px 0 0; /* Línea alineada a la izquierda */
+}
+
+/* Imagen y Marco Decorativo */
+.about-image-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  flex-shrink: 0; /* Evita que la imagen se aplaste */
+}
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  position: relative;
+  z-index: 2; /* Encima del marco */
+  filter: grayscale(100%) contrast(1.1); /* Efecto blanco y negro profesional */
+  transition: all 0.3s ease;
+}
+
+/* Efecto al pasar el mouse sobre la foto */
+.about-image-wrapper:hover .about-image {
+  filter: none; /* Vuelve a color */
+  transform: translate(-5px, -5px);
+}
+
+/* El marco cuadrado detrás de la foto */
+.image-border {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #64ffda;
+  border-radius: 5px;
+  z-index: 1; /* Detrás de la foto */
+  transition: all 0.3s ease;
+}
+
+.about-image-wrapper:hover .image-border {
+  top: 15px;
+  left: 15px; /* Se mueve un poco para seguir la foto */
+}
+
+/* RESPONSIVE: Para celulares */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column; /* Apila foto y texto verticalmente */
+    text-align: center;
+  }
+
+  .about-text .section-title {
+    text-align: center;
+  }
+  
+  .about-text .section-title::after {
+    margin: 10px auto 0;
+  }
+
+  .about-image-wrapper {
+    margin: 0 auto 40px; /* Centra la imagen */
+    width: 250px;
+    height: 250px;
+  }
+}

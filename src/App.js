@@ -12,6 +12,7 @@ import {
   SiCplusplus, SiPostgresql, SiMongodb, SiExpress, SiDjango, SiGnubash, 
   SiOracle, SiPytorch, SiTensorflow 
 } from 'react-icons/si';
+import profileImage from './perfil.png';
 
 const ProjectCard = ({ project }) => {
   return (
@@ -197,7 +198,7 @@ function App() {
       <section id="about" className="about-section">
         <div className="about-container">
           <div className="about-image-wrapper">
-            <img src="https://placehold.co/400x400/112240/64ffda?text=Alonso+Vera" alt="Alonso Vera Larach" className="about-image" />
+            <img src={profileImage} alt="Alonso Vera Larach" className="about-image" />
             <div className="image-border"></div>
           </div>
           <div className="about-text">

@@ -1,16 +1,20 @@
-/* 1. IMPORTACIÓN DE FUENTES */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Roboto+Mono:wght@400;700&display=swap');
+/* 1. IMPORTACIÓN DE FUENTES (NUEVA COMBINACIÓN) */
+/* Montserrat: Títulos fuertes | Open Sans: Lectura fácil | Roboto Mono: Código */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@300;400;600&family=Roboto+Mono:wght@400;700&display=swap');
 
-/* 2. VARIABLES GLOBALES (Tu Paleta de Colores) */
+/* 2. VARIABLES GLOBALES */
 :root {
-  --bg-primary: #0a192f;   /* Azul Marino Muy Oscuro */
-  --bg-secondary: #112240; /* Azul Ligeramente más claro (para tarjetas) */
-  --text-primary: #ccd6f6; /* Blanco Hueso */
-  --text-secondary: #8892b0; /* Gris Azulado */
-  --accent: #64ffda;       /* Verde Cian (Tu color distintivo) */
-  --accent-glow: rgba(100, 255, 218, 0.1); /* Brillo del acento */
-  --font-main: 'Inter', sans-serif;
-  --font-code: 'Roboto Mono', monospace;
+  --bg-primary: #0a192f;   
+  --bg-secondary: #112240; 
+  --text-primary: #ccd6f6; 
+  --text-secondary: #8892b0; 
+  --accent: #64ffda;       
+  --accent-glow: rgba(100, 255, 218, 0.1); 
+  
+  /* NUEVAS FUENTES */
+  --font-title: 'Montserrat', sans-serif; /* Para Títulos grandes */
+  --font-body: 'Open Sans', sans-serif;   /* Para párrafos */
+  --font-code: 'Roboto Mono', monospace;  /* Para detalles técnicos */
 }
 
 /* 3. RESET Y ESTILOS BASE */
@@ -21,18 +25,18 @@
 }
 
 html {
-  scroll-behavior: smooth; /* Desplazamiento suave entre secciones */
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--font-main);
+  font-family: var(--font-body); /* Usamos Open Sans por defecto */
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
-  overflow-x: hidden; /* Evita scroll horizontal indeseado */
+  overflow-x: hidden;
 }
 
-/* Scrollbar Personalizado (Estilo "Hacker") */
+/* Scrollbar Personalizado */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -79,9 +83,9 @@ body {
 .navbar-logo a {
   color: var(--accent);
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 800; /* Más grueso con Montserrat */
   text-decoration: none;
-  font-family: var(--font-code);
+  font-family: var(--font-title); /* Cambio a Montserrat */
   letter-spacing: -1px;
 }
 
@@ -96,7 +100,7 @@ body {
   color: var(--text-primary);
   text-decoration: none;
   font-size: 0.9rem;
-  font-family: var(--font-code); /* Links con fuente de código */
+  font-family: var(--font-code); 
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -105,30 +109,14 @@ body {
   color: var(--accent);
 }
 
-.nav-btn .btn-contact {
-  padding: 8px 16px;
-  border: 1px solid var(--accent);
-  border-radius: 4px;
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-family: var(--font-code);
-  transition: all 0.3s;
-}
-
-.nav-btn .btn-contact:hover {
-  background-color: var(--accent-glow);
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
 /* --- HERO SECTION --- */
 .hero-section {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* Alineado a la izquierda se ve más moderno */
-  padding: 0 100px; /* Margen lateral amplio */
+  align-items: flex-start;
+  padding: 0 100px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -145,18 +133,20 @@ body {
 }
 
 .name {
+  font-family: var(--font-title); /* Montserrat hace que destaque mucho */
   font-size: 4.5rem;
   color: #e6f1ff;
-  font-weight: 800;
+  font-weight: 800; /* Extra Bold */
   margin-bottom: 10px;
   line-height: 1.1;
 }
 
 .role {
+  font-family: var(--font-title);
   font-size: 2.5rem;
   color: var(--text-secondary);
   margin-bottom: 25px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .description {
@@ -168,7 +158,7 @@ body {
 
 .description strong {
   color: var(--accent);
-  font-weight: normal;
+  font-weight: 600;
 }
 
 /* Botones Hero */
@@ -187,6 +177,7 @@ body {
   font-family: var(--font-code);
   text-decoration: none;
   display: inline-block;
+  font-weight: bold;
 }
 
 .btn-primary {
@@ -204,15 +195,13 @@ body {
   background-color: var(--accent);
   border: 1px solid var(--accent);
   color: var(--bg-primary);
-  font-weight: bold;
 }
 
 .btn-secondary:hover {
-  background-color: #4cc9ac; /* Un tono un poco más oscuro */
+  background-color: #4cc9ac;
   transform: translateY(-3px);
 }
 
-/* Iconos Sociales Hero */
 .social-icons {
   font-size: 1.8rem;
   display: flex;
@@ -229,21 +218,26 @@ body {
   transform: translateY(-3px);
 }
 
-/* --- TÍTULOS DE SECCIÓN COMUNES --- */
+/* --- TÍTULOS DE SECCIÓN --- */
+/* Reemplaza estos bloques en src/App.css */
+
 .section-title {
+  font-family: var(--font-title);
   font-size: 2rem;
   color: #e6f1ff;
   margin-bottom: 40px;
   display: flex;
   align-items: center;
-  font-family: var(--font-main);
   font-weight: 700;
+  white-space: nowrap; /* CAMBIO CLAVE: Obliga al texto a mantenerse en una sola línea */
 }
 
 .section-title::after {
   content: "";
   display: block;
-  width: 300px; /* Línea larga a la derecha */
+  /* CAMBIO CLAVE: En lugar de un ancho fijo (width: 300px), usamos flex-grow */
+  flex-grow: 1;       /* La línea ocupa el espacio sobrante */
+  max-width: 300px;   /* Pero no crece más de 300px */
   height: 1px;
   background-color: #233554;
   margin-left: 20px;
@@ -299,15 +293,16 @@ body {
 }
 
 .card-title {
+  font-family: var(--font-title);
   color: #e6f1ff;
   font-size: 1.4rem;
   margin-bottom: 15px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .card-description {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 20px;
 }
 
@@ -391,7 +386,7 @@ body {
 
 .about-container {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Texto más ancho que foto */
+  grid-template-columns: 1fr 2fr;
   gap: 50px;
   align-items: start;
 }
@@ -399,6 +394,7 @@ body {
 .about-text p {
   margin-bottom: 15px;
   color: var(--text-secondary);
+  font-size: 1.1rem;
 }
 
 .about-text strong {
@@ -440,7 +436,7 @@ body {
   transform: translate(5px, 5px);
 }
 
-/* --- TRAYECTORIA (TIMELINE) --- */
+/* --- TRAYECTORIA --- */
 .education-section {
   padding: 100px 50px;
   max-width: 900px;
@@ -486,9 +482,11 @@ body {
 }
 
 .timeline-title {
+  font-family: var(--font-title); /* Montserrat aquí también */
   color: #e6f1ff;
   font-size: 1.3rem;
   margin: 5px 0;
+  font-weight: 700;
 }
 
 .timeline-institution {
@@ -499,31 +497,30 @@ body {
 
 .timeline-description {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
-/* --- SECCIÓN CONTACTO (CORREGIDA) --- */
+/* --- CONTACTO (Con tus correcciones) --- */
 .contact-section {
-  padding: 100px 20px 50px; /* Un poco más de padding arriba */
+  padding: 100px 20px 50px;
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
 }
 
-/* Corrección del Título: Centrado y sin línea lateral */
 .contact-section .section-title {
-  justify-content: center; /* Centra el contenido flex */
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 .contact-section .section-title::after {
-  display: none; /* Oculta la línea lateral solo en esta sección */
+  display: none;
 }
 
 .contact-text {
   color: var(--text-secondary);
   max-width: 600px;
-  margin: 0 auto 60px; /* Margen inferior para separar de las tarjetas */
+  margin: 0 auto 60px;
   font-size: 1.1rem;
 }
 
@@ -535,37 +532,32 @@ body {
   flex-wrap: wrap;
 }
 
-/* Corrección de las Tarjetas de Contacto */
 .contact-card {
   background: var(--bg-secondary);
   padding: 30px;
   border-radius: 8px;
-  text-decoration: none; /* Quita el subrayado de enlace */
+  text-decoration: none;
   min-width: 220px;
   transition: transform 0.3s ease, border 0.3s ease;
   border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* IMPORTANTE: Forzamos el color del texto para evitar el azul/morado de enlaces */
   color: var(--text-primary) !important; 
 }
 
 .contact-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent); /* Borde verde cian al pasar el mouse */
+  border-color: var(--accent);
 }
 
-/* Corrección de los Íconos */
 .contact-icon {
   font-size: 2.5rem;
   margin-bottom: 15px;
-  /* IMPORTANTE: Usamos la variable accent (#64ffda) */
   color: var(--accent); 
   transition: color 0.3s ease;
 }
 
-/* Aseguramos que el hover mantenga el color brillante */
 .contact-card:hover .contact-icon {
   color: var(--accent);
   text-shadow: 0 0 10px var(--accent-glow);
@@ -584,7 +576,6 @@ body {
   font-family: var(--font-code);
 }
 
-/* Footer */
 .footer-bottom {
   margin-top: 50px;
   padding-top: 20px;
@@ -594,7 +585,7 @@ body {
   font-family: var(--font-code);
 }
 
-/* --- MEDIA QUERIES (Responsive para Móvil) --- */
+/* --- MEDIA QUERIES --- */
 @media screen and (max-width: 768px) {
   .hero-section {
     padding: 0 25px;
@@ -602,7 +593,7 @@ body {
   }
   
   .name {
-    font-size: 3rem;
+    font-size: 2.8rem; /* Ajustado para móviles */
   }
   
   .role {

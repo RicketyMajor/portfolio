@@ -2,6 +2,7 @@
 /* Montserrat: Títulos fuertes | Open Sans: Lectura fácil | Roboto Mono: Código */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@300;400;600&family=Roboto+Mono:wght@400;700&display=swap');
 
+
 /* 2. VARIABLES GLOBALES */
 :root {
   --bg-primary: #0a192f;   
@@ -15,6 +16,17 @@
   --font-title: 'Montserrat', sans-serif; /* Para Títulos grandes */
   --font-body: 'Open Sans', sans-serif;   /* Para párrafos */
   --font-code: 'Roboto Mono', monospace;  /* Para detalles técnicos */
+}
+/* --- SELECCIÓN DE TEXTO PERSONALIZADA --- */
+::selection {
+  background-color: var(--accent); /* Tu verde cian */
+  color: var(--bg-primary); /* Texto oscuro para contraste */
+}
+
+/* Para compatibilidad con Firefox */
+::-moz-selection {
+  background-color: var(--accent);
+  color: var(--bg-primary);
 }
 
 /* 3. RESET Y ESTILOS BASE */
@@ -884,3 +896,33 @@ body {
   color: var(--bg-primary);
   transform: translateY(-5px);
 }
+/* --- SKELETON LOADING --- */
+.skeleton-loader {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px; /* Mismo borde que tus tarjetas */
+  
+  /* Color base (fondo de tarjeta) */
+  background-color: var(--bg-secondary);
+  
+  /* El "brillo" que se mueve */
+  background-image: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0px,
+    #1d2d50 50%, /* Un tono un poco más claro que el secundario */
+    var(--bg-secondary) 100%
+  );
+  
+  background-size: 200% 100%;
+  animation: skeleton-shine 1.5s infinite linear;
+}
+
+@keyframes skeleton-shine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+

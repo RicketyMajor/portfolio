@@ -1,18 +1,37 @@
-import React from 'react';
-import Tilt from 'react-parallax-tilt'; // Importamos la librería
+import React, { useState } from 'react'; // <--- Importar useState
+import Tilt from 'react-parallax-tilt';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import SkeletonLoader from './SkeletonLoader'; // <--- Importar Skeleton
 import '../App.css'; 
 
 const ProjectCard = ({ project }) => {
+  // Estado para controlar la carga de la imagen
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
-    // Envolvemos la tarjeta en Tilt
-    // tiltMaxAngleX/Y controla cuánto se inclina (sutil es mejor)
-    // scale hace un pequeño zoom al hacer hover
     <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} scale={1.02} transitionSpeed={450} className="tilt-card">
       <div className="project-card">
-        <div className="card-image">
-          <img src={project.image} alt={project.title} />
+        
+        {/* Contenedor de la Imagen */}
+        <div className="card-image" style={{ position: 'relative', height: '200px' }}>
+          
+          {/* 1. Si NO ha cargado, mostramos el Skeleton */}
+          {!imageLoaded && (
+            <SkeletonLoader style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+          )}
+
+          {/* 2. La imagen real. Se muestra solo cuando imageLoaded es true */}
+          <img 
+            src={project.image} 
+            alt={project.title} 
+            onLoad={() => setImageLoaded(true)} // ¡Aquí ocurre la magia!
+            style={{ 
+              opacity: imageLoaded ? 1 : 0, // Transición suave con opacidad
+              transition: 'opacity 0.5s ease'
+            }}
+          />
         </div>
+
         <div className="card-content">
           <h3 className="card-title">{project.title}</h3>
           <p className="card-description">{project.description}</p>

@@ -188,16 +188,113 @@ body {
   }
 }
 
-/* --- HERO SECTION --- */
+/* --- HERO SECTION (NUEVO LAYOUT GRID) --- */
 .hero-section {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0 100px;
-  max-width: 1200px;
+  padding: 0 50px; /* Reducimos padding lateral para dar espacio a las columnas */
+  max-width: 1300px;
   margin: 0 auto;
+  display: flex;
+  align-items: center; /* Centrado vertical */
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; /* Texto un poco más ancho que la terminal */
+  gap: 50px;
+  width: 100%;
+  align-items: center;
+}
+
+.hero-text-content {
+  text-align: left;
+}
+
+/* Ajustes visuales para la columna derecha */
+.hero-visual-content {
+  display: flex;
+  justify-content: center;
+  perspective: 1000px; /* Para efecto 3D si quisiéramos */
+}
+
+/* --- ESTILOS DE LA TERMINAL --- */
+.terminal-window {
+  background-color: rgba(17, 34, 64, 0.95); /* Azul oscuro casi opaco */
+  width: 100%;
+  max-width: 650px; /* Ancho máximo */
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Sombra fuerte para flotar */
+  overflow: hidden;
+  border: 1px solid rgba(100, 255, 218, 0.1); /* Borde sutil cian */
+  font-family: var(--font-code);
+  transition: transform 0.3s ease;
+}
+
+.terminal-window:hover {
+  transform: translateY(-5px); /* Flota un poco al pasar el mouse */
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+/* Barra de título */
+.terminal-header {
+  background-color: #0a192f; /* Más oscuro que el cuerpo */
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-button.red { background-color: #ff5f56; }
+.terminal-button.yellow { background-color: #ffbd2e; }
+.terminal-button.green { background-color: #27c93f; }
+
+.terminal-title {
+  margin-left: 10px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Cuerpo donde va el texto */
+.terminal-body {
+  padding: 25px;
+  color: #ccd6f6;
+  min-height: 320px; /* Altura fija para que no salte */
+  text-align: left;
+  font-size: 1.05rem;
+}
+
+/* --- RESPONSIVE DEL HERO --- */
+@media screen and (max-width: 960px) {
+  .role {
+    min-height: auto; /* En móvil dejamos que fluya natural */
+    justify-content: center; /* Centrado en móvil */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .hero-text-content {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .hero-section {
+    padding: 0 20px;
+  }
+
+  .terminal-window {
+    max-width: 100%; /* Ocupa todo el ancho en móvil */
+    margin: 0 auto;
+  }
 }
 
 .hero-content {
@@ -220,12 +317,19 @@ body {
   line-height: 1.1;
 }
 
+/* --- CORRECCIÓN DE SALTO EN HERO --- */
 .role {
   font-family: var(--font-title);
-  font-size: 2.5rem;
+  font-size: 1.5rem; /* Ajusta este tamaño si lo quieres más grande o chico */
   color: var(--text-secondary);
-  margin-bottom: 25px;
   font-weight: 700;
+  
+  /* LA SOLUCIÓN MÁGICA: */
+  min-height: 3.2em; /* Reservamos espacio para 2 líneas de texto */
+  
+  display: flex;
+  align-items: center; /* Centra el texto verticalmente en ese espacio reservado */
+  margin-bottom: 10px;
 }
 
 .description {

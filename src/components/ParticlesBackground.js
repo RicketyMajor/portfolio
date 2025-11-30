@@ -1,97 +1,115 @@
-import React, { useCallback } from 'react';
-import Particles from '@tsparticles/react';
-import { loadSlim } from '@tsparticles/slim';
+import React, { useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim"; 
 
 const ParticlesBackground = () => {
-  const particlesInit = useCallback(async engine => {
-    await loadSlim(engine);
+  const [init, setInit] = useState(false);
+
+  // Inicialización del motor (Sintaxis v3)
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+    });
   }, []);
 
-  return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={{
-        background: {
-          color: {
-            value: "#0a192f", // Tu color de fondo base
-          },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onHover: {
-              enable: true,
-              mode: "grab", // Efecto: conecta el mouse con los nodos cercanos
+  const particlesLoaded = (container) => {
+    // Puedes usar esto para debuggear si es necesario
+    console.log(container);
+  };
+
+  // Solo renderiza las partículas cuando el motor esté listo
+  if (init) {
+    return (
+      <Particles
+        id="tsparticles"
+        particlesLoaded={particlesLoaded}
+        options={{
+          background: {
+            color: {
+              value: "#0a192f", // Color de fondo base
             },
-            onClick: {
-              enable: true,
-              mode: "push", // Al hacer click crea más nodos
-            },
-            resize: true,
           },
-          modes: {
-            grab: {
-              distance: 140,
-              line_linked: {
-                opacity: 1,
+          fpsLimit: 120,
+          interactivity: {
+            events: {
+              onClick: {
+                enable: true,
+                mode: "push",
+              },
+              onHover: {
+                enable: true,
+                mode: "grab", // Efecto de red al pasar el mouse
+              },
+              resize: true,
+            },
+            modes: {
+              grab: {
+                distance: 140,
+                line_linked: {
+                  opacity: 1,
+                },
+              },
+              push: {
+                quantity: 4,
               },
             },
-            push: {
-              quantity: 4,
+          },
+          particles: {
+            color: {
+              value: "#64ffda", // Tu color Cian
             },
-          },
-        },
-        particles: {
-          color: {
-            value: "#64ffda", // Tu color de acento (cian)
-          },
-          links: {
-            color: "#8892b0", // Color de las líneas (gris azulado)
-            distance: 150,
-            enable: true,
-            opacity: 0.2, // Muy sutil para no distraer
-            width: 1,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outModes: {
-              default: "bounce",
-            },
-            random: false,
-            speed: 1, // Movimiento lento y elegante
-            straight: false,
-          },
-          number: {
-            density: {
+            links: {
+              color: "#8892b0", // Enlaces grises
+              distance: 150,
               enable: true,
-              area: 800,
+              opacity: 0.4, // Aumenté un poco la opacidad para que se note
+              width: 1,
             },
-            value: 60, // Cantidad de nodos (no saturar)
+            move: {
+              direction: "none",
+              enable: true,
+              outModes: {
+                default: "bounce",
+              },
+              random: false,
+              speed: 1.5, // Un pelín más rápido para que notes que se mueven
+              straight: false,
+            },
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80, // Un poco más de densidad
+            },
+            opacity: {
+              value: 0.5,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: 1, max: 3 },
+            },
           },
-          opacity: {
-            value: 0.3,
-          },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            value: { min: 1, max: 3 },
-          },
-        },
-        detectRetina: true,
-      }}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: -1 // IMPORTANTE: Detrás de todo el contenido
-      }}
-    />
-  );
+          detectRetina: true,
+        }}
+        // ESTILOS CRÍTICOS PARA QUE SE VEA
+        style={{
+          position: "fixed", // Fijo en la pantalla (no absoluto)
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: -1, // Detrás del contenido
+        }}
+      />
+    );
+  }
+
+  return <></>;
 };
 
 export default ParticlesBackground;

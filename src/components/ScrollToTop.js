@@ -20,8 +20,12 @@ const ScrollToTop = () => {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-  const scrollToTop = () => {
-    scroll.scrollToTop();
+const scrollToTop = () => {
+    scroll.scrollToTop({
+      duration: 100, // Tiempo en milisegundos (100ms es muy rápido, casi instantáneo)
+      smooth: true,  // Mantiene la suavidad pero a alta velocidad
+      spy: true
+    });
   };
 
   return (

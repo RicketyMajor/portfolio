@@ -28,9 +28,24 @@ html {
   scroll-behavior: smooth;
 }
 
+/* EN src/App.css */
+
+/* 1. Esto asegura que TODO el contenido de tu aplicación esté por encima del fondo */
+.App {
+  position: relative; /* Necesario para que z-index funcione */
+  z-index: 1;         /* Nivel 1: Por encima del fondo */
+}
+
+/* 2. Esto es un "seguro de vida" para las secciones individuales */
+section {
+  position: relative;
+  z-index: 2; /* Nivel 2: Por seguridad, las secciones van aún más arriba */
+}
+
 body {
   font-family: var(--font-body); /* Usamos Open Sans por defecto */
-  background-color: var(--bg-primary);
+  /* background-color: var(--bg-primary); */
+  background-color: transparent;
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
@@ -593,10 +608,14 @@ body {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  min-height: 80vh; /* Un poco menos para que el footer no quede tan lejos */
+  /* CAMBIO CLAVE: 100vh asegura que la sección ocupe toda la pantalla,
+     permitiendo que el "spy" del navbar la detecte correctamente. */
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* Agregamos un padding bottom extra si es necesario para pantallas muy altas */
+  padding-bottom: 100px; 
 }
 
 .contact-section .section-title {

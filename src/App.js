@@ -3,6 +3,8 @@ import './App.css';
 
 // Componentes Estructurales
 import Navbar from './components/Navbar';
+import ParticlesBackground from './components/ParticlesBackground'; // <--- Importar
+import ScrollToTop from './components/ScrollToTop';
 
 // Componentes de Sección (Modularizados)
 import HeroSection from './components/sections/HeroSection';
@@ -16,12 +18,14 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+      <ParticlesBackground />
       <HeroSection />
       <ProjectsSection />
       <SkillsSection />
       <AboutSection />
       <TrajectorySection />
       <ContactSection />
+      <ScrollToTop />
     </div>
   );
 }

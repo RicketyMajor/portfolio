@@ -736,3 +736,28 @@ body {
     display: none;
   }
 }
+/* --- SCROLL TO TOP --- */
+.scroll-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background-color: var(--bg-secondary);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.scroll-btn:hover {
+  background-color: var(--accent);
+  color: var(--bg-primary);
+  transform: translateY(-5px);
+}

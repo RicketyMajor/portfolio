@@ -127,3 +127,109 @@
   .about-container { grid-template-columns: 1fr; }
   .about-image-wrapper { margin: 0 auto 40px; }
 }
+
+/* --- CONTACT FORM --- */
+
+/* Contenedor del formulario */
+.contact-form-wrapper {
+  background: var(--bg-secondary);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 500px; /* Para que no se estire demasiado */
+  margin: 0 auto;
+  text-align: left; /* Alineamos etiquetas a la izquierda */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+}
+
+/* Inputs y Textarea */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 4px;
+  border: 1px solid rgba(136, 146, 176, 0.2); /* Borde sutil */
+  background-color: var(--bg-primary); /* Fondo del input */
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Estado Focus (Al escribir) */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+/* Botón de envío */
+.btn-submit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Feedback Messages */
+.form-feedback {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.form-feedback.success {
+  background-color: rgba(39, 201, 63, 0.1);
+  color: #27c93f;
+  border: 1px solid #27c93f;
+}
+
+.form-feedback.error {
+  background-color: rgba(255, 95, 86, 0.1);
+  color: #ff5f56;
+  border: 1px solid #ff5f56;
+}
+
+/* --- RESPONSIVE CONTACT GRID --- */
+/* Modificamos el contenedor general de contacto para aceptar dos columnas */
+.contact-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mitad tarjetas, Mitad formulario */
+  gap: 50px;
+  align-items: start;
+  width: 100%;
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 960px) {
+  .contact-content-grid {
+    grid-template-columns: 1fr; /* En móvil, uno debajo del otro */
+    gap: 60px;
+  }
+}

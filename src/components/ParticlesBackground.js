@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; 
 
-const ParticlesBackground = () => {
+const ParticlesBackground = ({ theme }) => {
   const [init, setInit] = useState(false);
+  const bgColor = theme === 'dark' ? "#0a192f" : "#ffffff";
+  const particleColor = theme === 'dark' ? "#64ffda" : "#007bff"; // Cian en dark, Azul en light
+  const linksColor = theme === 'dark' ? "#8892b0" : "#cbd5e0";
 
   // Inicialización del motor (Sintaxis v3)
   useEffect(() => {
@@ -28,7 +31,7 @@ const ParticlesBackground = () => {
         options={{
           background: {
             color: {
-              value: "#0a192f", // Color de fondo base
+              value: bgColor, // Color de fondo base
             },
           },
           fpsLimit: 120,
@@ -58,10 +61,10 @@ const ParticlesBackground = () => {
           },
           particles: {
             color: {
-              value: "#64ffda", // Tu color Cian
+              value: particleColor, // Tu color Cian
             },
             links: {
-              color: "#8892b0", // Enlaces grises
+              color: linksColor, // Enlaces grises
               distance: 150,
               enable: true,
               opacity: 0.4, // Aumenté un poco la opacidad para que se note

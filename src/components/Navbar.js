@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-scroll'; // Importamos el Link inteligente
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion'; // Para animaciones suaves
+import ThemeToggle from './ThemeToggle';
 import '../App.css';
 
-const Navbar = () => {
+const Navbar = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -48,6 +49,10 @@ const Navbar = () => {
         {/* Icono de Menú Móvil */}
         <div className="menu-icon" onClick={toggleMenu}>
           {isOpen ? <FaTimes /> : <FaBars />}
+        </div>
+
+        <div className="theme-toggle-wrapper" style={{ marginLeft: '20px', zIndex: 1001 }}>
+       <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
         {/* Menú Desktop */}

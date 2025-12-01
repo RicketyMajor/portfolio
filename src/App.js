@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { useTheme } from './hooks/useTheme';
 
 // Componentes Estructurales
 import Navbar from './components/Navbar';
@@ -15,10 +16,11 @@ import TrajectorySection from './components/sections/TrajectorySection';
 import ContactSection from './components/sections/ContactSection';
 
 function App() {
+  const { theme, toggleTheme } = useTheme();
   return (
     <div className="App">
-      <Navbar />
-      <ParticlesBackground />
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <ParticlesBackground theme={theme} />
       <HeroSection />
       <ProjectsSection />
       <SkillsSection />

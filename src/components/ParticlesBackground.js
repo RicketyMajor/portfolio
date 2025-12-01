@@ -4,9 +4,9 @@ import { loadSlim } from "@tsparticles/slim";
 
 const ParticlesBackground = ({ theme }) => {
   const [init, setInit] = useState(false);
-  const bgColor = theme === 'dark' ? "#0a192f" : "#ffffff";
-  const particleColor = theme === 'dark' ? "#64ffda" : "#007bff"; // Cian en dark, Azul en light
-  const linksColor = theme === 'dark' ? "#8892b0" : "#cbd5e0";
+  const bgColor = theme === 'dark' ? "#0a192f" : "#f0f4f8";
+  const particleColor = theme === 'dark' ? "#64ffda" : "#486581"; // Cian en dark, Azul en light
+  const linksColor = theme === 'dark' ? "#8892b0" : "#bcccdc";
 
   // Inicialización del motor (Sintaxis v3)
   useEffect(() => {

@@ -64,28 +64,38 @@
 
 /* --- TERMINAL --- */
 .terminal-window {
-  background-color: rgba(17, 34, 64, 0.95);
+  /* Usamos las variables dinámicas aquí */
+  background-color: var(--term-bg); 
   width: 100%;
   max-width: 650px; 
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(100, 255, 218, 0.1);
+  
+  /* Borde dinámico */
+  border: 1px solid var(--term-border); 
+  
   font-family: var(--font-code);
-  transition: transform 0.3s ease;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  
+  /* Sombra suave que sirve para ambos temas */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); 
 }
+
 .terminal-window:hover {
   transform: translateY(-5px);
-  border-color: rgba(100, 255, 218, 0.3);
+  /* En hover, usamos el acento para el borde */
+  border-color: var(--accent); 
 }
+
 .terminal-header {
-  background-color: #0a192f;
+  background-color: var(--term-header); /* Variable dinámica */
   padding: 10px 15px;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--term-border);
 }
+
 .terminal-button {
   width: 12px;
   height: 12px;
@@ -94,15 +104,20 @@
 .terminal-button.red { background-color: #ff5f56; }
 .terminal-button.yellow { background-color: #ffbd2e; }
 .terminal-button.green { background-color: #27c93f; }
+
 .terminal-title {
   margin-left: 10px;
   color: var(--text-secondary);
   font-size: 0.8rem;
-  opacity: 0.7;
+  opacity: 0.8;
 }
+
 .terminal-body {
   padding: 25px;
-  color: #ccd6f6;
+  
+  /* Color del texto del código dinámico */
+  color: var(--term-text); 
+  
   min-height: 320px; 
   text-align: left;
   font-size: 1.05rem; 
@@ -151,4 +166,38 @@
 @keyframes skeleton-shine {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+/* --- AJUSTES ESPECÍFICOS MODO CLARO --- */
+
+/* La terminal se queda oscura, pero suavizamos la sombra para el fondo claro */
+[data-theme='light'] .terminal-window {
+  box-shadow: 0 30px 60px rgba(0, 20, 40, 0.15); /* Sombra azulada, no negra */
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Los botones secundarios necesitan tener texto blanco en modo claro para leerse bien */
+[data-theme='light'] .btn-secondary {
+  color: #ffffff; /* Texto blanco sobre el botón azul intenso */
+}
+
+/* El Skeleton Loader debe ser más sutil en modo claro */
+[data-theme='light'] .skeleton-loader {
+  background-color: #e0e6ed;
+  background-image: linear-gradient(
+    90deg,
+    #e0e6ed 0px,
+    #f0f4f8 50%,
+    #e0e6ed 100%
+  );
+}
+
+/* Scroll To Top: Que se vea limpio en blanco */
+[data-theme='light'] .scroll-btn {
+  background-color: #ffffff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+[data-theme='light'] .scroll-btn:hover {
+  background-color: var(--accent);
+  color: #ffffff;
 }

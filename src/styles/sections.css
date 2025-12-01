@@ -17,7 +17,7 @@
 .hero-text-content { text-align: left; }
 .hero-visual-content { display: flex; justify-content: center; perspective: 1000px; }
 .greeting { color: var(--accent); font-family: var(--font-code); font-size: 1.1rem; margin-bottom: 20px; }
-.name { font-family: var(--font-title); font-size: 4.5rem; color: #e6f1ff; font-weight: 800; margin-bottom: 10px; line-height: 1.1; }
+.name { font-family: var(--font-title); font-size: 4.5rem; color: var(--text-primary); font-weight: 800; margin-bottom: 10px; line-height: 1.1; }
 .role { font-family: var(--font-title); font-size: 1.5rem; color: var(--text-secondary); font-weight: 700; min-height: 3.2em; display: flex; align-items: center; margin-bottom: 10px; }
 .description { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 50px; max-width: 600px; }
 .description strong { color: var(--accent); font-weight: 600; }
@@ -76,7 +76,7 @@
 .timeline-marker { display: flex; flex-direction: column; align-items: center; }
 .timeline-line { width: 1px; background: #233554; height: 100%; margin-top: 10px; }
 .timeline-date { color: var(--accent); font-family: var(--font-code); font-size: 0.85rem; }
-.timeline-title { font-family: var(--font-title); color: #e6f1ff; font-size: 1.3rem; margin: 5px 0; font-weight: 700; }
+.timeline-title { font-family: var(--font-title); color: var(--text-primary); font-size: 1.3rem; margin: 5px 0; font-weight: 700; }
 .timeline-institution { color: #a8b2d1; font-size: 1rem; margin-bottom: 10px; }
 .timeline-description { color: var(--text-secondary); font-size: 1rem; }
 
@@ -113,7 +113,7 @@
 .contact-card:hover { transform: translateY(-5px); border-color: var(--accent); }
 .contact-icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--accent); transition: color 0.3s ease; }
 .contact-card:hover .contact-icon { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
-.contact-card h3 { color: #e6f1ff; margin: 10px 0; font-size: 1.1rem; font-weight: 600; }
+.contact-card h3 {color: var(--text-primary); margin: 10px 0; font-size: 1.1rem; font-weight: 600; }
 .contact-card p { color: var(--text-secondary); font-size: 0.9rem; font-family: var(--font-code); }
 .footer-bottom { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(136, 146, 176, 0.1); color: var(--text-secondary); font-size: 0.85rem; font-family: var(--font-code); }
 

@@ -125,3 +125,47 @@
   color: var(--text-secondary);
   font-family: var(--font-code);
 }
+/* --- ESTILOS DE LISTA --- */
+/* Item seleccionado (Mouse o Teclado) */
+.palette-item.selected {
+  background-color: var(--accent-glow);
+  color: var(--text-primary);
+  border-left: 3px solid var(--accent); /* Indicador visual izquierdo */
+  padding-left: 12px; /* Compensar el borde */
+}
+
+/* Icono activo */
+.palette-icon.active {
+  color: var(--accent);
+}
+
+/* Indicador "Enter" a la derecha */
+.palette-shortcut-enter {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* --- TOAST NOTIFICATION --- */
+.palette-toast {
+  background-color: var(--bg-primary); /* Fondo oscuro */
+  color: var(--accent); /* Texto cian */
+  padding: 10px 15px;
+  margin: 0 10px 10px 10px; /* Margen dentro del modal */
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-family: var(--font-code);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+[data-theme='light'] .palette-toast {
+  background-color: #fff;
+}

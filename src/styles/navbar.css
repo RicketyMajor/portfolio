@@ -125,12 +125,55 @@
   transition: opacity 0.3s;
 }
 
+/* --- LOGO TIPO TERMINAL --- */
+.navbar-logo {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-code); /* Fuente monoespaciada vital */
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--accent);
+  letter-spacing: -1px;
+}
+
+.logo-prompt {
+  color: var(--accent);
+}
+
+/* El cursor bajo parpadeante */
+.logo-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px; /* Ajusta según la fuente */
+  background-color: var(--accent);
+  animation: blink 1s step-end infinite;
+  margin-left: -5px; /* Pegadito a la letra */
+  opacity: 0.7;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Ajustamos el hint para que se vea alineado */
+.cmd-k-hint {
+  margin-left: 10px;
+  font-size: 0.7rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(136, 146, 176, 0.3);
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
 .navbar-logo:hover .cmd-k-hint {
   opacity: 1;
   border-color: var(--accent);
   color: var(--accent);
 }
-
 /* En móvil ocultamos la pista porque no tienen teclado físico */
 @media screen and (max-width: 960px) {
   .cmd-k-hint {

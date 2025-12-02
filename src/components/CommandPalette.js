@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { scroller } from 'react-scroll'; // Para navegar
+import { scroller } from 'react-scroll';
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
-  FaSun, FaMoon, FaFileDownload, FaCopy 
+  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight 
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 
 const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
   const [query, setQuery] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0); // Para navegar con flechas
+  const [toastMsg, setToastMsg] = useState(null); // Para notificaciones
+
+  // Referencia para scroll automático en la lista
+  const listRef = useRef(null);
 
   // Definición de Comandos
   const commands = [
@@ -40,13 +45,17 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
       id: 'theme', 
       label: theme === 'dark' ? 'Cambiar a Modo Claro' : 'Cambiar a Modo Oscuro', 
       icon: theme === 'dark' ? <FaSun /> : <FaMoon />, 
-      action: () => { toggleTheme(); closeModal(); } 
+      action: () => { toggleTheme(); showToast("Tema actualizado"); } // No cerramos, solo notificamos
     },
     { 
       id: 'cv', 
       label: 'Descargar Curriculum Vitae', 
       icon: <FaFileDownload />, 
-      action: () => { window.open('/Profile.pdf', '_blank'); closeModal(); } 
+      action: () => { 
+        window.open('/Profile.pdf', '_blank'); 
+        showToast("Descargando CV...");
+        setTimeout(closeModal, 1500);
+      } 
     },
     { 
       id: 'email', 
@@ -54,16 +63,58 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
       icon: <FaCopy />, 
       action: () => { 
         navigator.clipboard.writeText('alonsoveralarach@gmail.com'); 
-        alert("Email copiado!"); 
-        closeModal(); 
+        showToast("Email copiado al portapapeles");
+        setTimeout(closeModal, 1500);
       } 
     },
   ];
 
-  // Filtramos comandos según lo que escribe el usuario
+  // Filtramos comandos
   const filteredCommands = commands.filter(cmd => 
     cmd.label.toLowerCase().includes(query.toLowerCase())
   );
+
+  // Reseteamos el índice cuando cambia la búsqueda
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
+
+  // ... imports y variables de estado ...
+
+  // NUEVO EFECTO: Auto-scroll al navegar con teclado
+  useEffect(() => {
+    // Verificamos que la lista exista y tenga elementos
+    if (listRef.current && filteredCommands.length > 0) {
+      // Obtenemos el elemento HTML correspondiente al índice seleccionado
+      const selectedElement = listRef.current.children[selectedIndex];
+      
+      if (selectedElement) {
+        // La magia: hace scroll solo si es necesario para mostrar el elemento
+        selectedElement.scrollIntoView({
+          block: 'nearest', // 'nearest' evita saltos bruscos, solo scrollea lo necesario
+          behavior: 'smooth' // Movimiento suave
+        });
+      }
+    }
+  }, [selectedIndex, filteredCommands]); // Se ejecuta cada vez que cambia la selección
+
+  // ... resto del componente ...
+
+  // Manejo de Teclado (Flechas y Enter) dentro del Input
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (filteredCommands.length > 0) {
+        filteredCommands[selectedIndex].action();
+      }
+    }
+  };
 
   const scrollToSection = (section) => {
     scroller.scrollTo(section, {
@@ -74,27 +125,30 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
     closeModal();
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setQuery(""); // Reseteamos búsqueda
+  const showToast = (msg) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 2000);
   };
 
-  // Listener de Teclado (Cmd+K / Ctrl+K)
+  const closeModal = () => {
+    setIsOpen(false);
+    setQuery("");
+    setToastMsg(null);
+  };
+
+  // Listener Global para abrir/cerrar (Cmd+K / Esc)
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      // Abrir con Cmd+K o Ctrl+K
+    const handleGlobalKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault(); // Evita que el navegador enfoque la barra de url
+        e.preventDefault();
         setIsOpen((prev) => !prev);
       }
-      // Cerrar con Escape
       if (e.key === 'Escape') {
         closeModal();
       }
     };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
   }, [setIsOpen]);
 
   return (
@@ -105,15 +159,15 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={closeModal} // Cerrar al click fuera
+          onClick={closeModal}
         >
           <motion.div 
             className="palette-modal"
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            initial={{ scale: 0.95, opacity: 0, y: 10 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", duration: 0.3 }}
-            onClick={(e) => e.stopPropagation()} // Evitar cierre al click dentro
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Input */}
             <div className="palette-search">
@@ -121,26 +175,34 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
               <input 
                 autoFocus
                 type="text" 
-                placeholder="Escribe un comando..." 
+                placeholder="¿Qué necesitas?" 
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
               <span className="palette-shortcut">ESC</span>
             </div>
 
             {/* Lista */}
-            <ul className="palette-list">
-              {filteredCommands.map((cmd) => (
+            <ul className="palette-list" ref={listRef}>
+              {filteredCommands.map((cmd, index) => (
                 <li 
                   key={cmd.id} 
-                  className="palette-item"
-                  onClick={cmd.action}
+                  className={`palette-item ${index === selectedIndex ? 'selected' : ''}`}
+                  onClick={() => cmd.action()}
+                  onMouseEnter={() => setSelectedIndex(index)} // Sincroniza mouse con teclado
                 >
                   <div className="palette-item-left">
-                    <span className="palette-icon">{cmd.icon}</span>
+                    <span className={`palette-icon ${index === selectedIndex ? 'active' : ''}`}>
+                      {cmd.icon}
+                    </span>
                     {cmd.label}
                   </div>
-                  <span className="palette-shortcut">↵</span>
+                  {index === selectedIndex && (
+                    <motion.span layoutId="enter-icon" className="palette-shortcut-enter">
+                      <FaArrowRight size={10} /> Enter
+                    </motion.span>
+                  )}
                 </li>
               ))}
               
@@ -151,10 +213,27 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
               )}
             </ul>
 
+            {/* TOAST NOTIFICATION (Feedback visual) */}
+            <AnimatePresence>
+              {toastMsg && (
+                <motion.div 
+                  className="palette-toast"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <FaCheckCircle /> {toastMsg}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Footer */}
             <div className="palette-footer">
-              <span>Usa las flechas para navegar (Pdt: Próxima mejora)</span>
-              <span>Alonso Vera Portfolio CLI v1.0</span>
+              <div style={{display:'flex', gap:'10px'}}>
+                <span>↑↓ Navegar</span>
+                <span>↵ Seleccionar</span>
+              </div>
+              <span>Alonso Vera Portfolio CLI v2.0</span>
             </div>
           </motion.div>
         </motion.div>

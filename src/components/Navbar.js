@@ -35,12 +35,12 @@ const Navbar = ({ theme, toggleTheme, openPalette }) => {
         <div 
           className="navbar-logo" 
           onClick={openPalette} 
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
         >
-          <span>AV.</span>
-          {/* Hint visual para Desktop */}
+          <span className="logo-prompt">~/AV</span>
+          <span className="logo-cursor">_</span> {/* Cursor parpadeante */}
+          
           <span className="cmd-k-hint" title="Presiona Cmd+K">
-             <FaTerminal size={12} /> Cmd+K
+             <FaTerminal size={10} /> Cmd+K
           </span>
         </div>
 

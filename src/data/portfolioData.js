@@ -37,27 +37,93 @@ export const projects = [
   }
 ];
 
-// 2. DATOS DE SKILLS
+// ... (imports anteriores se mantienen igual) ...
+
+// MANTÉN TUS PROYECTOS IGUAL, PERO ASEGÚRATE DE QUE TENGAN ID: 1, 2, 3...
+
+// 2. DATOS DE SKILLS (ENRIQUECIDOS PARA INTERACTIVIDAD)
 export const skills = {
   "Inteligencia Artificial & Datos": [
-    { name: "Machine Learning", icon: <SiTensorflow /> },
-    { name: "NLP", icon: <SiPytorch /> },
-    { name: "Oracle Cloud AI", icon: <SiOracle /> },
-    { name: "SQL & Bases de Datos", icon: <FaDatabase /> },
+    { 
+      name: "Machine Learning", 
+      icon: <SiTensorflow />,
+      description: "Diseño y entrenamiento de modelos predictivos. Experiencia ajustando hiperparámetros y evaluando métricas de precisión.",
+      relatedProjects: [3, 1] // IDs de proyectos donde usaste esto
+    },
+    { 
+      name: "NLP", 
+      icon: <SiPytorch />,
+      description: "Procesamiento de Lenguaje Natural para análisis de texto y chatbots. Tokenización, Lemmatización y modelos Transformers.",
+      relatedProjects: [1]
+    },
+    { 
+      name: "Oracle Cloud AI", 
+      icon: <SiOracle />,
+      description: "Implementación de servicios cognitivos en la nube de Oracle. Certificado como AI Foundations Associate.",
+      relatedProjects: [2]
+    },
+    { 
+      name: "SQL & Bases de Datos", 
+      icon: <FaDatabase />,
+      description: "Modelado relacional robusto y optimización de consultas complejas (Query Tuning) para grandes volúmenes de datos.",
+      relatedProjects: [2]
+    },
   ],
   "Lenguajes & Backend": [
-    { name: "Python", icon: <FaPython /> },
-    { name: "Java", icon: <FaJava /> },
-    { name: "C++", icon: <SiCplusplus /> },
-    { name: "Node.js", icon: <FaNodeJs /> },
+    { 
+      name: "Python", 
+      icon: <FaPython />,
+      description: "Mi lenguaje principal para Scripting, IA y Backend rápido. Uso de librerías como Pandas, NumPy y Scikit-learn.",
+      relatedProjects: [1, 3]
+    },
+    { 
+      name: "Java", 
+      icon: <FaJava />,
+      description: "Desarrollo orientado a objetos estricto. Aplicaciones empresariales y comprensión profunda de la JVM.",
+      relatedProjects: [1]
+    },
+    { 
+      name: "C++", 
+      icon: <SiCplusplus />,
+      description: "Lenguaje base para mis estudios en Computación Distribuida. Gestión de memoria manual y optimización de bajo nivel.",
+      relatedProjects: [3]
+    },
+    { 
+      name: "Node.js", 
+      icon: <FaNodeJs />,
+      description: "Arquitectura asíncrona orientada a eventos. Creación de APIs RESTful escalables.",
+      relatedProjects: [1]
+    },
   ],
   "Herramientas & Procesos": [
-    { name: "Git & GitHub", icon: <FaGitAlt /> },
-    { name: "Docker", icon: <FaDocker /> },
-    { name: "Linux", icon: <FaLinux /> },
-    { name: "BizAgi / Documentación", icon: <FaBriefcase /> },
+    { 
+      name: "Git & GitHub", 
+      icon: <FaGitAlt />,
+      description: "Control de versiones avanzado: Git Flow, resolución de conflictos y CI/CD pipelines básicos.",
+      relatedProjects: [1, 3]
+    },
+    { 
+      name: "Docker", 
+      icon: <FaDocker />,
+      description: "Contenedorización de aplicaciones para asegurar consistencia entre entornos de desarrollo y producción.",
+      relatedProjects: [3]
+    },
+    { 
+      name: "Linux", 
+      icon: <FaLinux />,
+      description: "Administración de sistemas, Bash scripting y configuración de servidores. Mi entorno nativo de desarrollo.",
+      relatedProjects: [3]
+    },
+    { 
+      name: "BizAgi / Documentación", 
+      icon: <FaBriefcase />,
+      description: "Modelado de procesos de negocio (BPMN) y documentación técnica exhaustiva para transferencia de conocimiento.",
+      relatedProjects: [2]
+    },
   ]
 };
+
+// ... (timeline se mantiene igual) ...
 
 // 3. DATOS DE TRAYECTORIA
 export const timeline = [

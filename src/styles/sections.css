@@ -233,3 +233,123 @@
     gap: 60px;
   }
 }
+/* --- SKILLS INTERACTIVAS (FASE 4.1) --- */
+
+.skills-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estado normal del item */
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Más espacio entre icono y texto */
+  
+  /* AUMENTO DE TAMAÑO */
+  padding: 15px 25px; /* Mucho más "gordito" y clicable */
+  
+  border-radius: 8px; /* Un poco más redondeado para el nuevo tamaño */
+  color: var(--text-secondary);
+  margin-bottom: 1; /* Quitamos margin bottom porque usamos gap en el padre */
+  
+  /* TEXTO MÁS GRANDE */
+  font-size: 1.1rem; /* Antes 0.9rem - Ahora se lee mucho mejor */
+  
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  background-color: rgba(100, 255, 218, 0.03); /* Un fondo muy sutil ayuda a ver el área de clic */
+}
+
+/* Estado Activo (Seleccionado) */
+.tech-item.active {
+  background-color: var(--accent-glow);
+  border-color: var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Estado Inactivo (Cuando otro está seleccionado) */
+.tech-item.inactive {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+}
+
+/* PANEL DE DETALLES */
+.skill-detail-panel {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 30px;
+  margin-top: 20px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Título dentro del panel */
+.skill-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: var(--accent);
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+}
+
+.skill-detail-description {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  font-family: var(--font-body);
+}
+
+/* Sección de proyectos relacionados dentro del panel */
+.related-projects-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  font-family: var(--font-code);
+}
+
+.related-projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.related-project-tag {
+  background-color: var(--bg-primary);
+  border: 1px solid rgba(136, 146, 176, 0.3);
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-family: var(--font-code);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Botón cerrar panel */
+.close-skill-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.close-skill-btn:hover {
+  color: var(--accent);
+}

@@ -125,25 +125,39 @@ export const skills = {
 
 // ... (timeline se mantiene igual) ...
 
-// 3. DATOS DE TRAYECTORIA
+// ... (imports anteriores se mantienen) ...
+
+// --- 3. DATOS DE TRAYECTORIA (ACTUALIZADO CON DETALLES) ---
+// --- 3. DATOS DE TRAYECTORIA (ORDEN CRONOLÓGICO: 2021 -> 2025) ---
 export const timeline = [
   {
-    id: 1,
-    type: "award",
-    title: "1er Lugar Feria de Proyectos EIT 2025",
-    institution: "Universidad Diego Portales - Team DOTS",
-    date: "2025",
-    description: "Reconocimiento al mejor proyecto del área de Ingeniería de Software con el proyecto 'PAWS'.",
-    icon: <FaTrophy />
+    id: 5, // Mantenemos IDs únicos
+    type: "education",
+    title: "Ingeniería Civil en Informática",
+    institution: "Universidad Diego Portales",
+    date: "2022 - 2026 (En curso)",
+    description: "Formación integral con enfoque en Ciencias de la Computación.",
+    details: [
+      "Promedio destacado.",
+      "Enfoque en Computación Distribuida y Sistemas Operativos.",
+      "Participación activa en ferias tecnológicas y ayudantías."
+    ],
+    icon: <FaGraduationCap />
   },
   {
-    id: 2,
+    id: 4,
     type: "work",
-    title: "Ayudante de Cátedra y Corrector",
-    institution: "Universidad Diego Portales",
-    date: "Marzo 2025 - Presente",
-    description: "Roles docentes en múltiples asignaturas clave: Ingeniería de Software, Arquitectura de Computadores, Electricidad y Magnetismo, y Química.",
-    icon: <FaChalkboardTeacher />
+    title: "Práctica Profesional - S2T",
+    institution: "Servicios y Soluciones Tecnológicas S2T",
+    date: "Dic 2024 - Feb 2025",
+    description: "Documentación técnica exhaustiva y optimización de sistemas.",
+    details: [
+      "Redacción de manual técnico de 65 páginas para sistema GLPI.",
+      "Modelado de flujos de negocio complejos con BizAgi (BPMN).",
+      "Optimización de consultas SQL para el área de Finanzas.",
+      "Integración de bases de datos con Oracle APEX."
+    ],
+    icon: <FaBriefcase />
   },
   {
     id: 3,
@@ -151,25 +165,70 @@ export const timeline = [
     title: "Certified AI Foundations Associate",
     institution: "Oracle Cloud Infrastructure",
     date: "2025",
-    description: "Certificación profesional validando conocimientos fundamentales en Inteligencia Artificial y servicios Cloud de Oracle.",
+    description: "Certificación profesional en IA y servicios Cloud.",
+    details: [
+      "Fundamentos de Machine Learning y Deep Learning.",
+      "Servicios de IA generativa en OCI.",
+      "Automatización de procesos mediante IA."
+    ],
     icon: <FaCertificate />
   },
   {
-    id: 4,
+    id: 2,
     type: "work",
-    title: "Práctica Profesional - Documentación & Desarrollo",
-    institution: "Servicios y Soluciones Tecnológicas S2T",
-    date: "Dic 2024 - Feb 2025",
-    description: "Creación de documentación técnica de 65 páginas para el sistema GLPI, modelado de flujos en BizAgi y optimización de consultas SQL.",
-    icon: <FaBriefcase />
+    title: "Ayudante de Cátedra y Corrector",
+    institution: "Universidad Diego Portales",
+    date: "Marzo 2025 - Presente",
+    description: "Roles docentes en múltiples asignaturas clave de la carrera.",
+    details: [
+      "Ingeniería de Software: Apoyo en metodologías ágiles y patrones de diseño.",
+      "Arquitectura de Computadores: Enseñanza de bajo nivel y ensamblador.",
+      "Electricidad y Magnetismo / Química: Refuerzo de ciencias base.",
+      "Evaluación y retroalimentación constante a más de 50 alumnos."
+    ],
+    icon: <FaChalkboardTeacher />
   },
   {
-    id: 5,
-    type: "education",
-    title: "Ingeniería Civil en Informática y Telecomunicaciones",
-    institution: "Universidad Diego Portales",
-    date: "2022 - 2026 (En curso)",
-    description: "Formación integral con enfoque en Ciencias de la Computación. Actualmente en 4to año.",
-    icon: <FaGraduationCap />
+    id: 1,
+    type: "award",
+    title: "1er Lugar Feria de Proyectos EIT 2025",
+    institution: "Universidad Diego Portales - Team DOTS",
+    date: "2025",
+    description: "Reconocimiento al mejor proyecto del área de Ingeniería de Software.",
+    details: [
+      "Proyecto: PAWS (Platform for Animal Welfare Support).",
+      "Lideré la arquitectura del backend asegurando escalabilidad.",
+      "Implementación de buenas prácticas de CI/CD y gestión ágil."
+    ],
+    icon: <FaTrophy />
   }
 ];
+
+// --- 4. NUEVO: DATOS "SOBRE MÍ" (PARA PESTAÑAS) ---
+export const aboutMeData = {
+  bio: {
+    title: "Mi Historia",
+    content: [
+      "Soy Alonso Vera Larach, estudiante de 4to año de Ingeniería Civil en Informática y Telecomunicaciones en la UDP. Me defino como una persona creativa y constante.",
+      "He complementado mi formación académica con una fuerte vocación docente, desempeñándome como ayudante en múltiples cátedras, lo que ha reforzado mi capacidad para comunicar conceptos técnicos complejos.",
+      "Mi objetivo es convertirme en un referente en la arquitectura de software."
+    ]
+  },
+  philosophy: {
+    title: "Enfoque Técnico",
+    content: [
+      "Creo firmemente que el código debe ser tan legible para humanos como eficiente para las máquinas.",
+      "Mi enfoque actual combina la robustez de la Computación Distribuida con la innovación de la Inteligencia Artificial.",
+      "Prefiero los sistemas resilientes y modulares sobre las soluciones monolíticas rápidas pero frágiles."
+    ]
+  },
+  interests: {
+    title: "Más allá del Código",
+    content: [
+      "🔭 Investigación: Me apasiona leer papers sobre nuevos algoritmos de consenso y redes neuronales.",
+      "🐧 Linux: Disfruto personalizando mi entorno y entendiendo el kernel.",
+      "🎮 Estrategia: Me gustan los desafíos que requieren planificación a largo plazo, tanto en ajedrez como en videojuegos.",
+      "📚 Aprendizaje Continuo: Siempre estoy haciendo un curso nuevo o probando una tecnología emergente."
+    ]
+  }
+};

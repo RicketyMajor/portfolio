@@ -10,12 +10,19 @@ const ProjectCard = ({ project, onClick }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    // Envolvemos todo en motion.div para la animación de layout
     <motion.div 
       layoutId={`project-${project.id}`} 
-      onClick={onClick} // Al hacer clic en la tarjeta, se expande
-      style={{ cursor: 'pointer' }} // Manito para indicar click
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
+      
+      /* AGREGAR ESTAS PROPIEDADES PARA LA ANIMACIÓN DE FILTRADO */
+      layout // Permite que se mueva suavemente si cambia de posición
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3 }}
     >
+      {/* ... resto del componente ... */}
       <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} scale={1.02} transitionSpeed={450} className="tilt-card">
         <div className="project-card">
           

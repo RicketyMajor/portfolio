@@ -11,31 +11,40 @@ import {
 } from 'react-icons/si';
 
 // 1. DATOS DE PROYECTOS
+// ... imports
+
+// 1. DATOS DE PROYECTOS (CON CATEGORÍAS)
 export const projects = [
   {
     id: 1,
     title: "PAWS - Ingeniería de Software",
-    description: "Proyecto ganador del 1er Lugar en la Feria EIT 2025 (Team Dots). Solución de software enfocada en la gestión eficiente, demostrando buenas prácticas de ingeniería y trabajo en equipo.",
+    category: "Desarrollo Web", // <--- NUEVO CAMPO
+    description: "Proyecto ganador del 1er Lugar en la Feria EIT 2025 (Team Dots). Solución de software enfocada en la gestión eficiente.",
     image: "https://placehold.co/600x400/112240/64ffda?text=PAWS+Project", 
     technologies: ["Ingeniería de Software", "Trabajo en Equipo", "Gestión de Proyectos"],
-    repoLink: "https://github.com/RicketyMajor" 
+    repoLink: "https://github.com/RicketyMajor",
+    demoLink: "https://paws-demo.com" // Ejemplo
   },
   {
     id: 2,
     title: "Optimización Gestión de Tickets GLPI",
-    description: "Implementación y documentación técnica exhaustiva (65 págs) del sistema GLPI para S2T. Incluyó integración con Oracle APEX, corrección de consultas SQL y modelado de procesos en BizAgi.",
+    category: "Procesos & BD", // <--- NUEVO CAMPO
+    description: "Implementación y documentación técnica exhaustiva del sistema GLPI. Integración con Oracle APEX y optimización SQL.",
     image: "https://placehold.co/600x400/112240/64ffda?text=S2T+GLPI+System",
     technologies: ["SQL", "Oracle APEX", "BizAgi", "Documentación Técnica"],
   },
   {
     id: 3,
     title: "Investigación en Computación Distribuida",
-    description: "Exploración académica sobre arquitecturas escalables y sistemas distribuidos, enfocada en el rendimiento y la tolerancia a fallos.",
+    category: "Sistemas", // <--- NUEVO CAMPO
+    description: "Exploración académica sobre arquitecturas escalables y sistemas distribuidos, enfocada en el rendimiento.",
     image: "https://placehold.co/600x400/112240/64ffda?text=Distributed+Systems",
     technologies: ["C++", "Linux", "Docker", "Networking"],
     repoLink: "https://github.com/RicketyMajor"
   }
 ];
+
+// ... resto del archivo igual
 
 // ... (imports anteriores se mantienen igual) ...
 

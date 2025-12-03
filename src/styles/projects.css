@@ -1,3 +1,43 @@
+/* --- BARRA DE FILTROS --- */
+.project-filter {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap; /* Para que baje en móviles si son muchos */
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid rgba(136, 146, 176, 0.3);
+  color: var(--text-secondary);
+  padding: 8px 20px;
+  border-radius: 20px; /* Forma de píldora */
+  cursor: pointer;
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: rgba(100, 255, 218, 0.05);
+}
+
+.filter-btn.active {
+  background-color: var(--accent);
+  color: var(--bg-primary); /* Texto oscuro sobre fondo brillante */
+  border-color: var(--accent);
+  font-weight: bold;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Ajuste específico para Modo Claro en el botón activo */
+[data-theme='light'] .filter-btn.active {
+  color: #ffffff;
+}
+
 /* --- PROJECTS GRID --- */
 .projects-section {
   padding: 120px 50px;

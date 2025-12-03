@@ -62,3 +62,46 @@ section {
 :focus:not(:focus-visible) {
   outline: none;
 }
+
+/* --- GESTIÓN DE INTERACCIÓN (PARTÍCULAS VS UI) --- */
+
+/* 1. Hacemos que el contenedor principal deje pasar los clics hacia el fondo */
+.App {
+  pointer-events: none;
+}
+
+/* 2. Reactivamos los clics SOLO en los elementos que importan */
+/* Esto asegura que botones y textos funcionen, y BLOQUEEN el clic al fondo */
+
+/* Navbar y Footer */
+.navbar, 
+.footer-bottom,
+.scroll-btn,
+.palette-overlay { 
+  pointer-events: auto; 
+}
+
+/* Contenedores de contenido (Para poder seleccionar texto) */
+.hero-text-content, 
+.hero-visual-content,
+.about-container, 
+.timeline-content,
+.contact-container {
+  pointer-events: auto;
+}
+
+/* Elementos Interactivos Específicos */
+.project-card,
+.skill-detail-panel,
+.tech-item,      /* Botones de skills */
+.filter-btn,     /* Filtros de proyectos */
+.terminal-window,
+.contact-card,
+.contact-form-wrapper {
+  pointer-events: auto;
+}
+
+/* Aseguramos que cualquier botón o enlace suelto también funcione */
+a, button, input, textarea {
+  pointer-events: auto;
+}

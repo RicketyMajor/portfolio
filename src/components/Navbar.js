@@ -57,7 +57,7 @@ const Navbar = ({ theme, toggleTheme, openPalette }) => {
                 spy={true}
                 smooth={true}
                 offset={-80}
-                duration={500}
+                duration={100}
                 className="nav-links"
               >
                 {link.name}
@@ -82,7 +82,7 @@ const Navbar = ({ theme, toggleTheme, openPalette }) => {
                   to={link.to}
                   smooth={true}
                   offset={-80}
-                  duration={500}
+                  duration={100}
                   className="nav-links-mobile-item"
                   onClick={toggleMenu}
                 >

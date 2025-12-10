@@ -24,6 +24,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
     { name: "Skills", to: "skills" },
     { name: "Sobre Mí", to: "about" },
     { name: "Trayectoria", to: "trajectory" },
+    { name: "Consenso Raft", to: "raft" },
     { name: "Colaboración", to: "collaboration" },
     { name: "Contacto", to: "contact" },
   ];
@@ -62,7 +63,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
                 to={link.to}
                 spy={true}
                 smooth={true}
-                offset={-60}
+                offset={-50}
                 duration={400}
                 className="nav-links"
                 onClick={handleLinkClick}

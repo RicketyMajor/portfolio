@@ -1,0 +1,42 @@
+.raft-container {
+  background: #020c1b; /* Un poco más oscuro que el fondo normal */
+  border-radius: 12px;
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+}
+
+.raft-controls {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  font-family: var(--font-code);
+}
+
+.raft-controls h3 {
+  margin-bottom: 5px;
+  color: var(--accent);
+}
+
+.raft-controls p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.raft-svg {
+  max-width: 100%;
+  height: auto;
+  /* background: radial-gradient(circle at center, #112240 0%, #020c1b 70%); */
+}
+
+/* Modo claro */
+[data-theme='light'] .raft-container {
+  background: #f0f4f8;
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}

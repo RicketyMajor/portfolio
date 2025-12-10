@@ -17,6 +17,7 @@ import CommandPalette from './components/CommandPalette'; // <--- Importar Compo
 import './styles/commandPalette.css'; // <--- AGREGAR ESTO
 import MultiplayerCursors from './components/MultiplayerCursors';
 import CollaborationSection from './components/sections/CollaborationSection'; // Importar
+import RaftSection from './components/sections/RaftSection'; // Importar RaftSection
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -48,6 +49,7 @@ function App() {
       <SkillsSection />
       <AboutSection />
       <TrajectorySection />
+      <RaftSection />
       <CollaborationSection />
       <ContactSection />
       <ScrollToTop />

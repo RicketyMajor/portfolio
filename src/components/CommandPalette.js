@@ -7,6 +7,7 @@ import {
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 
+
 const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject }) => {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0); // Para navegar con flechas
@@ -34,6 +35,12 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
       label: 'Ir a Trayectoria', 
       icon: <FaHistory />, 
       action: () => scrollToSection('trajectory') 
+    },
+    { 
+      id: 'raft', 
+      label: 'Ir a Raft Consensus', 
+      icon: <FaProjectDiagram />, 
+      action: () => scrollToSection('raft') 
     },
     { 
       id: 'collaboration', 

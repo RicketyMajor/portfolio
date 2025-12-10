@@ -76,17 +76,34 @@ const LiveDashboard = () => {
           </div>
         </div>
 
-        {/* FILA 3: GITHUB (Ancho completo) */}
+        {/* FILA 3: GITHUB STATS */}
         <div className="stat-card wide">
           <div className="stat-icon"><FaGithub /></div>
           <div className="stat-info">
             <h4>GitHub Activity</h4>
-            <p className="commit-msg">
-               {/* Lógica defensiva para mostrar mensajes */}
-               {githubData?.last_commit ? `"${githubData.last_commit.message}"` : 'Sin actividad reciente'}
-            </p>
-            <small>
-              {githubData?.public_repos ? `${githubData.public_repos} Repositorios Públicos` : 'Cargando datos...'}
+            <div style={{ display: 'flex', gap: '15px', marginTop: '5px' }}>
+              
+              {/* Dato 1: Repositorios (Sabemos que esto carga) */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>
+                  {githubData?.public_repos || '-'}
+                </span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Repositorios</span>
+              </div>
+
+              {/* Dato 2: Estado (Basado en si encontró commit o no) */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                 <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--accent)' }}>
+                   {githubData?.last_commit?.message !== 'Explorando código...' ? 'Active' : 'Contributor'}
+                 </span>
+                 <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Status</span>
+              </div>
+
+            </div>
+            
+            {/* Mensaje sutil abajo (Opcional) */}
+            <small style={{ marginTop: '8px', display: 'block', opacity: 0.6 }}>
+               Open Source & Distribuidos
             </small>
           </div>
         </div>

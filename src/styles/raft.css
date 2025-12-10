@@ -9,6 +9,9 @@
   position: relative;
   overflow: hidden;
   box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 50; /* Un número alto para estar seguro que está sobre las partículas */
+  pointer-events: auto !important;
 }
 
 .raft-controls {
@@ -32,6 +35,7 @@
   max-width: 100%;
   height: auto;
   /* background: radial-gradient(circle at center, #112240 0%, #020c1b 70%); */
+  pointer-events: visiblePainted;
 }
 
 /* Modo claro */

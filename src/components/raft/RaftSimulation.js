@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react'; // Importar useEffect
+import { useMachine } from '@xstate/react'; // Importar useMachine
+import { clusterMachine } from './clusterMachine'; // Importar la máquina
 import RaftNode from './RaftNode';
-import '../../styles/raft.css'; // Crearemos este CSS
+import '../../styles/raft.css';
 
 const RaftSimulation = () => {
-  const [nodes, setNodes] = useState([
-    { id: 1, state: 'follower', term: 1, isDead: false },
-    { id: 2, state: 'follower', term: 1, isDead: false },
-    { id: 3, state: 'leader',   term: 1, isDead: false }, // Un líder inicial para probar
-    { id: 4, state: 'follower', term: 1, isDead: false },
-    { id: 5, state: 'candidate',term: 2, isDead: false }, // Un candidato para probar
-  ]);
+  // Inicializamos la máquina
+  const [state, send] = useMachine(clusterMachine);
+  // Defensa contra undefined:
+  const nodes = state.context.nodes || [];
 
-  // CONFIGURACIÓN VISUAL
+  // 1. Inicializar nodos al montar
+  useEffect(() => {
+    send({ type: 'INIT_NODES' });
+  }, [send]);
+
+  // 2. El Reloj Maestro (Game Loop)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      send({ type: 'TICK' });
+    }, 20); // 50 ticks por segundo (fluido)
+
+    return () => clearInterval(interval);
+  }, [send]);
+
+  // CONFIGURACIÓN VISUAL (Misma de antes)
   const centerX = 300;
   const centerY = 200;
   const radius = 140;
 
-  // Calculamos posiciones en círculo
+  // Si nodes está vacío (primer render), no dibujamos nada aún
+  if (!nodes || nodes.length === 0) return null;
+
+  // Calculamos posiciones (igual que antes)
   const nodePositions = nodes.map((node, index) => {
-    const angle = (index * 2 * Math.PI) / nodes.length - Math.PI / 2; // -PI/2 para empezar arriba
+    const angle = (index * 2 * Math.PI) / nodes.length - Math.PI / 2;
     return {
       ...node,
       x: centerX + radius * Math.cos(angle),
@@ -26,7 +42,7 @@ const RaftSimulation = () => {
     };
   });
 
-  // Generamos las conexiones (Todos con todos, pero sin duplicar líneas)
+  // Conexiones (igual que antes)
   const connections = [];
   for (let i = 0; i < nodePositions.length; i++) {
     for (let j = i + 1; j < nodePositions.length; j++) {
@@ -38,21 +54,19 @@ const RaftSimulation = () => {
     }
   }
 
-  // Función simulada para matar nodo
-  const handleKill = (id) => {
-    setNodes(prev => prev.map(n => n.id === id ? { ...n, state: 'dead', isDead: true } : n));
-  };
-
   return (
     <div className="raft-container">
       <div className="raft-controls">
         <h3>Raft Consensus Simulator</h3>
-        <p>Click derecho en un nodo para "matarlo". (Lógica real en progreso...)</p>
+        <p>Estado actual: Todos los nodos inician como Followers. Espera el Timeout...</p>
+        <div style={{marginTop: 10, fontSize: '0.8rem', opacity: 0.7}}>
+          Nodos: {nodes.filter(n => n.state !== 'dead').length} Vivos | Term: {Math.max(...nodes.map(n => n.term))}
+        </div>
       </div>
 
       <svg width="600" height="400" viewBox="0 0 600 400" className="raft-svg">
         
-        {/* 1. DIBUJAR CONEXIONES (LÍNEAS) */}
+        {/* LÍNEAS */}
         {connections.map(conn => (
           <line
             key={conn.id}
@@ -62,11 +76,11 @@ const RaftSimulation = () => {
             y2={conn.to.y}
             stroke="rgba(136, 146, 176, 0.2)"
             strokeWidth="2"
-            strokeDasharray="5,5" // Línea punteada sutil
+            strokeDasharray="5,5"
           />
         ))}
 
-        {/* 2. DIBUJAR NODOS */}
+        {/* NODOS */}
         {nodePositions.map(node => (
           <RaftNode
             key={node.id}
@@ -75,7 +89,8 @@ const RaftSimulation = () => {
             x={node.x}
             y={node.y}
             term={node.term}
-            onKill={handleKill}
+            // Conectamos el evento KILL a la máquina
+            onKill={(id) => send({ type: 'KILL_NODE', id })} 
           />
         ))}
 

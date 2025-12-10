@@ -19,6 +19,7 @@ Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos,
 - **Secciones Interactivas**: Tabs dinámicos en About, Timeline expandible en Trayectoria
 - **Colaboración en Tiempo Real**: Canvas colaborativo con sincronización CRDT (Yjs + PartyKit)
 - **Cursores Multiplayer**: Visualización de cursores de otros usuarios en la aplicación
+- **Raft Consensus Visualization**: Simulación interactiva del algoritmo de consenso Raft con máquinas de estado (xstate)
 - **Formulario de Contacto**: Integración con EmailJS para envío de emails
 - **Accesibilidad**: Semántica HTML correcta y navegación por teclado
 
@@ -52,7 +53,13 @@ src/
 │   ├── ScrollToTop.js           # Botón flotante de scroll al inicio
 │   ├── LiveDashboard.js         # Panel en tiempo real de estadísticas
 │   ├── CollaborationCanvas.js   # Canvas colaborativo con Yjs
-│   └── MultiplayerCursors.js    # Visualización de cursores multiplayer
+│   ├── MultiplayerCursors.js    # Visualización de cursores multiplayer
+│   ├── raft/                    # Componentes para simulación de consenso Raft
+│   │   ├── RaftSimulation.js    # Componente principal de la simulación
+│   │   ├── RaftNode.js          # Representación visual de nodos del clúster
+│   │   └── clusterMachine.js    # Máquina de estado xstate para lógica de Raft
+│   └── sections/
+│       ├── RaftSection.js       # Sección para visualización de algoritmo Raft
 ├── data/
 │   └── portfolioData.js         # Datos centralizados de proyectos, skills, timeline, etc.
 ├── hooks/
@@ -67,7 +74,8 @@ src/
 │   ├── commandPalette.css       # Estilos de la paleta de comandos
 │   ├── dashboard.css            # Estilos del Live Dashboard
 │   ├── collaboration.css        # Estilos del canvas colaborativo
-│   └── cursors.css              # Estilos de cursores multiplayer
+│   ├── cursors.css              # Estilos de cursores multiplayer
+│   └── raft.css                 # Estilos de la simulación Raft
 ├── App.js                       # Componente raíz
 └── index.js                     # Punto de entrada
 
@@ -164,7 +172,26 @@ Línea de tiempo educativa y profesional expandible:
 - Premios y reconocimientos
 - Interactividad: Expandir/colapsar items para ver detalles
 
-### 6. **Contact Section** (`ContactSection.js`)
+### 6. **Raft Consensus Section** (`RaftSection.js`)
+
+Visualización interactiva del algoritmo **Raft** para consenso distribuido:
+
+- Simulación de un clúster de 5 nodos
+- Cambios de estado (Follower → Candidate → Leader)
+- Visualización de heartbeats del líder
+- Solicitudes y respuestas de votación
+- Capacidad de simular fallos (matar/revivir nodos)
+- Detección automática de nuevos líderes
+- Colores visuales para tipos de paquetes de red
+
+**Componentes internos**:
+- `RaftSimulation.js`: Renderizador principal de la simulación
+- `RaftNode.js`: Representación visual de cada nodo
+- `clusterMachine.js`: Máquina de estado xstate para la lógica
+
+**Caso de uso educativo**: Entender cómo los sistemas distribuidos llegan a consenso sin autoridad central.
+
+### 7. **Contact Section** (`ContactSection.js`)
 
 Formulario de contacto con múltiples canales:
 
@@ -174,7 +201,7 @@ Formulario de contacto con múltiples canales:
 - Mensajes de error/éxito animados
 - Información de contacto centralizada
 
-### 7. **Collaboration Section** (`CollaborationSection.js`)
+### 8. **Collaboration Section** (`CollaborationSection.js`)
 
 Sección experimental de colaboración en tiempo real:
 
@@ -213,6 +240,29 @@ Visualización de presencia de otros usuarios:
 - Movimiento suave del mouse
 - Integración con Awareness (protocolo de PartyKit)
 - Desaparición automática cuando el usuario se desconecta
+
+### Algoritmos de Consenso - Raft (`RaftSection.js` + `raft/`)
+
+Visualización interactiva del algoritmo **Raft** para consenso distribuido:
+
+- **RaftSimulation.js**: Componente principal que renderiza la simulación
+- **RaftNode.js**: Representación visual de cada nodo del clúster (líder, seguidor, candidato)
+- **clusterMachine.js**: Máquina de estado xstate que implementa la lógica de Raft
+
+**Características**:
+- Simulación de 5 nodos en clúster
+- Cambios de estado: Follower → Candidate → Leader
+- Visualización de heartbeats (latidos del líder)
+- Solicitudes de voto (VOTE_REQ) y respuestas (VOTE_ACK)
+- Capacidad de matar/revivir nodos para simular fallos
+- Detección automática de nuevos líderes cuando uno falla
+- Colores visuales para diferenciar tipos de paquetes de red
+
+**Tecnología**:
+- **xstate**: Máquina de estado determinista para la lógica de Raft
+- **@xstate/react**: Hook `useMachine` para integración con React
+- **SVG**: Renderización de nodos y paquetes de red
+- **Animaciones**: Transiciones suaves con CSS
 
 ### APIs Serverless (Vercel Functions)
 
@@ -328,6 +378,15 @@ HOC que anima elementos cuando:
   "PartyKit": "0.0.115",                  // Servidor WebSocket para room-based sync
   "Y-PartyKit": "0.0.33",                 // Provider de Yjs para PartyKit
   "PartySocket": "1.1.6"                  // Cliente WebSocket persistente
+}
+```
+
+### Máquinas de Estado & Sistemas Distribuidos
+
+```json
+{
+  "xstate": "5.24.0",                     // State machine para lógica determinista
+  "@xstate/react": "6.0.0"                // Integración de xstate con React (useMachine)
 }
 ```
 

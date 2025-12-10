@@ -1,0 +1,29 @@
+.cursors-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none; /* Dejar pasar clics */
+  z-index: 9999;
+}
+
+.cursor-indicator {
+  position: absolute;
+  /* La posición se maneja vía inline-styles por Framer Motion */
+}
+
+.cursor-label {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: bold;
+  white-space: nowrap;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}

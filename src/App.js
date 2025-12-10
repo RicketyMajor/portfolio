@@ -15,6 +15,7 @@ import TrajectorySection from './components/sections/TrajectorySection';
 import ContactSection from './components/sections/ContactSection';
 import CommandPalette from './components/CommandPalette'; // <--- Importar Componente
 import './styles/commandPalette.css'; // <--- AGREGAR ESTO
+import MultiplayerCursors from './components/MultiplayerCursors';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -47,6 +48,7 @@ function App() {
       <TrajectorySection />
       <ContactSection />
       <ScrollToTop />
+      <MultiplayerCursors />
     </div>
   );
 }

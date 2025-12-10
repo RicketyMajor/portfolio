@@ -2,7 +2,7 @@
 
 Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos, habilidades técnicas, trayectoria profesional y enfoque en **Sistemas Distribuidos**.
 
-> 🎓 Estudiante de Ingeniería Civil en Informática y Telecomunicaciones| UDP |
+> Estudiante de Ingeniería Civil en Informática y Telecomunicaciones | UDP
 
 ---
 
@@ -10,11 +10,13 @@ Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos,
 
 - **Tema Dinámico**: Alternancia entre modo oscuro y claro con persistencia en localStorage
 - **Command Palette**: Navegación rápida mediante paleta de comandos (Cmd/Ctrl + K)
+- **Live Dashboard**: Panel en tiempo real con datos de geolocalización, GitHub, Spotify y WakaTime
 - **Animaciones Fluidas**: Efectos visuales con Framer Motion y TypeAnimation
 - **Diseño Responsivo**: Optimizado para dispositivos móviles, tablets y desktop
 - **Scroll Reveal**: Animaciones de entrada al hacer scroll en elementos clave
 - **Partículas Interactivas**: Fondo animado dinámico con Tsparticles
 - **Modal de Proyectos**: Visualización detallada de proyectos con links a repositorios
+- **Secciones Interactivas**: Tabs dinámicos en About, Timeline expandible en Trayectoria
 - **Formulario de Contacto**: Integración con EmailJS para envío de emails
 - **Accesibilidad**: Semántica HTML correcta y navegación por teclado
 
@@ -44,7 +46,8 @@ src/
 │   ├── ContactForm.js           # Formulario de contacto
 │   ├── SkeletonLoader.js        # Componente de carga
 │   ├── ScrollReveal.js          # HOC para animaciones de scroll
-│   └── ScrollToTop.js           # Botón flotante de scroll al inicio
+│   ├── ScrollToTop.js           # Botón flotante de scroll al inicio
+│   └── LiveDashboard.js         # Panel en tiempo real de estadísticas
 ├── data/
 │   └── portfolioData.js         # Datos centralizados de proyectos, skills, etc.
 ├── hooks/
@@ -125,87 +128,124 @@ Cada skill incluye descripción y proyectos relacionados.
 
 ### 4. **About Section** (`AboutSection.js`)
 
-Información sobre quién soy:
+Información sobre quién soy con navegación por tabs:
 
-- Resumen profesional
-- Valores y motivación
+- Biografía personal
+- Filosofía y valores
 - Intereses técnicos principales
+- Transiciones animadas entre pestañas
 
 ### 5. **Trajectory Section** (`TrajectorySection.js`)
 
-Línea de tiempo educativa y profesional:
+Línea de tiempo educativa y profesional expandible:
 
 - Educación (UDP - Ingeniería Civil Informática)
-- Experiencia laboral y proyectos destacados
-- Certificaciones (Oracle Cloud AI Foundations)
+- Experiencia laboral con detalles técnicos
+- Certificaciones profesionales
+- Premios y reconocimientos
+- Interactividad: Expandir/colapsar items para ver detalles
 
 ### 6. **Contact Section** (`ContactSection.js`)
 
-Formulario de contacto con:
+Formulario de contacto con múltiples canales:
 
-- Validación de campos
+- Validación de campos con feedback visual
 - Integración con EmailJS para envío seguro
-- Mensajes de error/éxito
-- Envío de datos al correo personal
+- Métodos de contacto directo (WhatsApp, email)
+- Mensajes de error/éxito animados
+- Información de contacto centralizada
 
 ---
 
-## ⚙️ Funcionalidades Interactivas
+## Funcionalidades Interactivas
+
+### Live Dashboard (`LiveDashboard.js`)
+
+Panel dinámico que muestra datos en tiempo real:
+
+- Geolocalización del usuario con latencia de conexión
+- Último commit de GitHub y actividad reciente
+- Canción actual reproduciéndose en Spotify
+- Estadísticas de productividad desde WakaTime
+- Revalidación automática de datos con SWR
 
 ### Command Palette (Cmd/Ctrl + K)
 
 Paleta de comandos rápida que permite:
 
-- Navegar a secciones específicas.
-- Cambiar tema (claro/oscuro).
-- Descargar CV.
-- Copiar email al portapapeles.
-- Búsqueda fuzzy de comandos.
+- Navegar a secciones específicas
+- Cambiar tema (claro/oscuro)
+- Descargar CV
+- Copiar email al portapapeles
+- Búsqueda fuzzy de comandos
 
 Características técnicas:
 
-- Navegación por flechas (↑/↓).
-- Ejecución con Enter.
-- Cierre con Esc.
-- Notificaciones Toast.
+- Navegación por flechas (↑/↓)
+- Ejecución con Enter
+- Cierre con Esc
+- Notificaciones Toast con confirmación visual
+
+### Tabs Dinámicos en About Section
+
+- Sistema de pestañas reutilizable con transiciones animadas
+- Contenido contextual que cambia según la pestaña activa
+- Layout automático y responsive
+- Indicador visual de pestaña activa
+
+### Timeline Expandible en Trajectory Section
+
+- Items de trayectoria interactivos (educación, trabajo, certificaciones, premios)
+- Expansión/colapso con animación smooth
+- Detalles enriquecidos en cada item
+- Orden cronológico descendente
 
 ### Theme Toggle (`useTheme.js` Hook)
 
-- Respeta preferencia del sistema operativo.
-- Persiste la selección en localStorage.
-- Variables CSS dinámicas para cambio de colores instantáneo.
-- Compatible con reducción de movimiento (prefers-reduced-motion).
+- Respeta preferencia del sistema operativo
+- Persiste la selección en localStorage
+- Variables CSS dinámicas para cambio de colores instantáneo
+- Compatible con reducción de movimiento (prefers-reduced-motion)
 
 ### Scroll Reveal (`ScrollReveal.js`)
 
 HOC que anima elementos cuando:
 
-- Entran en el viewport.
-- Usa Intersection Observer para eficiencia.
-- Soporta variaciones de animación.
+- Entran en el viewport
+- Usa Intersection Observer para eficiencia
+- Soporta variaciones de animación
 
 ### Partículas Interactivas (`ParticlesBackground.js`)
 
-- Fondo animado con @tsparticles.
-- Se adapta al tema actual.
-- Efecto parallax con movimiento del ratón.
-- Configuración responsive.
+- Fondo animado con @tsparticles
+- Se adapta al tema actual
+- Efecto parallax con movimiento del ratón
+- Configuración responsive
 
 ---
 
 ## Stack Tecnológico
 
-### Frontend
+### Frontend Framework & UI
 
 ```json
 {
   "React": "19.2.0", // UI Framework
-  "Framer Motion": "12.23.24", // Animaciones
-  "React Icons": "5.5.0", // Iconografía
-  "React Scroll": "1.9.3", // Smooth scrolling
-  "React Type Animation": "3.2.0", // Animación de tipeo
-  "React Parallax Tilt": "1.7.314", // Efecto 3D en cards
-  "Tsparticles": "3.9.1" // Partículas animadas
+  "Framer Motion": "12.23.24", // Animaciones y transiciones
+  "React Icons": "5.5.0", // Librería de iconos
+  "React Scroll": "1.9.3", // Smooth scrolling entre secciones
+  "React Type Animation": "3.2.0", // Animaciones de tipeo
+  "React Parallax Tilt": "1.7.314", // Efectos 3D en tarjetas
+  "Tsparticles": "3.9.1" // Partículas animadas interactivas
+}
+```
+
+### Data Fetching & Estado
+
+```json
+{
+  "SWR": "2.3.7", // Fetching de datos con revalidación automática
+  "QueryString": "0.2.1" // Parsing de query parameters
 }
 ```
 
@@ -213,7 +253,7 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "EmailJS": "4.4.1" // Envío de emails desde el cliente
+  "EmailJS": "4.4.1" // Envío de emails desde cliente (sin backend)
 }
 ```
 
@@ -332,6 +372,59 @@ npm test -- --coverage
 
 ### Modificar Datos
 
+Editar `/src/data/portfolioData.js` (centralizado):
+
+**Proyectos**:
+
+```javascript
+export const projects = [
+  {
+    id: 1,
+    title: "Mi Proyecto",
+    category: "Desarrollo Web",
+    description: "Descripción del proyecto",
+    image: "URL de imagen",
+    technologies: ["React", "Node.js"],
+    repoLink: "URL del repo",
+    demoLink: "URL de demo",
+  },
+];
+```
+
+**Timeline (Educación, Trabajo, Certificaciones)**:
+
+Modifica el array `timeline` en `portfolioData.js` con estructura:
+
+```javascript
+export const timeline = [
+  {
+    id: 1,
+    type: "education|work|certification|award",
+    title: "Título del evento",
+    institution: "Institución",
+    date: "Fecha",
+    description: "Descripción breve",
+    details: ["Detalle 1", "Detalle 2"],
+    icon: <FaIcon />,
+  },
+];
+```
+
+**About Section Tabs**:
+
+Modifica `aboutMeData` en `portfolioData.js` para personalizar biografía, filosofía e intereses.
+
+### Conectar Live Dashboard
+
+Configura endpoints en `LiveDashboard.js`:
+
+- `/api/geo` - Geolocalización
+- `/api/github` - Datos de GitHub
+- `/api/spotify` - Canción actual
+- `/api/wakatime` - Estadísticas de código
+
+### Cambiar Colores
+
 Editar `/src/data/portfolioData.js`:
 
 ```javascript
@@ -373,13 +466,15 @@ Editar `/src/styles/variables.css`:
 
 Optimizaciones implementadas:
 
-- Code splitting automático con React.lazy().
-- Lazy loading de imágenes.
-- Memoización de componentes (React.memo).
-- Debouncing en event listeners.
-- PWA optimizado (manifest.json).
+- Code splitting automático con React.lazy()
+- Lazy loading de imágenes con SkeletonLoader
+- Memoización de componentes (React.memo)
+- Debouncing en event listeners
+- SWR para caching inteligente de datos
+- PWA optimizado (manifest.json)
+- Revalidación eficiente en Live Dashboard
 
-**Métricas (Web Vitals):**
+**Métricas (Web Vitals)**:
 
 ```bash
 npm run build  # Genera reporte en build/
@@ -473,15 +568,16 @@ Proyecto personal sin licencia específica. Siéntete libre de usar como referen
 - [Tailwind CSS](https://tailwindcss.com)
 - [EmailJS Docs](https://www.emailjs.com/docs/)
 - [Tsparticles Demo](https://particles.js.org)
+- [SWR Documentation](https://swr.vercel.app)
 
 ---
 
 ## Agradecimientos
 
-Inspirado en portafolios modernos y buenas prácticas en desarrollo web. Gracias a la comunidad open-source por las herramientas utilizadas.
+Inspirado en portafolios modernos y buenas prácticas en desarrollo web. Gracias a la comunidad open-source por las herramientas utilizados.
 
 ---
 
 **Última actualización**: Diciembre 2025  
-**Versión**: 1.0.0  
+**Versión**: 1.1.0  
 **Estado**: En desarrollo activo

@@ -1,5 +1,11 @@
 export default async function handler(req, res) {
   const token = process.env.GITHUB_TOKEN;
+
+  console.log(">>> EJECUTANDO API GITHUB");
+  if (!token) {
+    console.error(">>> ERROR CRÍTICO: No hay GITHUB_TOKEN");
+    return res.status(500).json({ error: "Configuración faltante" });
+  }
   
   try {
     const userResponse = await fetch('https://api.github.com/user', {

@@ -458,10 +458,11 @@ Proyecto personal sin licencia específica. Siéntete libre de usar como referen
 
 ## Contacto
 
-- **Email**: [Tu email]
+- **Email**: alonsoveralarach@gmail.com
+- **Email Institucional**: alonso.vera@mail.udp.cl
 - **GitHub**: [@RicketyMajor](https://github.com/RicketyMajor)
-- **LinkedIn**: [Tu perfil LinkedIn](https://www.linkedin.com/in/alonso-vera-larach-1103542b7)
-- **Portafolio Live**: [Aquí](https://tu-dominio.com)
+- **LinkedIn**: [Alonso Vera Larach](https://www.linkedin.com/in/alonso-vera-larach-1103542b7)
+- **Portafolio Live**: [En Proceso](https://alonso-vera-larach.com)
 
 ---
 
@@ -483,4 +484,4 @@ Inspirado en portafolios modernos y buenas prácticas en desarrollo web. Gracias
 
 **Última actualización**: Diciembre 2025  
 **Versión**: 1.0.0  
-**Estado**: En desarrollo activo 🚀
+**Estado**: En desarrollo activo

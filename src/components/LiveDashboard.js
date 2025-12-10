@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import { FaGithub, FaServer, FaGlobeAmericas, FaBolt, FaSpotify, FaCode } from 'react-icons/fa';
-
-import '../styles/dashboard.css'; // Crearemos este CSS luego
+import { FaGithub, FaServer, FaGlobeAmericas, FaBolt, FaSpotify } from 'react-icons/fa';
+import '../styles/dashboard.css';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const LiveDashboard = () => {
-  // Fetching de datos usando SWR (se revalida automáticamente)
-  const { data: geoData } = useSWR('/api/geo', fetcher, { refreshInterval: 0 }); // Geo no cambia
-  const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 60000 }); // Cada 1 min
-  const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); // Cada 10s
-  const { data: wakatimeData } = useSWR('/api/wakatime', fetcher);
+  const { data: geoData } = useSWR('/api/geo', fetcher, { refreshInterval: 0 }); 
+  
+  // GitHub: Revalidar cada 5 minutos
+  const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });
+  
+  // Spotify: Revalidar cada 10 segundos
+  const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); 
 
   const [latency, setLatency] = useState(null);
 
-  // Calcular latencia aproximada
   useEffect(() => {
     const start = Date.now();
     fetch('/api/geo').then(() => {
@@ -33,12 +33,12 @@ const LiveDashboard = () => {
 
       <div className="dashboard-grid">
         
-        {/* CARD 1: EDGE AWARENESS */}
+        {/* FILA 1: UBICACIÓN Y RED (Dos columnas) */}
         <div className="stat-card">
           <div className="stat-icon"><FaGlobeAmericas /></div>
           <div className="stat-info">
-            <h4>Cliente (Tú)</h4>
-            <p>{geoData ? `${geoData.city}, ${geoData.country}` : 'Localizando...'}</p>
+            <h4>Cliente</h4>
+            <p>{geoData ? `${geoData.city}, ${geoData.country}` : '...'}</p>
           </div>
         </div>
 
@@ -51,11 +51,11 @@ const LiveDashboard = () => {
           <div className="stat-icon"><FaServer /></div>
           <div className="stat-info">
             <h4>Nodo Edge</h4>
-            <p>{geoData ? geoData.serverLocation : 'Detectando...'}</p>
+            <p>{geoData ? geoData.serverLocation : '...'}</p>
           </div>
         </div>
 
-        {/* CARD 3: SPOTIFY (NOW PLAYING) */}
+        {/* FILA 2: SPOTIFY (Ancho completo) */}
         <div className="stat-card wide" style={{ borderColor: spotifyData?.isPlaying ? '#1db954' : 'transparent' }}>
           <div className="stat-icon"><FaSpotify style={{ color: '#1db954' }} /></div>
           <div className="stat-info">
@@ -76,26 +76,17 @@ const LiveDashboard = () => {
           </div>
         </div>
 
-        {/* CARD 4: WAKATIME (CODING STATS) */}
-        <div className="stat-card">
-          <div className="stat-icon"><FaCode style={{ color: '#ff5f56' }} /></div>
-          <div className="stat-info">
-            <h4>Wakatime (7 días)</h4>
-            <p>{wakatimeData ? wakatimeData.hours : 'Calculando...'}</p>
-            <small>Top: {wakatimeData ? wakatimeData.language : '...'}</small>
-          </div>
-        </div>
-
-        {/* CARD 2: GITHUB ACTIVITY */}
+        {/* FILA 3: GITHUB (Ancho completo) */}
         <div className="stat-card wide">
           <div className="stat-icon"><FaGithub /></div>
           <div className="stat-info">
-            <h4>Última Actividad</h4>
+            <h4>GitHub Activity</h4>
             <p className="commit-msg">
-              {githubData ? `"${githubData.last_commit.message}"` : 'Cargando commits...'}
+               {/* Lógica defensiva para mostrar mensajes */}
+               {githubData?.last_commit ? `"${githubData.last_commit.message}"` : 'Sin actividad reciente'}
             </p>
             <small>
-              en {githubData ? githubData.last_commit.repo : '...'}
+              {githubData?.public_repos ? `${githubData.public_repos} Repositorios Públicos` : 'Cargando datos...'}
             </small>
           </div>
         </div>

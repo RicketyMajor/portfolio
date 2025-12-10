@@ -1,10 +1,8 @@
 import React from 'react';
 // Importamos los iconos aquí porque se definen dentro de los objetos de datos
 import { 
-  FaGithub, FaExternalLinkAlt, 
   FaChalkboardTeacher, FaBriefcase, FaTrophy, FaGraduationCap, FaCertificate,
-  FaJs, FaReact, FaHtml5, FaCss3, FaNodeJs, FaPython, FaJava, 
-  FaGitAlt, FaLinux, FaDocker, FaDatabase 
+  FaNodeJs, FaPython, FaJava, FaGitAlt, FaLinux, FaDocker, FaDatabase 
 } from 'react-icons/fa';
 import { 
   SiCplusplus, SiOracle, SiPytorch, SiTensorflow 

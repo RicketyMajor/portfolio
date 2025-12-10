@@ -1,0 +1,120 @@
+.dashboard-container {
+  background: rgba(10, 25, 47, 0.7);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 800px;
+  font-family: var(--font-code);
+  backdrop-filter: blur(5px);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(136, 146, 176, 0.1);
+  padding-bottom: 10px;
+}
+
+.dashboard-header h3 {
+  color: var(--text-primary);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.live-indicator {
+  color: #ff5f56;
+  font-size: 0.8rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.dashboard-grid {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 15px;
+  border-radius: 6px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.stat-card.wide {
+  flex-basis: 100%; /* Ocupa toda la fila */
+  margin-top: 10px;
+  background: rgba(100, 255, 218, 0.05);
+  border: 1px dashed rgba(100, 255, 218, 0.3);
+}
+
+.stat-icon {
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+.stat-info h4 {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.stat-info p {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin: 2px 0 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.commit-msg {
+  font-style: italic;
+  max-width: 400px !important;
+}
+
+.connection-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.dashed-line {
+  width: 50px;
+  height: 2px;
+  background-image: linear-gradient(to right, var(--text-secondary) 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+}
+
+.latency-tag {
+  font-size: 0.7rem;
+  color: #ffbd2e;
+  margin-bottom: 2px;
+}
+
+[data-theme='light'] .dashboard-container {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+}

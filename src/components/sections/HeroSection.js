@@ -3,6 +3,8 @@ import { TypeAnimation } from 'react-type-animation';
 import { Link } from 'react-scroll';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Terminal from '../Terminal'; // <--- IMPORTAR TERMINAL
+import LiveDashboard from '../LiveDashboard';
+import '../../styles/dashboard.css'; // Asegúrate de importar el css si no lo hiciste en App.js
 
 const HeroSection = () => {
   return (
@@ -50,9 +52,12 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* COLUMNA DERECHA: TERMINAL (NUEVO) */}
+        {/* COLUMNA DERECHA */}
         <div className="hero-visual-content">
-          <Terminal />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', alignItems: 'center' }}>
+            <Terminal />
+            <LiveDashboard />
+          </div>
         </div>
 
       </div>

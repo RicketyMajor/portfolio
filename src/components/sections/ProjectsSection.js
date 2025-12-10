@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import { scroller } from 'react-scroll';
 import ScrollReveal from '../ScrollReveal';

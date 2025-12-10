@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { scroller } from 'react-scroll';
 import { 
@@ -134,11 +134,11 @@ const scrollToSection = (section) => {
     setTimeout(() => setToastMsg(null), 2000);
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsOpen(false);
     setQuery("");
     setToastMsg(null);
-  };
+  }, [setIsOpen]);
 
   // Listener Global para abrir/cerrar (Cmd+K / Esc)
   useEffect(() => {
@@ -153,7 +153,7 @@ const scrollToSection = (section) => {
     };
     window.addEventListener('keydown', handleGlobalKeyDown);
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-  }, [setIsOpen]);
+  }, [setIsOpen, closeModal]); // <--- AHORA SÍ AGREGAMOS closeModal
 
   return (
     <AnimatePresence>

@@ -22,7 +22,7 @@ const ScrollToTop = () => {
 
 const scrollToTop = () => {
     scroll.scrollToTop({
-      duration: 100, // Tiempo en milisegundos (100ms es muy rápido, casi instantáneo)
+      duration: 600, // Tiempo en milisegundos (100ms es muy rápido, casi instantáneo)
       smooth: true,  // Mantiene la suavidad pero a alta velocidad
       spy: true
     });

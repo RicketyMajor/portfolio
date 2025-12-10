@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 
-const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
+const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject }) => {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0); // Para navegar con flechas
   const [toastMsg, setToastMsg] = useState(null); // Para notificaciones
@@ -116,7 +116,11 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme }) => {
     }
   };
 
-  const scrollToSection = (section) => {
+const scrollToSection = (section) => {
+    // 1. Cerramos el proyecto si hay uno abierto
+    closeProject(); 
+    
+    // 2. Navegamos
     scroller.scrollTo(section, {
       duration: 500,
       smooth: true,

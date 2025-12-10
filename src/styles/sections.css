@@ -17,8 +17,8 @@
 .hero-text-content { text-align: left; }
 .hero-visual-content { display: flex; justify-content: center; perspective: 1000px; }
 .greeting { color: var(--accent); font-family: var(--font-code); font-size: 1.1rem; margin-bottom: 20px; }
-.name { font-family: var(--font-title); font-size: 4.5rem; color: var(--text-primary); font-weight: 800; margin-bottom: 10px; line-height: 1.1; }
-.role { font-family: var(--font-title); font-size: 1.5rem; color: var(--text-secondary); font-weight: 700; min-height: 3.2em; display: flex; align-items: center; margin-bottom: 10px; }
+.name { font-family: var(--font-title); font-size: 3.5rem; color: var(--text-primary); font-weight: 800; margin-bottom: 10px; line-height: 1.1; }
+.role { font-family: var(--font-title); font-size: 1.25rem; color: var(--text-secondary); font-weight: 700; min-height: 3.2em; display: flex; align-items: center; margin-bottom: 10px; }
 .description { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 50px; max-width: 600px; }
 .description strong { color: var(--accent); font-weight: 600; }
 .hero-buttons { margin-bottom: 50px; display: flex; gap: 20px; }
@@ -113,8 +113,8 @@
 .contact-card:hover { transform: translateY(-5px); border-color: var(--accent); }
 .contact-icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--accent); transition: color 0.3s ease; }
 .contact-card:hover .contact-icon { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
-.contact-card h3 {color: var(--text-primary); margin: 10px 0; font-size: 1.1rem; font-weight: 600; }
-.contact-card p { color: var(--text-secondary); font-size: 0.9rem; font-family: var(--font-code); }
+.contact-card h3 {color: var(--text-primary); margin: 10px 0; font-size: 1.4rem; font-weight: 600; font-family: var(--font-title); }
+.contact-card p { color: var(--text-secondary); font-size: 1rem; font-family: var(--font-code); }
 .footer-bottom { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(136, 146, 176, 0.1); color: var(--text-secondary); font-size: 0.85rem; font-family: var(--font-code); }
 
 /* --- RESPONSIVE GENERAL --- */
@@ -534,4 +534,13 @@
   font-size: 1.1rem;
 }
 
-/* ... resto de estilos de imagen y tabs se mantienen igual ... */
+/* --- MÁRGENES GENERALES (PADDING) --- */
+/* Reducimos el padding de todas las secciones para que no se sienta tan "expandido" */
+.hero-section,
+.skills-section,
+.about-section,
+.education-section,
+.projects-section,
+.contact-section {
+  padding: 80px 20px; /* Antes era 120px 50px -> Esto reduce mucho el "zoom" visual */
+}

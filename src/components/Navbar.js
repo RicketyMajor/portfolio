@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'; // Para animaciones sua
 import ThemeToggle from './ThemeToggle';
 import '../App.css';
 
-const Navbar = ({ theme, toggleTheme, openPalette }) => {
+const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -26,6 +26,11 @@ const Navbar = ({ theme, toggleTheme, openPalette }) => {
     { name: "Trayectoria", to: "trajectory" },
     { name: "Contacto", to: "contact" },
   ];
+
+  const handleLinkClick = () => {
+    closeProject(); // <--- ESTO CIERRA EL MODAL SI ESTÁ ABIERTO
+    setIsOpen(false); // Cierra el menú móvil si está abierto
+  };
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
@@ -56,9 +61,10 @@ const Navbar = ({ theme, toggleTheme, openPalette }) => {
                 to={link.to}
                 spy={true}
                 smooth={true}
-                offset={-80}
-                duration={100}
+                offset={-60}
+                duration={400}
                 className="nav-links"
+                onClick={handleLinkClick}
               >
                 {link.name}
               </Link>
@@ -82,9 +88,9 @@ const Navbar = ({ theme, toggleTheme, openPalette }) => {
                   to={link.to}
                   smooth={true}
                   offset={-80}
-                  duration={100}
+                  duration={400}
                   className="nav-links-mobile-item"
-                  onClick={toggleMenu}
+                  onClick={handleLinkClick}
                 >
                   {link.name}
                 </Link>

@@ -1,25 +1,35 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; 
+import { scroller } from 'react-scroll';
 import ScrollReveal from '../ScrollReveal';
 import ProjectCard from '../ProjectCard';
 import ProjectModal from '../ProjectModal';
 import { projects } from '../../data/portfolioData';
 
-const ProjectsSection = () => {
-  const [selectedId, setSelectedId] = useState(null);
-  const [filter, setFilter] = useState('Todos'); // Estado del filtro
+const ProjectsSection = ({ selectedId, setSelectedId }) => {
+  const [filter, setFilter] = React.useState('Todos'); // El filtro sí puede quedarse local
 
-  // 1. Obtener categorías únicas de tus proyectos + "Todos"
   const categories = ['Todos', ...new Set(projects.map(p => p.category))];
 
-  // 2. Filtrar el array de proyectos
   const filteredProjects = projects.filter(project => 
     filter === 'Todos' || project.category === filter
   );
 
   const selectedProject = projects.find(p => p.id === selectedId);
 
-  return (
+  const handleCardClick = (id) => {
+    // 1. Forzamos el scroll hacia la sección de proyectos
+    scroller.scrollTo('projects', {
+      duration: 500,
+      smooth: true,
+      offset: -80, // Ajuste para que no quede tapado por el navbar
+    });
+
+    // 2. Abrimos el modal
+    setSelectedId(id);
+  };
+
+return (
     <section id="projects" className="projects-section">
       <ScrollReveal>
         <h2 className="section-title">Proyectos Destacados</h2>
@@ -37,17 +47,15 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-        {/* GRILLA DE PROYECTOS (Con Layout Animation) */}
-        <motion.div 
-          className="projects-grid"
-          layout // ESTA PROP ES MÁGICA: Anima el reordenamiento
-        >
+        {/* GRILLA */}
+        <motion.div className="projects-grid" layout>
           <AnimatePresence>
             {filteredProjects.map((project) => (
               <ProjectCard 
                 key={project.id} 
                 project={project} 
-                onClick={() => setSelectedId(project.id)} 
+                // Usamos nuestra nueva función manejadora
+                onClick={() => handleCardClick(project.id)} 
               />
             ))}
           </AnimatePresence>

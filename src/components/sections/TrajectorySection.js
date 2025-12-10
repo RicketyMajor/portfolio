@@ -15,9 +15,6 @@ const TrajectorySection = () => {
     <section id="trajectory" className="education-section">
       <ScrollReveal>
         <h2 className="section-title">Trayectoria y Experiencia</h2>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '40px' }}>
-          Haz clic en cada experiencia para desplegar los detalles.
-        </p>
         
         <div className="timeline-container">
           {timeline.map((item) => {

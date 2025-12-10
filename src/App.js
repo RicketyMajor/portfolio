@@ -19,18 +19,29 @@ import './styles/commandPalette.css'; // <--- AGREGAR ESTO
 function App() {
   const { theme, toggleTheme } = useTheme();
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const closeProjectModal = () => setSelectedProjectId(null);
   return (
     <div className="App">
-      <Navbar theme={theme} toggleTheme={toggleTheme} openPalette={() => setIsPaletteOpen(true)} />
+      <Navbar 
+        theme={theme} 
+        toggleTheme={toggleTheme} 
+        openPalette={() => setIsPaletteOpen(true)} 
+        closeProject={closeProjectModal}
+      />
       <CommandPalette 
         isOpen={isPaletteOpen} 
         setIsOpen={setIsPaletteOpen} 
         theme={theme} 
         toggleTheme={toggleTheme} 
+        closeProject={closeProjectModal}
       />
       <ParticlesBackground theme={theme} />
       <HeroSection />
-      <ProjectsSection />
+      <ProjectsSection 
+        selectedId={selectedProjectId} 
+        setSelectedId={setSelectedProjectId}
+      />
       <SkillsSection />
       <AboutSection />
       <TrajectorySection />

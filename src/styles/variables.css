@@ -45,3 +45,14 @@
   --term-text: #102a43;             /* Código oscuro */
   --term-border: rgba(0, 0, 0, 0.1); /* Borde gris sutil */
 }
+
+/* Agrega esto al final del archivo para controlar el tamaño en pantallas grandes */
+html {
+  font-size: 16px; /* Base estándar */
+}
+
+@media screen and (min-width: 1920px) {
+  html {
+    font-size: 18px; /* Solo aumenta en pantallas 4K */
+  }
+}

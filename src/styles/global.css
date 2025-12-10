@@ -1,3 +1,27 @@
+/* --- AJUSTE DE ESCALA GLOBAL --- */
+html {
+  /* Por defecto es 100% (aprox 16px). 
+     Al bajarlo a 90% o 85%, todo el sitio se "aleja" y se ve más elegante en Desktop.
+  */
+  scroll-behavior: smooth;
+  font-size: 80%; 
+}
+
+/* En pantallas muy grandes (Full HD o 2K), achicamos un poco más */
+@media screen and (min-width: 1920px) {
+  html {
+    font-size: 80%;
+  }
+}
+
+/* En móviles volvemos al tamaño normal para que sea legible */
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 100%;
+  }
+}
+
+
 /* RESET BÁSICO */
 * {
   margin: 0;
@@ -25,7 +49,7 @@ body {
 
 section {
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 
 /* SCROLLBAR PERSONALIZADO */

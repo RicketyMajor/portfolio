@@ -1,10 +1,20 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { FaTimes, FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import React, { useEffect } from 'react';
 import '../App.css';
 
 const ProjectModal = ({ project, onClose }) => {
   // Evita que el clic en el contenido cierre el modal
+// BLOQUEO DE SCROLL DEL BODY
+  useEffect(() => {
+    // Al montar el modal: Quitar scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Al desmontar (cerrar): Devolver scroll
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
   const handleContentClick = (e) => e.stopPropagation();
 
   return (
@@ -14,6 +24,7 @@ const ProjectModal = ({ project, onClose }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose} // Cierra al hacer clic en el fondo oscuro
+      style={{ zIndex: 10000 }}
     >
       <motion.div 
         className="project-modal"

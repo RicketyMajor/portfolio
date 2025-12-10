@@ -81,16 +81,20 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 25, 47, 0.85); /* Backdop */
-  backdrop-filter: blur(5px);
-  z-index: 10000;
+  width: 100vw; /* Asegura ancho total */
+  height: 100vh; /* Asegura alto total */
+  background: rgba(10, 25, 47, 0.9); /* Un poco más oscuro para tapar mejor */
+  backdrop-filter: blur(8px);
+  z-index: 10000; /* Debe ser mayor que el Navbar (que suele ser 999 o 1000) */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  cursor: default; /* Cursor normal en el fondo */
+  pointer-events: auto; /* ESTO BLOQUEA los clicks a lo que está detrás */
+  user-select: none; /* ESTO BLOQUEA la selección de texto del fondo */
 }
+
 [data-theme='light'] .project-overlay {
   background: rgba(255, 255, 255, 0.85);
 }
@@ -107,6 +111,8 @@
   flex-direction: column;
   max-height: 90vh;
   overflow-y: auto;
+  pointer-events: auto; /* Aseguramos interacción dentro de la carta */
+  user-select: text;    /* Permitimos copiar texto dentro de la carta */
 }
 .modal-image img { width: 100%; height: 350px; object-fit: cover; display: block; }
 .modal-content { padding: 40px; }

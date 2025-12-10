@@ -2,11 +2,11 @@
 
 Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos, habilidades técnicas, trayectoria profesional y enfoque en **Sistemas Distribuidos**.
 
-> 🎓 Estudiante de Ingeniería Civil Informática | UDP | Especialización en Computación Distribuida y Cloud Computing
+> 🎓 Estudiante de Ingeniería Civil en Informática y Telecomunicaciones| UDP |
 
 ---
 
-## ✨ Características Principales
+## Características Principales
 
 - **Tema Dinámico**: Alternancia entre modo oscuro y claro con persistencia en localStorage
 - **Command Palette**: Navegación rápida mediante paleta de comandos (Cmd/Ctrl + K)

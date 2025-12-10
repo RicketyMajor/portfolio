@@ -17,6 +17,8 @@ Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos,
 - **Partículas Interactivas**: Fondo animado dinámico con Tsparticles
 - **Modal de Proyectos**: Visualización detallada de proyectos con links a repositorios
 - **Secciones Interactivas**: Tabs dinámicos en About, Timeline expandible en Trayectoria
+- **Colaboración en Tiempo Real**: Canvas colaborativo con sincronización CRDT (Yjs + PartyKit)
+- **Cursores Multiplayer**: Visualización de cursores de otros usuarios en la aplicación
 - **Formulario de Contacto**: Integración con EmailJS para envío de emails
 - **Accesibilidad**: Semántica HTML correcta y navegación por teclado
 
@@ -33,9 +35,10 @@ src/
 │   │   ├── HeroSection.js        # Sección de inicio con terminal interactiva
 │   │   ├── ProjectsSection.js    # Galería de proyectos
 │   │   ├── SkillsSection.js      # Habilidades técnicas categorizadas
-│   │   ├── AboutSection.js       # Información personal
-│   │   ├── TrajectorySection.js  # Trayectoria educativa y profesional
-│   │   └── ContactSection.js     # Formulario de contacto
+│   │   ├── AboutSection.js       # Información personal con tabs
+│   │   ├── TrajectorySection.js  # Trayectoria educativa y profesional expandible
+│   │   ├── ContactSection.js     # Formulario de contacto
+│   │   └── CollaborationSection.js # Sección de colaboración en tiempo real
 │   ├── CommandPalette.js        # Paleta de comandos rápidos
 │   ├── Navbar.js                # Barra de navegación principal
 │   ├── Terminal.js              # Emulador de terminal ASCII
@@ -47,9 +50,11 @@ src/
 │   ├── SkeletonLoader.js        # Componente de carga
 │   ├── ScrollReveal.js          # HOC para animaciones de scroll
 │   ├── ScrollToTop.js           # Botón flotante de scroll al inicio
-│   └── LiveDashboard.js         # Panel en tiempo real de estadísticas
+│   ├── LiveDashboard.js         # Panel en tiempo real de estadísticas
+│   ├── CollaborationCanvas.js   # Canvas colaborativo con Yjs
+│   └── MultiplayerCursors.js    # Visualización de cursores multiplayer
 ├── data/
-│   └── portfolioData.js         # Datos centralizados de proyectos, skills, etc.
+│   └── portfolioData.js         # Datos centralizados de proyectos, skills, timeline, etc.
 ├── hooks/
 │   └── useTheme.js              # Hook personalizado para gestión de tema
 ├── styles/
@@ -59,14 +64,28 @@ src/
 │   ├── sections.css             # Estilos de secciones
 │   ├── navbar.css               # Estilos de navegación
 │   ├── projects.css             # Estilos de proyectos
-│   └── commandPalette.css       # Estilos de la paleta de comandos
+│   ├── commandPalette.css       # Estilos de la paleta de comandos
+│   ├── dashboard.css            # Estilos del Live Dashboard
+│   ├── collaboration.css        # Estilos del canvas colaborativo
+│   └── cursors.css              # Estilos de cursores multiplayer
 ├── App.js                       # Componente raíz
 └── index.js                     # Punto de entrada
+
+api/
+├── geo.js                       # Endpoint: Geolocalización del usuario (Vercel)
+├── github.js                    # Endpoint: Último commit y actividad de GitHub
+├── spotify.js                   # Endpoint: Canción actual reproduciendo
+└── wakatime.js                  # Endpoint: Estadísticas de productividad (si aplica)
+
+party/
+└── server.js                    # Servidor PartyKit para sincronización CRDT
 
 public/
 ├── index.html                   # HTML base
 ├── manifest.json                # Configuración PWA
 └── robots.txt                   # Directivas para bots de búsqueda
+
+partykit.json                     # Configuración de PartyKit
 ```
 
 ### Patrones de Diseño Utilizados
@@ -155,9 +174,70 @@ Formulario de contacto con múltiples canales:
 - Mensajes de error/éxito animados
 - Información de contacto centralizada
 
+### 7. **Collaboration Section** (`CollaborationSection.js`)
+
+Sección experimental de colaboración en tiempo real:
+
+- Canvas colaborativo donde múltiples usuarios pueden dejar marcas simultáneamente
+- Sincronización sin conflictos mediante CRDTs (Yjs)
+- Persistencia de datos mediante PartyKit
+- Explicación educativa sobre consistencia eventual
+- Interacción simple: hacer clic para marcar
+
 ---
 
 ## Funcionalidades Interactivas
+
+### Colaboración en Tiempo Real (`CollaborationCanvas.js` + PartyKit)
+
+Sistema distribuido de sincronización de estado:
+
+- **CRDTs con Yjs**: Estructura de datos que resuelve conflictos automáticamente sin necesidad de servidor central
+- **PartyKit Provider**: Conecta múltiples clientes al mismo "room" para sincronización
+- **Persistencia**: Los datos se mantienen entre sesiones
+- **Sin latencia crítica**: Cada usuario ve cambios locales instantáneamente; cambios remotos se sincronizan cuando llegan
+- **Escalabilidad**: Demostra arquitectura distribuida sin conflictos
+
+**Tecnología detrás**:
+```javascript
+// Yjs gestiona conflictos automáticamente
+yDotsRef.current.push([newDot]);  // Se propaga sin conflictos
+```
+
+### Cursores Multiplayer (`MultiplayerCursors.js`)
+
+Visualización de presencia de otros usuarios:
+
+- Muestra cursores de otros usuarios en tiempo real
+- Colores únicos por usuario
+- Movimiento suave del mouse
+- Integración con Awareness (protocolo de PartyKit)
+- Desaparición automática cuando el usuario se desconecta
+
+### APIs Serverless (Vercel Functions)
+
+APIs implementadas en `/api` que proveen datos en tiempo real:
+
+**`/api/geo.js`** - Geolocalización del usuario
+- Extrae ubicación del cliente desde headers de Vercel
+- Retorna ciudad, región, país
+- Simula latencia de conexión entre cliente y servidor
+
+**`/api/github.js`** - Actividad de GitHub
+- Obtiene datos del perfil (followers, repos públicos)
+- Extrae último commit del usuario
+- Cachea respuesta para optimizar API calls
+- Fallback elegante si GitHub API no está disponible
+
+**`/api/spotify.js`** - Canción actual reproduciendo
+- Usa OAuth 2.0 con Spotify API
+- Obtiene canción actual en tiempo real
+- Incluye cover del álbum, artista, link a Spotify
+- Detecta cuando no hay música reproduciendo
+
+**`/api/wakatime.js`** - Estadísticas de productividad (opcional)
+- Integración con WakaTime para tracking de código
+- Muestra horas de código y lenguaje top
 
 ### Live Dashboard (`LiveDashboard.js`)
 
@@ -230,13 +310,24 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "React": "19.2.0", // UI Framework
-  "Framer Motion": "12.23.24", // Animaciones y transiciones
-  "React Icons": "5.5.0", // Librería de iconos
-  "React Scroll": "1.9.3", // Smooth scrolling entre secciones
-  "React Type Animation": "3.2.0", // Animaciones de tipeo
-  "React Parallax Tilt": "1.7.314", // Efectos 3D en tarjetas
-  "Tsparticles": "3.9.1" // Partículas animadas interactivas
+  "React": "19.2.0",                      // UI Framework
+  "Framer Motion": "12.23.24",            // Animaciones y transiciones
+  "React Icons": "5.5.0",                 // Librería de iconos
+  "React Scroll": "1.9.3",                // Smooth scrolling entre secciones
+  "React Type Animation": "3.2.0",        // Animaciones de tipeo
+  "React Parallax Tilt": "1.7.314",       // Efectos 3D en tarjetas
+  "Tsparticles": "3.9.1"                  // Partículas animadas interactivas
+}
+```
+
+### Colaboración y Estado Distribuido
+
+```json
+{
+  "Yjs": "13.6.27",                       // CRDT para sincronización sin conflictos
+  "PartyKit": "0.0.115",                  // Servidor WebSocket para room-based sync
+  "Y-PartyKit": "0.0.33",                 // Provider de Yjs para PartyKit
+  "PartySocket": "1.1.6"                  // Cliente WebSocket persistente
 }
 ```
 
@@ -244,8 +335,8 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "SWR": "2.3.7", // Fetching de datos con revalidación automática
-  "QueryString": "0.2.1" // Parsing de query parameters
+  "SWR": "2.3.7",                         // Fetching de datos con revalidación automática
+  "QueryString": "0.2.1"                  // Parsing de query parameters
 }
 ```
 
@@ -253,7 +344,15 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "EmailJS": "4.4.1" // Envío de emails desde cliente (sin backend)
+  "EmailJS": "4.4.1"                      // Envío de emails desde cliente (sin backend)
+}
+```
+
+### Utilidades
+
+```json
+{
+  "RandomColor": "0.6.2"                  // Generación de colores aleatorios para usuarios
 }
 ```
 
@@ -297,41 +396,75 @@ cd portfolio
 npm install
 ```
 
-3. **Configurar variables de entorno** (si aplica)
-   Crear archivo `.env.local`:
+3. **Configurar variables de entorno** (importante para APIs)
+
+Crear archivo `.env.local`:
 
 ```env
+# EmailJS
 REACT_APP_EMAILJS_SERVICE_ID=your_service_id
 REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
 REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
+
+# GitHub (para api/github.js)
+GITHUB_TOKEN=your_github_token
+
+# Spotify (para api/spotify.js)
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+SPOTIFY_REFRESH_TOKEN=your_spotify_refresh_token
+
+# PartyKit (local dev)
+PARTYKIT_HOST=127.0.0.1:1999
 ```
 
 4. **Iniciar servidor de desarrollo**
 
+Para desarrollo local con PartyKit:
+
 ```bash
-npm start
+npm run dev
+# Puerto: 3000 (React)
+# PartyKit: 1999 (server.js)
 ```
 
-Abrirá automáticamente [http://localhost:3000](http://localhost:3000)
+O solo React sin PartyKit:
+
+```bash
+npm start
+# Puerto: 3000
+# PartyKit estará disponible en modo producción
+```
 
 ---
 
 ## Scripts Disponibles
 
-| Script         | Comando         | Descripción                                       |
-| -------------- | --------------- | ------------------------------------------------- |
-| **Desarrollo** | `npm start`     | Inicia servidor en modo desarrollo con hot reload |
-| **Build**      | `npm run build` | Compila para producción en carpeta `build/`       |
-| **Testing**    | `npm test`      | Ejecuta tests en modo watch                       |
-| **Eject**      | `npm run eject` | Expone configuración de Webpack (irreversible)    |
+| Script | Comando | Descripción |
+|--------|---------|-------------|
+| **Desarrollo** | `npm start` | Inicia React en puerto 3000 (sin PartyKit local) |
+| **Dev PartyKit** | `npm run dev` | Inicia React + PartyKit dev server |
+| **Build** | `npm run build` | Compila para producción en carpeta `build/` |
+| **Testing** | `npm test` | Ejecuta tests en modo watch |
+| **Eject** | `npm run eject` | Expone configuración de Webpack (irreversible) |
 
-### Modo Desarrollo
+### Modo Desarrollo con PartyKit
+
+Para testear colaboración en tiempo real localmente:
+
+```bash
+npm run dev
+# Puerto React: 3000
+# Puerto PartyKit: 1999
+# Abre múltiples pestañas en http://localhost:3000 para ver sincronización
+```
+
+### Modo Desarrollo React Only
 
 ```bash
 npm start
 # Puerto: 3000
-# Hot reload habilitado
-# Source maps para debugging
+# PartyKit estará disponible una vez deployado a producción
 ```
 
 ### Build para Producción
@@ -339,7 +472,7 @@ npm start
 ```bash
 npm run build
 # Minificado y optimizado
-# Listo para deploy a Vercel, Netlify, etc.
+# Listo para deploy a Vercel (con APIs serverless en /api)
 # Carpeta generada: /build
 ```
 
@@ -423,24 +556,13 @@ Configura endpoints en `LiveDashboard.js`:
 - `/api/spotify` - Canción actual
 - `/api/wakatime` - Estadísticas de código
 
-### Cambiar Colores
+### Configurar Colaboración en Tiempo Real
 
-Editar `/src/data/portfolioData.js`:
+Para habilitar la colaboración multiplayer con Yjs y PartyKit:
 
-```javascript
-export const projects = [
-  {
-    id: 1,
-    title: "Mi Proyecto",
-    category: "Desarrollo Web",
-    description: "Descripción del proyecto",
-    image: "URL de imagen",
-    technologies: ["React", "Node.js"],
-    repoLink: "URL del repo",
-    demoLink: "URL de demo",
-  },
-];
-```
+1. **Localmente**: Asegúrate de que `npm run dev` esté ejecutándose
+2. **Producción**: PartyKit debe estar deployado (configurado en `partykit.json`)
+3. **PARTYKIT_HOST** debe apuntar al servidor correcto
 
 ### Cambiar Colores
 
@@ -473,12 +595,18 @@ Optimizaciones implementadas:
 - SWR para caching inteligente de datos
 - PWA optimizado (manifest.json)
 - Revalidación eficiente en Live Dashboard
+- **CRDTs (Yjs)**: Sincronización sin conflictos sin round-trips al servidor
+- **WebSockets (PartyKit)**: Comunicación bidireccional en tiempo real sin polling
+- **Eventual Consistency**: Optimista updates en CollaborationCanvas
+- **Awareness Protocol**: Presencia de usuarios con bajo overhead
 
 **Métricas (Web Vitals)**:
 
 ```bash
 npm run build  # Genera reporte en build/
 ```
+
+**Nota CRDT**: Los CRDTs garantizan eventual consistency sin necesidad de locking central. Esto permite colaboración offline-first y hace que la arquitectura sea escalable sin cuello de botella en el servidor.
 
 ---
 
@@ -489,6 +617,11 @@ npm run build  # Genera reporte en build/
 - HTTPS recomendado para producción
 - CSP headers en servidor (Vercel/Netlify automático)
 - Dependencies auditadas regularmente
+- **WebSocket Security**: PartyKit usa WSS (WebSocket Secure) en producción
+- **API Keys**: Almacenadas en variables de entorno (.env.local), nunca en el repositorio
+- **CORS**: Vercel serverless functions actúan como proxy para requests a APIs externas
+- **Rate Limiting**: Implementar en PartyKit server para prevenir abuse en colaboración
+- **Secrets Management**: GitHub Secrets para CI/CD, Vercel Environment Variables para producción
 
 ```bash
 npm audit           # Ver vulnerabilidades
@@ -569,6 +702,10 @@ Proyecto personal sin licencia específica. Siéntete libre de usar como referen
 - [EmailJS Docs](https://www.emailjs.com/docs/)
 - [Tsparticles Demo](https://particles.js.org)
 - [SWR Documentation](https://swr.vercel.app)
+- [Yjs Documentation](https://docs.yjs.dev) - CRDT Library
+- [PartyKit Documentation](https://docs.partykit.io) - WebSocket Server
+- [GitHub API Docs](https://docs.github.com/en/rest)
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api)
 
 ---
 
@@ -578,6 +715,6 @@ Inspirado en portafolios modernos y buenas prácticas en desarrollo web. Gracias
 
 ---
 
-**Última actualización**: Diciembre 2025  
-**Versión**: 1.1.0  
+**Última actualización**: Enero 2025  
+**Versión**: 1.2.0  
 **Estado**: En desarrollo activo

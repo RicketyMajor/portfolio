@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
+    "@xstate/react": "^6.0.0",
     "framer-motion": "^12.23.24",
     "partykit": "^0.0.115",
     "partysocket": "^1.1.6",
@@ -24,18 +25,18 @@
     "react-type-animation": "^3.2.0",
     "swr": "^2.3.7",
     "web-vitals": "^2.1.4",
+    "xstate": "^5.24.0",
     "y-partykit": "^0.0.33",
-    "yjs": "^13.6.27"
+    "yjs": "^13.6.27",
+    "zustand": "^5.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    
-    "dev": "react-scripts start", 
+    "dev": "react-scripts start",
     "// COMENTARIO": "Arriba: Vercel usa 'dev' para correr React. Abajo: Tú usas 'multiverse' para correr todo.",
-    
     "multiverse": "concurrently \"vercel dev\" \"npx partykit dev\""
   },
   "eslintConfig": {

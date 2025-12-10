@@ -1,48 +1,36 @@
-import React, { useEffect } from 'react'; // Importar useEffect
-import { useMachine } from '@xstate/react'; // Importar useMachine
-import { clusterMachine } from './clusterMachine'; // Importar la máquina
+import React, { useEffect } from 'react';
+import { useMachine } from '@xstate/react';
+import { clusterMachine } from './clusterMachine';
 import RaftNode from './RaftNode';
 import '../../styles/raft.css';
 
 const RaftSimulation = () => {
-  // Inicializamos la máquina
   const [state, send] = useMachine(clusterMachine);
-  // Defensa contra undefined:
   const nodes = state.context.nodes || [];
+  const packets = state.context.packets || []; // <-- Capturamos los paquetes
 
-  // 1. Inicializar nodos al montar
+  useEffect(() => { send({ type: 'INIT_NODES' }); }, [send]);
   useEffect(() => {
-    send({ type: 'INIT_NODES' });
-  }, [send]);
-
-  // 2. El Reloj Maestro (Game Loop)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      send({ type: 'TICK' });
-    }, 20); // 50 ticks por segundo (fluido)
-
+    const interval = setInterval(() => { send({ type: 'TICK' }); }, 20); // 50 FPS
     return () => clearInterval(interval);
   }, [send]);
 
-  // CONFIGURACIÓN VISUAL (Misma de antes)
+  // CONFIGURACIÓN VISUAL
   const centerX = 300;
   const centerY = 200;
   const radius = 140;
 
-  // Si nodes está vacío (primer render), no dibujamos nada aún
-  if (!nodes || nodes.length === 0) return null;
-
-  // Calculamos posiciones (igual que antes)
+  // Mapa de posiciones para búsqueda rápida
+  const posMap = {};
   const nodePositions = nodes.map((node, index) => {
     const angle = (index * 2 * Math.PI) / nodes.length - Math.PI / 2;
-    return {
-      ...node,
-      x: centerX + radius * Math.cos(angle),
-      y: centerY + radius * Math.sin(angle)
-    };
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    posMap[node.id] = { x, y }; // Guardamos para usarlo en paquetes
+    return { ...node, x, y };
   });
 
-  // Conexiones (igual que antes)
+  // Conexiones estáticas
   const connections = [];
   for (let i = 0; i < nodePositions.length; i++) {
     for (let j = i + 1; j < nodePositions.length; j++) {
@@ -54,19 +42,27 @@ const RaftSimulation = () => {
     }
   }
 
+  // Colores de paquetes
+  const getPacketColor = (type) => {
+    if (type === 'HEARTBEAT') return '#27c93f'; // Verde (Líder)
+    if (type === 'VOTE_REQ') return '#ffbd2e';  // Amarillo (Solicitud)
+    if (type === 'VOTE_ACK') return '#64ffda';  // Cian (Voto concedido)
+    return '#fff';
+  };
+
   return (
     <div className="raft-container">
       <div className="raft-controls">
-        <h3>Raft Consensus Simulator</h3>
-        <p>Estado actual: Todos los nodos inician como Followers. Espera el Timeout...</p>
-        <div style={{marginTop: 10, fontSize: '0.8rem', opacity: 0.7}}>
-          Nodos: {nodes.filter(n => n.state !== 'dead').length} Vivos | Term: {Math.max(...nodes.map(n => n.term))}
+        <h3>Simulación de Consenso Raft</h3>
+        <p>Click derecho en un nodo para <strong>matarlo</strong> o <strong>revivirlo</strong>.</p>
+        <div style={{marginTop: 5, fontSize: '0.8rem', opacity: 0.7, fontFamily: 'monospace'}}>
+          Packets In-Flight: {packets.length} | Term: {nodes.length > 0 ? Math.max(...nodes.map(n => n.term)) : 1}
         </div>
       </div>
 
       <svg width="600" height="400" viewBox="0 0 600 400" className="raft-svg">
         
-        {/* LÍNEAS */}
+        {/* LÍNEAS DE CONEXIÓN */}
         {connections.map(conn => (
           <line
             key={conn.id}
@@ -74,11 +70,33 @@ const RaftSimulation = () => {
             y1={conn.from.y}
             x2={conn.to.x}
             y2={conn.to.y}
-            stroke="rgba(136, 146, 176, 0.2)"
-            strokeWidth="2"
+            stroke="rgba(136, 146, 176, 0.1)"
+            strokeWidth="1"
             strokeDasharray="5,5"
           />
         ))}
+
+        {/* PAQUETES (MENSAJES) VIAJANDO */}
+        {packets.map(pkt => {
+          const start = posMap[pkt.from];
+          const end = posMap[pkt.to];
+          if (!start || !end) return null;
+
+          // Interpolación Lineal (Lerp)
+          const currentX = start.x + (end.x - start.x) * (pkt.progress / 100);
+          const currentY = start.y + (end.y - start.y) * (pkt.progress / 100);
+
+          return (
+            <circle 
+              key={pkt.id}
+              cx={currentX}
+              cy={currentY}
+              r="4"
+              fill={getPacketColor(pkt.type)}
+              className="raft-packet"
+            />
+          );
+        })}
 
         {/* NODOS */}
         {nodePositions.map(node => (
@@ -89,8 +107,15 @@ const RaftSimulation = () => {
             x={node.x}
             y={node.y}
             term={node.term}
-            // Conectamos el evento KILL a la máquina
-            onKill={(id) => send({ type: 'KILL_NODE', id })} 
+            
+            // --- LÓGICA DE TOGGLE ---
+            onKill={(id) => {
+              if (node.state === 'dead') {
+                send({ type: 'REVIVE_NODE', id });
+              } else {
+                send({ type: 'KILL_NODE', id });
+              }
+            }} 
           />
         ))}
 

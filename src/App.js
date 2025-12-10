@@ -16,6 +16,7 @@ import ContactSection from './components/sections/ContactSection';
 import CommandPalette from './components/CommandPalette'; // <--- Importar Componente
 import './styles/commandPalette.css'; // <--- AGREGAR ESTO
 import MultiplayerCursors from './components/MultiplayerCursors';
+import CollaborationSection from './components/sections/CollaborationSection'; // Importar
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -38,6 +39,7 @@ function App() {
         closeProject={closeProjectModal}
       />
       <ParticlesBackground theme={theme} />
+      <MultiplayerCursors /> {/* Agregar el componente de cursores */}
       <HeroSection />
       <ProjectsSection 
         selectedId={selectedProjectId} 
@@ -46,9 +48,11 @@ function App() {
       <SkillsSection />
       <AboutSection />
       <TrajectorySection />
+      <CollaborationSection />
       <ContactSection />
       <ScrollToTop />
-      <MultiplayerCursors />
+      
+
     </div>
   );
 }

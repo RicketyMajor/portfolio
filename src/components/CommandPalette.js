@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { scroller } from 'react-scroll';
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
-  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight 
+  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaPaintBrush 
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 
@@ -34,6 +34,12 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
       label: 'Ir a Trayectoria', 
       icon: <FaHistory />, 
       action: () => scrollToSection('trajectory') 
+    },
+    { 
+      id: 'collaboration', 
+      label: 'Ir a Colaboración (Guestbook)', 
+      icon: <FaPaintBrush />, 
+      action: () => scrollToSection('collaboration') 
     },
     { 
       id: 'contact', 

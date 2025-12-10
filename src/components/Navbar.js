@@ -24,6 +24,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
     { name: "Skills", to: "skills" },
     { name: "Sobre Mí", to: "about" },
     { name: "Trayectoria", to: "trajectory" },
+    { name: "Colaboración", to: "collaboration" },
     { name: "Contacto", to: "contact" },
   ];
 

@@ -1,0 +1,108 @@
+.collaboration-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 8px;
+  background: rgba(17, 34, 64, 0.4);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+}
+
+.collab-header {
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collab-status {
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ff5f56;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.status-dot.online {
+  background-color: #27c93f;
+  box-shadow: 0 0 8px #27c93f;
+}
+
+.clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.clear-btn:hover {
+  color: #ff5f56;
+}
+
+.canvas-container {
+  height: 400px; /* Altura fija */
+  position: relative;
+  cursor: crosshair; /* Cursor de precisión */
+  overflow: hidden;
+  background-image: 
+    radial-gradient(rgba(100, 255, 218, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px; /* Patrón de grilla sutil */
+}
+
+.canvas-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-secondary);
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.collab-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%); /* Centrar el punto en el clic */
+  pointer-events: none; /* Para que no bloqueen clics futuros */
+}
+
+.tech-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.4;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Modo claro */
+[data-theme='light'] .collaboration-wrapper {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+[data-theme='light'] .canvas-container {
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+}

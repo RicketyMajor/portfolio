@@ -121,7 +121,9 @@ section {
 .filter-btn,     /* Filtros de proyectos */
 .terminal-window,
 .contact-card,
-.contact-form-wrapper {
+.contact-form-wrapper,
+.collaboration-wrapper,
+.canvas-container {
   pointer-events: auto;
 }
 

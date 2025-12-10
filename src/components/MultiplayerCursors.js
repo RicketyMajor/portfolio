@@ -58,25 +58,32 @@ const MultiplayerCursors = () => {
   }, [myColor]);
 
   // 5. Manejar movimiento de MI mouse
-  useEffect(() => {
+useEffect(() => {
     if (!awareness) return;
 
+    let lastUpdate = 0; // Marca de tiempo del último envío
+
     const handleMouseMove = (e) => {
-      // Actualizamos mi posición en la red para que otros me vean
-      // Usamos requestAnimationFrame para no saturar el websocket
-      requestAnimationFrame(() => {
+      const now = Date.now();
+
+      // EL SEMÁFORO: Solo enviamos si han pasado más de 60ms desde la última vez
+      if (now - lastUpdate > 60) {
+        
+        // Actualizamos mi posición en la red
         const localState = awareness.getLocalState();
         if (localState) {
           awareness.setLocalState({
             ...localState,
             user: {
               ...localState.user,
-              x: e.pageX, // Coordenada absoluta en la página
+              x: e.pageX,
               y: e.pageY
             }
           });
         }
-      });
+        
+        lastUpdate = now; // Actualizamos la marca de tiempo
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);

@@ -4,16 +4,16 @@ import * as Y from "yjs";
 import randomColor from "randomcolor";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTrashAlt, FaInfoCircle } from 'react-icons/fa';
-import '../styles/collaboration.css'; // Crearemos este CSS luego
+import '../styles/collaboration.css';
 
 const CollaborationCanvas = () => {
-  const [dots, setDots] = useState([]); // Estado local para renderizar
-  const yDotsRef = useRef(null); // Referencia al array de Yjs
+  const [dots, setDots] = useState([]);
+  const yDotsRef = useRef(null);
   const [myColor] = useState(randomColor({ luminosity: 'bright' }));
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    // 1. Conectar a la misma sala 'portfolio-room'
+    {/* --- CONNECT TO PARTYKIT ROOM --- */}
     const yDoc = new Y.Doc();
     const provider = new YPartyKitProvider(
       "127.0.0.1:1999", 
@@ -21,15 +21,15 @@ const CollaborationCanvas = () => {
       yDoc
     );
 
-    // 2. Obtener el Array compartido 'guestbook'
+    {/* --- GET SHARED ARRAY --- */}
     const yDots = yDoc.getArray('guestbook');
     yDotsRef.current = yDots;
 
-    // 3. Sincronizar estado inicial
+    {/* --- SYNC INITIAL STATE --- */}
     setDots(yDots.toArray());
     setIsConnected(true);
 
-    // 4. Escuchar cambios (cuando otros agregan puntos)
+    {/* --- LISTEN TO CHANGES --- */}
     yDots.observe(() => {
       setDots(yDots.toArray());
     });
@@ -40,17 +40,15 @@ const CollaborationCanvas = () => {
     };
   }, []);
 
-  // Función para agregar un punto
   const handleCanvasClick = (e) => {
     if (!yDotsRef.current) return;
 
-    // Obtenemos coordenadas relativas al contenedor
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
     const newDot = {
-      id: Date.now() + Math.random(), // ID único
+      id: Date.now() + Math.random(),
       x,
       y,
       color: myColor,
@@ -58,18 +56,16 @@ const CollaborationCanvas = () => {
       timestamp: Date.now()
     };
 
-    // MAGIA CRDT: Solo hacemos push. Yjs se encarga de distribuirlo.
     yDotsRef.current.push([newDot]);
     
-    // Opcional: Limitar a los últimos 50 puntos para no saturar
     if (yDotsRef.current.length > 50) {
-      yDotsRef.current.delete(0, 1); // Borra el más antiguo
+      yDotsRef.current.delete(0, 1);
     }
   };
 
-  // Función para limpiar (Demo purpose)
+  {/* --- CLEAR CANVAS --- */}
   const handleClear = (e) => {
-    e.stopPropagation(); // Evitar poner un punto al hacer click en borrar
+    e.stopPropagation();
     if (yDotsRef.current) {
       yDotsRef.current.delete(0, yDotsRef.current.length);
     }
@@ -89,7 +85,6 @@ const CollaborationCanvas = () => {
 
       <div className="canvas-container" onClick={handleCanvasClick}>
         
-        {/* Placeholder text */}
         {dots.length === 0 && (
           <div className="canvas-placeholder">
             <p>Haz clic para dejar tu huella en el sistema distribuido.</p>

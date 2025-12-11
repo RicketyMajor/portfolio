@@ -1,10 +1,10 @@
-/* --- BARRA DE FILTROS --- */
+/* --- FILTER BAR --- */
 .project-filter {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-bottom: 40px;
-  flex-wrap: wrap; /* Para que baje en móviles si son muchos */
+  flex-wrap: wrap;
 }
 
 .filter-btn {
@@ -12,7 +12,7 @@
   border: 1px solid rgba(136, 146, 176, 0.3);
   color: var(--text-secondary);
   padding: 8px 20px;
-  border-radius: 20px; /* Forma de píldora */
+  border-radius: 20px;
   cursor: pointer;
   font-family: var(--font-code);
   font-size: 0.9rem;
@@ -27,13 +27,13 @@
 
 .filter-btn.active {
   background-color: var(--accent);
-  color: var(--bg-primary); /* Texto oscuro sobre fondo brillante */
+  color: var(--bg-primary);
   border-color: var(--accent);
   font-weight: bold;
   box-shadow: 0 0 15px var(--accent-glow);
 }
 
-/* Ajuste específico para Modo Claro en el botón activo */
+/* --- LIGHT MODE ACTIVE BUTTON --- */
 [data-theme='light'] .filter-btn.active {
   color: #ffffff;
 }
@@ -81,18 +81,18 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Asegura ancho total */
-  height: 100vh; /* Asegura alto total */
-  background: rgba(10, 25, 47, 0.9); /* Un poco más oscuro para tapar mejor */
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 25, 47, 0.9);
   backdrop-filter: blur(8px);
-  z-index: 10000; /* Debe ser mayor que el Navbar (que suele ser 999 o 1000) */
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  cursor: default; /* Cursor normal en el fondo */
-  pointer-events: auto; /* ESTO BLOQUEA los clicks a lo que está detrás */
-  user-select: none; /* ESTO BLOQUEA la selección de texto del fondo */
+  cursor: default;
+  pointer-events: auto;
+  user-select: none;
 }
 
 [data-theme='light'] .project-overlay {
@@ -111,8 +111,8 @@
   flex-direction: column;
   max-height: 90vh;
   overflow-y: auto;
-  pointer-events: auto; /* Aseguramos interacción dentro de la carta */
-  user-select: text;    /* Permitimos copiar texto dentro de la carta */
+  pointer-events: auto;
+  user-select: text;
 }
 .modal-image img { width: 100%; height: 350px; object-fit: cover; display: block; }
 .modal-content { padding: 40px; }

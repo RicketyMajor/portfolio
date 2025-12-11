@@ -27,13 +27,13 @@ const TrajectorySection = () => {
                 layout 
                 onClick={() => toggleExpand(item.id)}
               >
-                {/* Marcador Izquierdo */}
+                {/* --- TIMELINE MARKER --- */}
                 <div className="timeline-marker">
                   <div className="timeline-icon-bg">{item.icon}</div>
                   <div className="timeline-line"></div>
                 </div>
 
-                {/* Contenido Derecho */}
+                {/* --- TIMELINE CONTENT --- */}
                 <div className="timeline-content" style={{ width: '100%' }}>
                   <div className="timeline-header">
                     <div>
@@ -42,7 +42,6 @@ const TrajectorySection = () => {
                       <h4 className="timeline-institution">{item.institution}</h4>
                     </div>
                     
-                    {/* CAMBIO: Envolvemos el icono en un botón estilizado */}
                     <div className="accordion-btn">
                       <FaChevronDown className="accordion-icon" />
                     </div>

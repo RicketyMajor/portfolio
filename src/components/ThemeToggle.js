@@ -21,7 +21,7 @@ const ThemeToggle = ({ theme, toggleTheme }) => {
     >
       <motion.div
         initial={{ rotate: 0 }}
-        animate={{ rotate: theme === 'dark' ? 0 : 180 }} // Rotación suave al cambiar
+        animate={{ rotate: theme === 'dark' ? 0 : 180 }}
         transition={{ duration: 0.3 }}
       >
         {theme === 'dark' ? <FaSun /> : <FaMoon />}

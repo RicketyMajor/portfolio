@@ -5,21 +5,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 25, 47, 0.6); /* Backdrop oscuro suave */
+  background: rgba(10, 25, 47, 0.6);
   backdrop-filter: blur(3px);
-  z-index: 10002; /* Por encima de TODO */
+  z-index: 10002;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Alineado arriba, no al centro */
-  padding-top: 15vh; /* Empieza al 15% de la pantalla */
+  align-items: flex-start;
+  padding-top: 15vh;
 }
 
-/* En modo claro, backdrop más claro */
+/* --- LIGHT MODE PALETTE --- */
 [data-theme='light'] .palette-overlay {
   background: rgba(255, 255, 255, 0.6);
 }
 
-/* --- LA CAJA PRINCIPAL --- */
+/* --- PALETTE MODAL --- */
 .palette-modal {
   width: 100%;
   max-width: 600px;
@@ -37,7 +37,7 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* --- INPUT DE BÚSQUEDA --- */
+/* --- PALETTE SEARCH --- */
 .palette-search {
   padding: 20px;
   border-bottom: 1px solid rgba(136, 146, 176, 0.1);
@@ -61,7 +61,7 @@
   opacity: 0.5;
 }
 
-/* --- LISTA DE COMANDOS --- */
+/* --- PALETTE LIST --- */
 .palette-list {
   list-style: none;
   max-height: 300px;
@@ -94,7 +94,7 @@
   color: var(--text-secondary);
 }
 
-/* Estado Seleccionado / Hover */
+/* --- HOVER & SELECTED STATES --- */
 .palette-item:hover, .palette-item.selected {
   background-color: var(--accent-glow);
   color: var(--text-primary);
@@ -105,7 +105,7 @@
   color: var(--accent);
 }
 
-/* Shortcuts visuales (Enter, Esc) */
+/* --- PALETTE SHORTCUT --- */
 .palette-shortcut {
   font-family: var(--font-code);
   font-size: 0.75rem;
@@ -114,7 +114,7 @@
   border-radius: 4px;
 }
 
-/* Footer con instrucciones */
+/* --- PALETTE FOOTER --- */
 .palette-footer {
   padding: 10px 20px;
   background: rgba(0, 0, 0, 0.1);
@@ -125,21 +125,21 @@
   color: var(--text-secondary);
   font-family: var(--font-code);
 }
-/* --- ESTILOS DE LISTA --- */
-/* Item seleccionado (Mouse o Teclado) */
+
+/* --- PALETTE ITEM SELECTED --- */
 .palette-item.selected {
   background-color: var(--accent-glow);
   color: var(--text-primary);
-  border-left: 3px solid var(--accent); /* Indicador visual izquierdo */
-  padding-left: 12px; /* Compensar el borde */
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
 }
 
-/* Icono activo */
+/* --- ACTIVE ICON --- */
 .palette-icon.active {
   color: var(--accent);
 }
 
-/* Indicador "Enter" a la derecha */
+/* --- PALETTE SHORTCUT ENTER --- */
 .palette-shortcut-enter {
   font-family: var(--font-code);
   font-size: 0.75rem;
@@ -149,12 +149,12 @@
   gap: 5px;
 }
 
-/* --- TOAST NOTIFICATION --- */
+/* --- PALETTE TOAST --- */
 .palette-toast {
-  background-color: var(--bg-primary); /* Fondo oscuro */
-  color: var(--accent); /* Texto cian */
+  background-color: var(--bg-primary);
+  color: var(--accent);
   padding: 10px 15px;
-  margin: 0 10px 10px 10px; /* Margen dentro del modal */
+  margin: 0 10px 10px 10px;
   border-radius: 6px;
   border: 1px solid var(--accent);
   display: flex;

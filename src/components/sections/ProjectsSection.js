@@ -18,14 +18,12 @@ const ProjectsSection = ({ selectedId, setSelectedId }) => {
   const selectedProject = projects.find(p => p.id === selectedId);
 
   const handleCardClick = (id) => {
-    // 1. Forzamos el scroll hacia la sección de proyectos
     scroller.scrollTo('projects', {
       duration: 500,
       smooth: true,
-      offset: -80, // Ajuste para que no quede tapado por el navbar
+      offset: -80,
     });
 
-    // 2. Abrimos el modal
     setSelectedId(id);
   };
 
@@ -34,7 +32,7 @@ return (
       <ScrollReveal>
         <h2 className="section-title">Proyectos Destacados</h2>
         
-        {/* BARRA DE FILTROS */}
+        {/* --- FILTERS BAR --- */}
         <div className="project-filter">
           {categories.map((cat, index) => (
             <button
@@ -47,14 +45,13 @@ return (
           ))}
         </div>
 
-        {/* GRILLA */}
+        {/* --- GRID --- */}
         <motion.div className="projects-grid" layout>
           <AnimatePresence>
             {filteredProjects.map((project) => (
               <ProjectCard 
                 key={project.id} 
                 project={project} 
-                // Usamos nuestra nueva función manejadora
                 onClick={() => handleCardClick(project.id)} 
               />
             ))}

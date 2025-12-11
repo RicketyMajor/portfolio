@@ -8,25 +8,22 @@ import {
   SiCplusplus, SiOracle, SiPytorch, SiTensorflow 
 } from 'react-icons/si';
 
-// 1. DATOS DE PROYECTOS
-// ... imports
-
-// 1. DATOS DE PROYECTOS (CON CATEGORÍAS)
+{/* --- PROJECTS DATA --- */}
 export const projects = [
   {
     id: 1,
     title: "PAWS - Ingeniería de Software",
-    category: "Desarrollo Web", // <--- NUEVO CAMPO
+    category: "Desarrollo Web",
     description: "Proyecto ganador del 1er Lugar en la Feria EIT 2025 (Team Dots). Solución de software enfocada en la gestión eficiente.",
     image: "https://placehold.co/600x400/112240/64ffda?text=PAWS+Project", 
     technologies: ["Ingeniería de Software", "Trabajo en Equipo", "Gestión de Proyectos"],
     repoLink: "https://github.com/RicketyMajor",
-    demoLink: "https://paws-demo.com" // Ejemplo
+    demoLink: "https://paws-demo.com"
   },
   {
     id: 2,
     title: "Optimización Gestión de Tickets GLPI",
-    category: "Procesos & BD", // <--- NUEVO CAMPO
+    category: "Procesos & BD",
     description: "Implementación y documentación técnica exhaustiva del sistema GLPI. Integración con Oracle APEX y optimización SQL.",
     image: "https://placehold.co/600x400/112240/64ffda?text=S2T+GLPI+System",
     technologies: ["SQL", "Oracle APEX", "BizAgi", "Documentación Técnica"],
@@ -34,7 +31,7 @@ export const projects = [
   {
     id: 3,
     title: "Investigación en Computación Distribuida",
-    category: "Sistemas", // <--- NUEVO CAMPO
+    category: "Sistemas",
     description: "Exploración académica sobre arquitecturas escalables y sistemas distribuidos, enfocada en el rendimiento.",
     image: "https://placehold.co/600x400/112240/64ffda?text=Distributed+Systems",
     technologies: ["C++", "Linux", "Docker", "Networking"],
@@ -42,20 +39,14 @@ export const projects = [
   }
 ];
 
-// ... resto del archivo igual
-
-// ... (imports anteriores se mantienen igual) ...
-
-// MANTÉN TUS PROYECTOS IGUAL, PERO ASEGÚRATE DE QUE TENGAN ID: 1, 2, 3...
-
-// 2. DATOS DE SKILLS (ENRIQUECIDOS PARA INTERACTIVIDAD)
+{/* --- SKILLS DATA --- */}
 export const skills = {
   "Inteligencia Artificial & Datos": [
     { 
       name: "Machine Learning", 
       icon: <SiTensorflow />,
       description: "Diseño y entrenamiento de modelos predictivos. Experiencia ajustando hiperparámetros y evaluando métricas de precisión.",
-      relatedProjects: [3, 1] // IDs de proyectos donde usaste esto
+      relatedProjects: [3, 1]
     },
     { 
       name: "NLP", 
@@ -130,15 +121,10 @@ export const skills = {
   ]
 };
 
-// ... (timeline se mantiene igual) ...
-
-// ... (imports anteriores se mantienen) ...
-
-// --- 3. DATOS DE TRAYECTORIA (ACTUALIZADO CON DETALLES) ---
-// --- 3. DATOS DE TRAYECTORIA (ORDEN CRONOLÓGICO: 2021 -> 2025) ---
+{/* --- TIMELINE DATA --- */}
 export const timeline = [
   {
-    id: 5, // Mantenemos IDs únicos
+    id: 5,
     type: "education",
     title: "Ingeniería Civil en Informática",
     institution: "Universidad Diego Portales",

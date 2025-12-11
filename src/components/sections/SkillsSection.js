@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaProjectDiagram } from 'react-icons/fa'; // Iconos nuevos
+import { FaTimes, FaProjectDiagram } from 'react-icons/fa';
 import ScrollReveal from '../ScrollReveal';
-import { skills, projects } from '../../data/portfolioData'; // Importamos proyectos también para cruzarlos
+import { skills, projects } from '../../data/portfolioData';
 
 const SkillsSection = () => {
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  // Función para manejar el clic en una habilidad
   const handleSkillClick = (tech) => {
-    // Si ya está seleccionada, la deseleccionamos. Si no, la seleccionamos.
     if (selectedSkill?.name === tech.name) {
       setSelectedSkill(null);
     } else {
@@ -17,7 +15,6 @@ const SkillsSection = () => {
     }
   };
 
-  // Función helper para obtener nombres de proyectos por ID
   const getRelatedProjects = (projectIds) => {
     if (!projectIds) return [];
     return projectIds.map(id => projects.find(p => p.id === id)).filter(Boolean);
@@ -33,7 +30,7 @@ const SkillsSection = () => {
         
         <div className="skills-wrapper">
           
-          {/* PANEL DE DETALLE (Aparece cuando hay selección) */}
+          {/* --- DETAIL PANEL --- */}
           <AnimatePresence mode="wait">
             {selectedSkill && (
               <motion.div
@@ -60,7 +57,7 @@ const SkillsSection = () => {
                   {selectedSkill.description}
                 </p>
 
-                {/* Proyectos Relacionados */}
+                {/* --- RELATED PROJECTS --- */}
                 {selectedSkill.relatedProjects && selectedSkill.relatedProjects.length > 0 && (
                   <div>
                     <h4 className="related-projects-title">Implementado en:</h4>
@@ -77,10 +74,10 @@ const SkillsSection = () => {
             )}
           </AnimatePresence>
 
-          {/* GRILLA DE SKILLS */}
+          {/* --- SKILLS GRID --- */}
           <motion.div 
             className="skills-container"
-            layout // Permite que la grilla se ajuste suavemente al abrir el panel
+            layout
           >
             {Object.entries(skills).map(([category, techList]) => (
               <div key={category} className="skill-category">
@@ -97,7 +94,7 @@ const SkillsSection = () => {
                         onClick={() => handleSkillClick(tech)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        layout // Animación de posición
+                        layout
                       >
                         <span className="tech-icon">{tech.icon}</span>
                         <span className="tech-name">{tech.name}</span>

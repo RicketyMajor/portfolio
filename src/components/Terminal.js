@@ -37,7 +37,7 @@ const Terminal = () => {
 
   return (
     <div className="terminal-window">
-      {/* HEADER */}
+      {/* --- HEADER --- */}
       <div className="terminal-header">
         <div style={{display:'flex', gap:'8px'}}>
           <div className="terminal-button red"></div>
@@ -49,7 +49,7 @@ const Terminal = () => {
 
       <div className="terminal-body" style={{ padding: '25px' }}>
         
-        {/* PROMPT */}
+        {/* --- PROMPT --- */}
         <div className="prompt-line">
           <div>
             <span className="prompt-user">alonso@portfolio</span>:
@@ -62,22 +62,22 @@ const Terminal = () => {
         {loaded && (
           <div className="dashboard-grid fade-in">
             
-            {/* 1. NETWORK TOPOLOGY (CLIENT + ARROW + EDGE) */}
+            {/* --- NETWORK TOPOLOGY --- */}
             <div className="stat-card">
               <div className="card-label"><FaNetworkWired /> Network Topology</div>
               <div className="network-flow">
-                {/* Cliente */}
+                {/* Client */}
                 <div className="network-node">
                   <FaGlobeAmericas className="node-icon" />
                   <span className="node-text">{geoData ? geoData.city : 'Locating'}</span>
                   <span className="node-subtext">{geoData ? geoData.country : '...'}</span>
                 </div>
-                {/* Flecha */}
+                {/* Arrow */}
                 <div className="network-arrow">
                   <span className="latency-badge">{latency ? `${latency}ms` : '-'}</span>
                   <div className="arrow-line"></div>
                 </div>
-                {/* Servidor */}
+                {/* Server */}
                 <div className="network-node">
                   <FaServer className="node-icon" />
                   <span className="node-text">{geoData ? geoData.serverLocation.split(' ')[0] : 'Edge'}</span>
@@ -86,7 +86,7 @@ const Terminal = () => {
               </div>
             </div>
 
-            {/* 2. CHRONOMETRY (UTC + UPTIME) */}
+            {/* --- CHRONOMETRY --- */}
             <div className="stat-card">
               <div className="card-label"><FaClock /> System Chronometry</div>
               <div className="chrono-grid">
@@ -101,7 +101,7 @@ const Terminal = () => {
               </div>
             </div>
 
-            {/* 3. SPOTIFY */}
+            {/* --- SPOTIFY --- */}
             <div className="stat-card" style={{ borderColor: spotifyData?.isPlaying ? '#1db954' : 'rgba(136,146,176,0.1)' }}>
               <div className="card-label">
                 <FaSpotify style={{ color: spotifyData?.isPlaying ? '#1db954' : 'inherit' }} /> 
@@ -129,7 +129,7 @@ const Terminal = () => {
               </div>
             </div>
 
-            {/* 4. GITHUB */}
+            {/* --- GITHUB --- */}
             <div className="stat-card">
               <div className="card-label"><FaGithub /> GitHub Module</div>
               <div className="app-content" style={{ justifyContent: 'space-between', width: '100%' }}>
@@ -157,7 +157,7 @@ const Terminal = () => {
           </div>
         )}
 
-        {/* LOGS */}
+        {/* --- LOGS --- */}
         {loaded && (
           <div className="terminal-logs">
             <div className="prompt-line">

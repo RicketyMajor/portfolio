@@ -7,30 +7,29 @@ import '../../styles/raft.css';
 const RaftSimulation = () => {
   const [state, send] = useMachine(clusterMachine);
   const nodes = state.context.nodes || [];
-  const packets = state.context.packets || []; // <-- Capturamos los paquetes
+  const packets = state.context.packets || [];
 
   useEffect(() => { send({ type: 'INIT_NODES' }); }, [send]);
   useEffect(() => {
-    const interval = setInterval(() => { send({ type: 'TICK' }); }, 20); // 50 FPS
+    const interval = setInterval(() => { send({ type: 'TICK' }); }, 20);
     return () => clearInterval(interval);
   }, [send]);
 
-  // CONFIGURACIÓN VISUAL
+  {/* --- VISUAL CONFIGURATION --- */}
   const centerX = 300;
   const centerY = 200;
   const radius = 140;
 
-  // Mapa de posiciones para búsqueda rápida
   const posMap = {};
   const nodePositions = nodes.map((node, index) => {
     const angle = (index * 2 * Math.PI) / nodes.length - Math.PI / 2;
     const x = centerX + radius * Math.cos(angle);
     const y = centerY + radius * Math.sin(angle);
-    posMap[node.id] = { x, y }; // Guardamos para usarlo en paquetes
+    posMap[node.id] = { x, y };
     return { ...node, x, y };
   });
 
-  // Conexiones estáticas
+  {/* --- STATIC CONNECTIONS --- */}
   const connections = [];
   for (let i = 0; i < nodePositions.length; i++) {
     for (let j = i + 1; j < nodePositions.length; j++) {
@@ -42,11 +41,10 @@ const RaftSimulation = () => {
     }
   }
 
-  // Colores de paquetes
   const getPacketColor = (type) => {
-    if (type === 'HEARTBEAT') return '#27c93f'; // Verde (Líder)
-    if (type === 'VOTE_REQ') return '#ffbd2e';  // Amarillo (Solicitud)
-    if (type === 'VOTE_ACK') return '#64ffda';  // Cian (Voto concedido)
+    if (type === 'HEARTBEAT') return '#27c93f';
+    if (type === 'VOTE_REQ') return '#ffbd2e';
+    if (type === 'VOTE_ACK') return '#64ffda';
     return '#fff';
   };
 
@@ -62,7 +60,7 @@ const RaftSimulation = () => {
 
       <svg width="600" height="400" viewBox="0 0 600 400" className="raft-svg">
         
-        {/* LÍNEAS DE CONEXIÓN */}
+        {/* --- CONNECTION LINES --- */}
         {connections.map(conn => (
           <line
             key={conn.id}
@@ -76,13 +74,12 @@ const RaftSimulation = () => {
           />
         ))}
 
-        {/* PAQUETES (MENSAJES) VIAJANDO */}
+        {/* --- PACKETS IN FLIGHT --- */}
         {packets.map(pkt => {
           const start = posMap[pkt.from];
           const end = posMap[pkt.to];
           if (!start || !end) return null;
 
-          // Interpolación Lineal (Lerp)
           const currentX = start.x + (end.x - start.x) * (pkt.progress / 100);
           const currentY = start.y + (end.y - start.y) * (pkt.progress / 100);
 

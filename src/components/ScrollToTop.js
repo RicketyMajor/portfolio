@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
-import { animateScroll as scroll } from 'react-scroll'; // Usamos react-scroll que ya instalamos
-import '../App.css'; // Asegúrate de importar estilos si usas clases CSS globales
+import { animateScroll as scroll } from 'react-scroll';
+import '../App.css';
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Mostrar botón solo si bajamos más de 300px
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -20,10 +19,10 @@ const ScrollToTop = () => {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-const scrollToTop = () => {
+  const scrollToTop = () => {
     scroll.scrollToTop({
-      duration: 600, // Tiempo en milisegundos (100ms es muy rápido, casi instantáneo)
-      smooth: true,  // Mantiene la suavidad pero a alta velocidad
+      duration: 600,
+      smooth: true,
       spy: true
     });
   };

@@ -7,52 +7,40 @@
   --text-primary: #ccd6f6; 
   --text-secondary: #8892b0; 
   --accent: #64ffda;       
-  --accent-glow: rgba(100, 255, 218, 0.1); 
-  
-  /* Fuentes */
+  --accent-glow: rgba(100, 255, 218, 0.1);
   --font-title: 'Montserrat', sans-serif;
   --font-body: 'Open Sans', sans-serif;
   --font-code: 'Roboto Mono', monospace;
-  
-  /* Sombras */
   --shadow-card: 0 10px 30px -15px rgba(2,12,27,0.7);
-
-  /* VARIABLES NUEVAS PARA LA TERMINAL (Modo Oscuro) */
-  --term-bg: rgba(17, 34, 64, 0.95); /* Azul oscuro */
-  --term-header: #0a192f;            /* Azul más oscuro */
-  --term-text: #ccd6f6;              /* Texto claro */
-  --term-border: rgba(100, 255, 218, 0.1); /* Borde cian sutil */
+  --term-bg: rgba(17, 34, 64, 0.95);
+  --term-header: #0a192f;
+  --term-text: #ccd6f6;
+  --term-border: rgba(100, 255, 218, 0.1);
 }
 
 /* --- TEMA CLARO (MEJORADO) --- */
 [data-theme='light'] {
   --bg-primary: #f0f4f8;        
   --bg-secondary: #ffffff;      
-  
-  /* CAMBIO 1: Texto mucho más oscuro (Casi negro azulado) para contraste alto */
   --text-primary: #0a192f;      
-  
-  /* CAMBIO 2: Texto secundario un poco más oscuro también */
   --text-secondary: #334e68;    
-  
   --accent: #0056d6;            
   --accent-glow: rgba(0, 86, 214, 0.15);
   --shadow-card: 0 10px 40px -10px rgba(0,0,0,0.1);
-
-  /* VARIABLES NUEVAS PARA LA TERMINAL (Modo Claro - Estilo macOS) */
-  --term-bg: #ffffff;               /* Fondo blanco */
-  --term-header: #e1e4e8;           /* Barra gris claro */
-  --term-text: #102a43;             /* Código oscuro */
-  --term-border: rgba(0, 0, 0, 0.1); /* Borde gris sutil */
+  --term-bg: #ffffff;
+  --term-header: #e1e4e8;
+  --term-text: #102a43;
+  --term-border: rgba(0, 0, 0, 0.1);
 }
 
-/* Agrega esto al final del archivo para controlar el tamaño en pantallas grandes */
+/* --- BASE FONT SIZE --- */
 html {
-  font-size: 16px; /* Base estándar */
+  font-size: 16px;
 }
 
+/* --- LARGE SCREEN FONT SIZE --- */
 @media screen and (min-width: 1920px) {
   html {
-    font-size: 18px; /* Solo aumenta en pantallas 4K */
+    font-size: 18px;
   }
 }

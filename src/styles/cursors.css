@@ -5,13 +5,13 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  pointer-events: none; /* Dejar pasar clics */
+  pointer-events: none;
   z-index: 9999;
 }
 
+/* --- CURSOR INDICATOR --- */
 .cursor-indicator {
   position: absolute;
-  /* La posición se maneja vía inline-styles por Framer Motion */
 }
 
 .cursor-label {

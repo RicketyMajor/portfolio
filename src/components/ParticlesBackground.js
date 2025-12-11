@@ -5,10 +5,9 @@ import { loadSlim } from "@tsparticles/slim";
 const ParticlesBackground = ({ theme }) => {
   const [init, setInit] = useState(false);
   const bgColor = theme === 'dark' ? "#0a192f" : "#f0f4f8";
-  const particleColor = theme === 'dark' ? "#64ffda" : "#486581"; // Cian en dark, Azul en light
+  const particleColor = theme === 'dark' ? "#64ffda" : "#486581";
   const linksColor = theme === 'dark' ? "#8892b0" : "#bcccdc";
 
-  // Inicialización del motor (Sintaxis v3)
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
@@ -18,11 +17,8 @@ const ParticlesBackground = ({ theme }) => {
   }, []);
 
   const particlesLoaded = (container) => {
-    // Puedes usar esto para debuggear si es necesario
     console.log(container);
   };
-
-  // Solo renderiza las partículas cuando el motor esté listo
   if (init) {
     return (
       <Particles
@@ -31,7 +27,7 @@ const ParticlesBackground = ({ theme }) => {
         options={{
           background: {
             color: {
-              value: bgColor, // Color de fondo base
+              value: bgColor,
             },
           },
           fpsLimit: 120,
@@ -44,7 +40,7 @@ const ParticlesBackground = ({ theme }) => {
               },
               onHover: {
                 enable: true,
-                mode: "grab", // Efecto de red al pasar el mouse
+                mode: "grab",
               },
               resize: true,
             },
@@ -62,13 +58,13 @@ const ParticlesBackground = ({ theme }) => {
           },
           particles: {
             color: {
-              value: particleColor, // Tu color Cian
+              value: particleColor,
             },
             links: {
-              color: linksColor, // Enlaces grises
+              color: linksColor,
               distance: 150,
               enable: true,
-              opacity: 0.4, // Aumenté un poco la opacidad para que se note
+              opacity: 0.4,
               width: 1,
             },
             move: {
@@ -78,7 +74,7 @@ const ParticlesBackground = ({ theme }) => {
                 default: "bounce",
               },
               random: false,
-              speed: 1.5, // Un pelín más rápido para que notes que se mueven
+              speed: 1.5,
               straight: false,
             },
             number: {
@@ -86,7 +82,7 @@ const ParticlesBackground = ({ theme }) => {
                 enable: true,
                 area: 800,
               },
-              value: 80, // Un poco más de densidad
+              value: 80,
             },
             opacity: {
               value: 0.5,
@@ -100,14 +96,13 @@ const ParticlesBackground = ({ theme }) => {
           },
           detectRetina: true,
         }}
-        // ESTILOS CRÍTICOS PARA QUE SE VEA
         style={{
-          position: "fixed", // Fijo en la pantalla (no absoluto)
+          position: "fixed",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-          zIndex: -1, // Detrás del contenido
+          zIndex: -1,
         }}
       />
     );

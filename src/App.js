@@ -1,23 +1,22 @@
-import React, { useState } from 'react'; // <--- Importar useStateimport './App.css';
+import React, { useState } from 'react';
+import './App.css';
 import { useTheme } from './hooks/useTheme';
 
-// Componentes Estructurales
 import Navbar from './components/Navbar';
-import ParticlesBackground from './components/ParticlesBackground'; // <--- Importar
+import ParticlesBackground from './components/ParticlesBackground';
 import ScrollToTop from './components/ScrollToTop';
 
-// Componentes de Sección (Modularizados)
 import HeroSection from './components/sections/HeroSection';
 import ProjectsSection from './components/sections/ProjectsSection';
 import SkillsSection from './components/sections/SkillsSection';
 import AboutSection from './components/sections/AboutSection';
 import TrajectorySection from './components/sections/TrajectorySection';
 import ContactSection from './components/sections/ContactSection';
-import CommandPalette from './components/CommandPalette'; // <--- Importar Componente
-import './styles/commandPalette.css'; // <--- AGREGAR ESTO
+import CommandPalette from './components/CommandPalette';
+import './styles/commandPalette.css';
 import MultiplayerCursors from './components/MultiplayerCursors';
-import CollaborationSection from './components/sections/CollaborationSection'; // Importar
-import RaftSection from './components/sections/RaftSection'; // Importar RaftSection
+import CollaborationSection from './components/sections/CollaborationSection';
+import RaftSection from './components/sections/RaftSection';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -40,7 +39,7 @@ function App() {
         closeProject={closeProjectModal}
       />
       <ParticlesBackground theme={theme} />
-      <MultiplayerCursors /> {/* Agregar el componente de cursores */}
+      <MultiplayerCursors />
       <HeroSection />
       <ProjectsSection 
         selectedId={selectedProjectId} 

@@ -35,14 +35,12 @@ export default async function handler(req, res) {
     },
   });
 
-  // Si no hay música sonando (204 No Content) o hay error
   if (response.status === 204 || response.status > 400) {
     return res.status(200).json({ isPlaying: false });
   }
 
   const song = await response.json();
   
-  // Si es un podcast o algo raro, a veces song.item es null
   if(song.item === null) {
       return res.status(200).json({ isPlaying: false });
   }

@@ -8,10 +8,8 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 const LiveDashboard = () => {
   const { data: geoData } = useSWR('/api/geo', fetcher, { refreshInterval: 0 }); 
   
-  // GitHub: Revalidar cada 5 minutos
   const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });
   
-  // Spotify: Revalidar cada 10 segundos
   const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); 
 
   const [latency, setLatency] = useState(null);
@@ -33,7 +31,7 @@ const LiveDashboard = () => {
 
       <div className="dashboard-grid">
         
-        {/* FILA 1: UBICACIÓN Y RED (Dos columnas) */}
+        {/* --- LOCATION AND NETWORK --- */}
         <div className="stat-card">
           <div className="stat-icon"><FaGlobeAmericas /></div>
           <div className="stat-info">
@@ -55,7 +53,7 @@ const LiveDashboard = () => {
           </div>
         </div>
 
-        {/* FILA 2: SPOTIFY (Ancho completo) */}
+        {/* --- SPOTIFY --- */}
         <div className="stat-card wide" style={{ borderColor: spotifyData?.isPlaying ? '#1db954' : 'transparent' }}>
           <div className="stat-icon"><FaSpotify style={{ color: '#1db954' }} /></div>
           <div className="stat-info">
@@ -76,14 +74,13 @@ const LiveDashboard = () => {
           </div>
         </div>
 
-        {/* FILA 3: GITHUB STATS */}
+        {/* --- GITHUB STATS --- */}
         <div className="stat-card wide">
           <div className="stat-icon"><FaGithub /></div>
           <div className="stat-info">
             <h4>GitHub Activity</h4>
             <div style={{ display: 'flex', gap: '15px', marginTop: '5px' }}>
               
-              {/* Dato 1: Repositorios (Sabemos que esto carga) */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>
                   {githubData?.public_repos || '-'}
@@ -91,7 +88,6 @@ const LiveDashboard = () => {
                 <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Repositorios</span>
               </div>
 
-              {/* Dato 2: Estado (Basado en si encontró commit o no) */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                  <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--accent)' }}>
                    {githubData?.last_commit?.message !== 'Explorando código...' ? 'Active' : 'Contributor'}
@@ -101,7 +97,6 @@ const LiveDashboard = () => {
 
             </div>
             
-            {/* Mensaje sutil abajo (Opcional) */}
             <small style={{ marginTop: '8px', display: 'block', opacity: 0.6 }}>
                Open Source & Distribuidos
             </small>

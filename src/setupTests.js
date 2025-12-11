@@ -1,21 +1,18 @@
-// Importamos las extensiones de jest-dom
 import '@testing-library/jest-dom';
 
-// --- 1. MOCK ROBUSTO PARA WINDOW.MATCHMEDIA ---
-// Esto soluciona los errores en App.test.js (useTheme) y ProjectCard.test.js (Framer Motion)
+// --- WINDOW.MATCHMEDIA MOCK ---
 window.matchMedia = (query) => ({
   matches: false,
   media: query,
   onchange: null,
-  addListener: jest.fn(), // Deprecated
-  removeListener: jest.fn(), // Deprecated
+  addListener: jest.fn(),
+  removeListener: jest.fn(),
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
   dispatchEvent: jest.fn(),
 });
 
-// --- 2. MOCK PARA INTERSECTION OBSERVER ---
-// Necesario para ScrollReveal y componentes que detectan cuando entran en pantalla
+// --- INTERSECTION OBSERVER MOCK ---
 const IntersectionObserverMock = function () {
   return {
     observe: jest.fn(),
@@ -25,8 +22,7 @@ const IntersectionObserverMock = function () {
 };
 window.IntersectionObserver = IntersectionObserverMock;
 
-// --- 3. MOCK PARA RESIZE OBSERVER ---
-// Framer Motion a veces lo usa para animaciones de layout (layoutId)
+// --- RESIZE OBSERVER MOCK ---
 window.ResizeObserver = function () {
   return {
     observe: jest.fn(),
@@ -35,6 +31,5 @@ window.ResizeObserver = function () {
   };
 };
 
-// --- 4. MOCK PARA SCROLLTO ---
-// Necesario para el botón de "Volver Arriba"
+// --- SCROLL TO MOCK ---
 window.scrollTo = jest.fn();

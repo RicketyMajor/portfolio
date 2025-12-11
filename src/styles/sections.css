@@ -130,16 +130,16 @@
 
 /* --- CONTACT FORM --- */
 
-/* Contenedor del formulario */
+/* --- CONTACT FORM WRAPPER --- */
 .contact-form-wrapper {
   background: var(--bg-secondary);
   padding: 30px;
   border-radius: 8px;
   box-shadow: var(--shadow-card);
   width: 100%;
-  max-width: 500px; /* Para que no se estire demasiado */
+  max-width: 500px;
   margin: 0 auto;
-  text-align: left; /* Alineamos etiquetas a la izquierda */
+  text-align: left;
 }
 
 .form-group {
@@ -155,21 +155,21 @@
   font-size: 0.9rem;
 }
 
-/* Inputs y Textarea */
+/* --- FORM INPUTS --- */
 .contact-form input,
 .contact-form textarea {
   width: 100%;
   padding: 12px 15px;
   border-radius: 4px;
-  border: 1px solid rgba(136, 146, 176, 0.2); /* Borde sutil */
-  background-color: var(--bg-primary); /* Fondo del input */
+  border: 1px solid rgba(136, 146, 176, 0.2);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
-/* Estado Focus (Al escribir) */
+/* --- INPUT FOCUS STATE --- */
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: var(--accent);
@@ -177,7 +177,7 @@
   box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
-/* Botón de envío */
+/* --- SUBMIT BUTTON --- */
 .btn-submit {
   width: 100%;
   display: flex;
@@ -192,7 +192,7 @@
   cursor: not-allowed;
 }
 
-/* Feedback Messages */
+/* --- FORM FEEDBACK --- */
 .form-feedback {
   margin-top: 15px;
   padding: 10px;
@@ -217,10 +217,9 @@
 }
 
 /* --- RESPONSIVE CONTACT GRID --- */
-/* Modificamos el contenedor general de contacto para aceptar dos columnas */
 .contact-content-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Mitad tarjetas, Mitad formulario */
+  grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: start;
   width: 100%;
@@ -229,11 +228,12 @@
 
 @media screen and (max-width: 960px) {
   .contact-content-grid {
-    grid-template-columns: 1fr; /* En móvil, uno debajo del otro */
+    grid-template-columns: 1fr;
     gap: 60px;
   }
 }
-/* --- SKILLS INTERACTIVAS (FASE 4.1) --- */
+
+/* --- INTERACTIVE SKILLS --- */
 
 .skills-wrapper {
   display: flex;
@@ -241,29 +241,23 @@
   gap: 20px;
 }
 
-/* Estado normal del item */
+/* --- SKILL ITEM NORMAL STATE --- */
 .tech-item {
   display: flex;
   align-items: center;
-  gap: 15px; /* Más espacio entre icono y texto */
-  
-  /* AUMENTO DE TAMAÑO */
-  padding: 15px 25px; /* Mucho más "gordito" y clicable */
-  
-  border-radius: 8px; /* Un poco más redondeado para el nuevo tamaño */
+  gap: 15px;
+  padding: 15px 25px;
+  border-radius: 8px;
   color: var(--text-secondary);
-  margin-bottom: 1; /* Quitamos margin bottom porque usamos gap en el padre */
-  
-  /* TEXTO MÁS GRANDE */
-  font-size: 1.1rem; /* Antes 0.9rem - Ahora se lee mucho mejor */
-  
+  margin-bottom: 1;
+  font-size: 1.1rem;
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.3s ease;
-  background-color: rgba(100, 255, 218, 0.03); /* Un fondo muy sutil ayuda a ver el área de clic */
+  background-color: rgba(100, 255, 218, 0.03);
 }
 
-/* Estado Activo (Seleccionado) */
+/* --- SKILL ITEM ACTIVE STATE --- */
 .tech-item.active {
   background-color: var(--accent-glow);
   border-color: var(--accent);
@@ -271,13 +265,13 @@
   box-shadow: 0 0 15px var(--accent-glow);
 }
 
-/* Estado Inactivo (Cuando otro está seleccionado) */
+/* --- SKILL ITEM INACTIVE STATE --- */
 .tech-item.inactive {
   opacity: 0.4;
   filter: grayscale(0.8);
 }
 
-/* PANEL DE DETALLES */
+/* --- SKILL DETAIL PANEL --- */
 .skill-detail-panel {
   background-color: var(--bg-secondary);
   border: 1px solid var(--accent);
@@ -289,7 +283,7 @@
   overflow: hidden;
 }
 
-/* Título dentro del panel */
+/* --- SKILL DETAIL HEADER --- */
 .skill-detail-header {
   display: flex;
   align-items: center;
@@ -308,7 +302,7 @@
   font-family: var(--font-body);
 }
 
-/* Sección de proyectos relacionados dentro del panel */
+/* --- RELATED PROJECTS --- */
 .related-projects-title {
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -337,7 +331,7 @@
   gap: 5px;
 }
 
-/* Botón cerrar panel */
+/* --- CLOSE SKILL BUTTON --- */
 .close-skill-btn {
   position: absolute;
   top: 15px;
@@ -354,54 +348,54 @@
   color: var(--accent);
 }
 
-/* --- TRAYECTORIA: ACORDEÓN MEJORADO --- */
+/* --- TRAJECTORY ITEM --- */
 .timeline-item {
   cursor: pointer;
   transition: transform 0.2s ease;
-  position: relative; /* Para z-index */
-  z-index: 2; /* Asegura que esté sobre las partículas */
+  position: relative;
+  z-index: 2;
 }
 
 .timeline-header {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Alineado al centro verticalmente */
+  align-items: center;
   width: 100%;
 }
 
-/* NUEVO: ESTILO DEL BOTÓN GRANDE */
+/* --- ACCORDION BUTTON --- */
 .accordion-btn {
-  background-color: var(--bg-primary); /* Fondo sólido (tapa partículas) */
-  border: 1px solid var(--accent); /* Borde del color de acento */
-  width: 45px;  /* Tamaño grande */
+  background-color: var(--bg-primary);
+  border: 1px solid var(--accent);
+  width: 45px;
   height: 45px;
-  border-radius: 50%; /* Círculo perfecto */
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   margin-left: 15px;
-  flex-shrink: 0; /* Evita que se aplaste en móvil */
+  flex-shrink: 0;
 }
 
-/* Hover del botón */
+/* --- ACCORDION BUTTON HOVER --- */
 .timeline-item:hover .accordion-btn {
   background-color: var(--accent);
   transform: scale(1.1);
 }
 
-/* Icono dentro del botón */
+/* --- ACCORDION ICON --- */
 .accordion-icon {
   color: var(--accent);
   font-size: 1.2rem;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
-/* Cuando está abierto */
+/* --- ACCORDION ACTIVE ICON --- */
 .timeline-item.active .accordion-icon {
   transform: rotate(180deg);
-  color: var(--bg-primary); /* Icono oscuro sobre fondo accent */
+  color: var(--bg-primary);
 }
 
 .timeline-item.active .accordion-btn {
@@ -413,63 +407,57 @@
 
 
 
-/* --- SOBRE MÍ: PESTAÑAS (TABS) MEJORADAS --- */
-
+/* --- ABOUT TABS --- */
 .about-tabs {
   display: flex;
-  gap: 10px; /* Espacio entre pestañas */
+  gap: 10px;
   margin-bottom: 35px;
-  border-bottom: 2px solid rgba(136, 146, 176, 0.1); /* Línea base sutil */
+  border-bottom: 2px solid rgba(136, 146, 176, 0.1);
   position: relative;
 }
 
 .tab-btn {
-  /* 1. Quitamos los estilos por defecto del navegador */
   background: transparent;
   border: none;
   outline: none;
-  
-  /* 2. Estilo Tech */
-  font-family: var(--font-code); /* Fuente de código para que parezca terminal */
+  font-family: var(--font-code);
   font-size: 1rem;
-  color: var(--text-secondary); /* Color apagado por defecto */
+  color: var(--text-secondary);
   cursor: pointer;
-  
-  /* 3. Espaciado y forma */
   padding: 12px 24px;
   position: relative;
   transition: all 0.3s ease;
-  border-radius: 4px 4px 0 0; /* Redondeado solo arriba */
+  border-radius: 4px 4px 0 0;
 }
 
-/* Efecto Hover (al pasar el mouse) */
+/* --- TAB BUTTON HOVER --- */
 .tab-btn:hover {
-  color: var(--accent); /* Se ilumina */
-  background-color: var(--accent-glow); /* Fondo muy sutil */
+  color: var(--accent);
+  background-color: var(--accent-glow);
 }
 
-/* Estado Activo (Pestaña seleccionada) */
+/* --- TAB BUTTON ACTIVE --- */
 .tab-btn.active {
   color: var(--accent);
-  font-weight: 700; /* Texto más grueso */
-  background-color: transparent; /* O puedes dejar el glow si prefieres */
+  font-weight: 700;
+  background-color: transparent;
 }
 
-/* La línea mágica de Framer Motion */
+/* --- ACTIVE LINE --- */
 .active-line {
   position: absolute;
-  bottom: -2px; /* Se posa justo sobre la línea base */
+  bottom: -2px;
   left: 0;
   width: 100%;
-  height: 3px; /* Un poco más gruesa para destacar */
+  height: 3px;
   background-color: var(--accent);
   border-radius: 3px 3px 0 0;
-  box-shadow: 0 0 10px var(--accent-glow); /* Efecto neón */
+  box-shadow: 0 0 10px var(--accent-glow);
 }
 
-/* Contenido de las pestañas */
+/* --- TAB CONTENT --- */
 .tab-content {
-  min-height: 200px; /* Evita saltos bruscos de altura */
+  min-height: 200px;
 }
 
 .tab-content h3 {
@@ -480,25 +468,25 @@
   font-weight: 700;
 }
 
-/* Ajuste Responsive para móviles */
+/* --- MOBILE TABS RESPONSIVE --- */
 @media screen and (max-width: 768px) {
   .about-tabs {
-    justify-content: space-between; /* Distribuye el espacio */
-    overflow-x: auto; /* Permite scroll horizontal si los nombres son largos */
-    padding-bottom: 5px; /* Espacio para el scrollbar si aparece */
+    justify-content: space-between;
+    overflow-x: auto;
+    padding-bottom: 5px;
   }
   
   .tab-btn {
     font-size: 0.9rem;
-    padding: 10px 15px; /* Botones un poco más compactos */
-    flex-shrink: 0; /* Evita que se aplasten */
+    padding: 10px 15px;
+    flex-shrink: 0;
   }
 }
 
-/* Ajustamos la alineación general */
+/* --- ABOUT SECTION ALIGNMENT --- */
 .about-section {
   padding: 120px 50px;
-  max-width: 1200px; /* Damos un poco más de ancho total */
+  max-width: 1200px;
   margin: 0 auto;
   min-height: 90vh;
   display: flex;
@@ -506,41 +494,36 @@
   justify-content: center;
 }
 
-/* El grid ahora solo maneja Foto vs Texto (El título está arriba) */
+/* --- ABOUT GRID LAYOUT --- */
 .about-container {
   display: grid;
-  grid-template-columns: 1fr 2fr; 
-  gap: 60px; /* Un poco más de separación entre foto y texto */
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
   align-items: start;
-  margin-top: 20px; /* Espacio respecto al título que ahora está arriba */
+  margin-top: 20px;
 }
 
-/* --- SOLUCIÓN AL SALTO DE CONTENIDO --- */
+/* --- TAB CONTENT FIX --- */
 .tab-content {
-  /* CAMBIO CLAVE: Reservamos una altura suficiente para el texto más largo.
-     Si tu texto de "Biografía" es muy largo, aumenta este valor (ej: 350px o 400px) */
-  min-height: 350px; 
-  
-  /* Opcional: Si quieres que el texto siempre esté alineado arriba */
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-/* Ajustes previos que se mantienen... */
+/* --- ABOUT TEXT --- */
 .about-text p {
   margin-bottom: 15px;
   color: var(--text-secondary);
   font-size: 1.1rem;
 }
 
-/* --- MÁRGENES GENERALES (PADDING) --- */
-/* Reducimos el padding de todas las secciones para que no se sienta tan "expandido" */
+/* --- GENERAL SECTION PADDING --- */
 .hero-section,
 .skills-section,
 .about-section,
 .education-section,
 .projects-section,
 .contact-section {
-  padding: 80px 20px; /* Antes era 120px 50px -> Esto reduce mucho el "zoom" visual */
+  padding: 80px 20px;
 }

@@ -12,12 +12,11 @@ const AboutSection = () => {
   return (
     <section id="about" className="about-section">
       <ScrollReveal>
-        {/* CAMBIO 1: El título ahora está FUERA del container grid */}
         <h2 className="section-title">Sobre Mí</h2>
 
         <div className="about-container">
           
-          {/* COLUMNA IMAGEN */}
+          {/* --- IMAGE COLUMN --- */}
           <div className="about-image-wrapper">
             {!imageLoaded && (
                <SkeletonLoader style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 3 }} />
@@ -32,10 +31,10 @@ const AboutSection = () => {
             <div className="image-border"></div>
           </div>
 
-          {/* COLUMNA DERECHA (Ahora solo tiene Tabs y Contenido) */}
+          {/* --- RIGHT COLUMN --- */}
           <div className="about-text">
             
-            {/* Navegación de Pestañas */}
+            {/* --- TAB NAVIGATION --- */}
             <div className="about-tabs">
               {['bio', 'philosophy', 'interests'].map((tab) => (
                 <button
@@ -54,7 +53,7 @@ const AboutSection = () => {
               ))}
             </div>
 
-            {/* Contenido Dinámico */}
+            {/* --- DYNAMIC CONTENT --- */}
             <AnimatePresence mode='wait'>
               <motion.div
                 key={activeTab}
@@ -62,7 +61,7 @@ const AboutSection = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="tab-content" // Esta clase controlará la altura mínima
+                className="tab-content"
               >
                 {aboutMeData && aboutMeData[activeTab] ? (
                   <>

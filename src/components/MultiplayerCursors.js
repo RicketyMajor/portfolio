@@ -3,45 +3,42 @@ import YPartyKitProvider from "y-partykit/provider";
 import * as Y from "yjs";
 import randomColor from "randomcolor";
 import { motion, AnimatePresence } from "framer-motion";
-import '../styles/cursors.css'; // Crearemos este CSS
+import '../styles/cursors.css';
 
 const MultiplayerCursors = () => {
   const [awareness, setAwareness] = useState(null);
-  const [users, setUsers] = useState({}); // Guardamos los otros usuarios aquí
-  const [myColor] = useState(randomColor()); // Mi color único
+  const [users, setUsers] = useState({});
+  const [myColor] = useState(randomColor());
 
   useEffect(() => {
-    // 1. Conexión al servidor PartyKit
+    {/* --- CONNECTION TO PARTYKIT SERVER --- */}
     const yDoc = new Y.Doc();
     
-    // NOTA: "localhost:1999" es el puerto por defecto de PartyKit dev server
     const provider = new YPartyKitProvider(
       "127.0.0.1:1999", 
-      "portfolio-room", // Nombre de la sala (todos entran aquí)
+      "portfolio-room",
       yDoc
     );
 
-    // 2. Configurar Awareness (Presencia)
+    {/* --- AWARENESS SETUP --- */}
     const localAwareness = provider.awareness;
     setAwareness(localAwareness);
 
-    // 3. Definir mi estado inicial (quién soy yo)
     localAwareness.setLocalState({
       user: {
-        id: Math.random().toString(36).substr(2, 9), // ID temporal
+        id: Math.random().toString(36).substr(2, 9),
         color: myColor,
         x: 0,
         y: 0,
       }
     });
 
-    // 4. Escuchar cambios de otros usuarios
+    {/* --- LISTEN TO OTHER USERS CHANGES --- */}
     localAwareness.on('change', () => {
-      const states = localAwareness.getStates(); // Map<clientID, state>
+      const states = localAwareness.getStates();
       const activeUsers = {};
       
       states.forEach((state, clientId) => {
-        // Filtramos: que no sea yo mismo y que tenga datos válidos
         if (clientId !== yDoc.clientID && state.user) {
           activeUsers[clientId] = state.user;
         }
@@ -50,26 +47,23 @@ const MultiplayerCursors = () => {
       setUsers(activeUsers);
     });
 
-    // Limpieza al desmontar
     return () => {
       provider.disconnect();
       yDoc.destroy();
     };
   }, [myColor]);
 
-  // 5. Manejar movimiento de MI mouse
+  {/* --- HANDLE MY MOUSE MOVEMENT --- */}
 useEffect(() => {
     if (!awareness) return;
 
-    let lastUpdate = 0; // Marca de tiempo del último envío
+    let lastUpdate = 0;
 
     const handleMouseMove = (e) => {
       const now = Date.now();
 
-      // EL SEMÁFORO: Solo enviamos si han pasado más de 60ms desde la última vez
       if (now - lastUpdate > 60) {
         
-        // Actualizamos mi posición en la red
         const localState = awareness.getLocalState();
         if (localState) {
           awareness.setLocalState({

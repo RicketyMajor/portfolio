@@ -4,17 +4,14 @@ import React, { useEffect } from 'react';
 import '../App.css';
 
 const ProjectModal = ({ project, onClose }) => {
-  // Evita que el clic en el contenido cierre el modal
-// BLOQUEO DE SCROLL DEL BODY
   useEffect(() => {
-    // Al montar el modal: Quitar scroll
     document.body.style.overflow = 'hidden';
     
-    // Al desmontar (cerrar): Devolver scroll
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, []);
+  
   const handleContentClick = (e) => e.stopPropagation();
 
   return (
@@ -28,24 +25,24 @@ const ProjectModal = ({ project, onClose }) => {
     >
       <motion.div 
         className="project-modal"
-        layoutId={`project-${project.id}`} // LA MAGIA: Mismo ID que la tarjeta pequeña
+        layoutId={`project-${project.id}`}
         onClick={handleContentClick}
       >
-        {/* Botón Cerrar */}
+        {/* --- CLOSE BUTTON --- */}
         <button className="modal-close-btn" onClick={onClose}>
           <FaTimes size={20} />
         </button>
 
-        {/* Imagen Grande */}
+        {/* --- IMAGE --- */}
         <div className="modal-image">
           <motion.img 
             src={project.image} 
             alt={project.title} 
-            layoutId={`image-${project.id}`} // La imagen también se transforma
+            layoutId={`image-${project.id}`}
           />
         </div>
 
-        {/* Contenido Detallado */}
+        {/* --- DETAILED CONTENT --- */}
         <div className="modal-content">
           <motion.h2 className="card-title" style={{ fontSize: '2rem' }}>
             {project.title}
@@ -64,8 +61,6 @@ const ProjectModal = ({ project, onClose }) => {
           </motion.p>
           
           <p style={{ color: '#8892b0', marginBottom: '30px' }}>
-            {/* Aquí podrías agregar más detalles "long text" en tus datos si quisieras.
-                Por ahora mostramos la descripción estándar pero más grande. */}
             Este proyecto representa un desafío técnico importante donde apliqué conceptos de {project.technologies.join(", ")}.
           </p>
 

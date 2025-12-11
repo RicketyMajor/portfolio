@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css'; // Para acceder a los estilos de animación
+import '../App.css'; 
 
 const SkeletonLoader = ({ style }) => {
   return (

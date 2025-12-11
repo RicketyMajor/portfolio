@@ -11,8 +11,6 @@ const ContactForm = () => {
     e.preventDefault();
     setStatus('sending');
 
-    // REEMPLAZA ESTOS VALORES CON LOS TUYOS DE EMAILJS
-    // O mejor aún, usa variables de entorno (.env)
     const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
     const TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
     const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
@@ -21,8 +19,8 @@ const ContactForm = () => {
       .then((result) => {
           console.log(result.text);
           setStatus('success');
-          form.current.reset(); // Limpia el formulario
-          setTimeout(() => setStatus(''), 5000); // Borra el mensaje de éxito después de 5s
+          form.current.reset();
+          setTimeout(() => setStatus(''), 5000);
       }, (error) => {
           console.log(error.text);
           setStatus('error');
@@ -57,7 +55,7 @@ const ContactForm = () => {
           )}
         </button>
 
-        {/* Mensajes de Feedback */}
+        {/* --- FEEDBACK MESSAGES --- */}
         {status === 'success' && (
           <motion.div 
             initial={{ opacity: 0, y: 10 }} 

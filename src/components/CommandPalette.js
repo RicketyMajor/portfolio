@@ -10,13 +10,12 @@ import '../styles/commandPalette.css';
 
 const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject }) => {
   const [query, setQuery] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(0); // Para navegar con flechas
-  const [toastMsg, setToastMsg] = useState(null); // Para notificaciones
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [toastMsg, setToastMsg] = useState(null);
 
-  // Referencia para scroll automático en la lista
   const listRef = useRef(null);
 
-  // Definición de Comandos
+  // --- COMMANDS DEFINITION ---
   const commands = [
     { 
       id: 'projects', 
@@ -58,7 +57,7 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
       id: 'theme', 
       label: theme === 'dark' ? 'Cambiar a Modo Claro' : 'Cambiar a Modo Oscuro', 
       icon: theme === 'dark' ? <FaSun /> : <FaMoon />, 
-      action: () => { toggleTheme(); showToast("Tema actualizado"); } // No cerramos, solo notificamos
+      action: () => { toggleTheme(); showToast("Tema actualizado"); }
     },
     { 
       id: 'cv', 
@@ -86,49 +85,37 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
       icon: <FaNetworkWired />, 
       action: () => { 
         const start = Date.now();
-        // Hacemos un fetch real a tu API de Geo para medir latencia real
         fetch('/api/geo').then(() => {
           const latency = Date.now() - start;
           showToast(`Pong! 🏓 Latency: ${latency}ms`);
-          // Opcional: No cerrar el modal para ver el resultado
-          // closeModal(); 
         });
       } 
     },
   ];
 
-  // Filtramos comandos
   const filteredCommands = commands.filter(cmd => 
     cmd.label.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Reseteamos el índice cuando cambia la búsqueda
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
 
-  // ... imports y variables de estado ...
-
-  // NUEVO EFECTO: Auto-scroll al navegar con teclado
+  // --- AUTO-SCROLL ON KEYBOARD NAVIGATION ---
   useEffect(() => {
-    // Verificamos que la lista exista y tenga elementos
     if (listRef.current && filteredCommands.length > 0) {
-      // Obtenemos el elemento HTML correspondiente al índice seleccionado
       const selectedElement = listRef.current.children[selectedIndex];
       
       if (selectedElement) {
-        // La magia: hace scroll solo si es necesario para mostrar el elemento
         selectedElement.scrollIntoView({
-          block: 'nearest', // 'nearest' evita saltos bruscos, solo scrollea lo necesario
-          behavior: 'smooth' // Movimiento suave
+          block: 'nearest',
+          behavior: 'smooth'
         });
       }
     }
-  }, [selectedIndex, filteredCommands]); // Se ejecuta cada vez que cambia la selección
+  }, [selectedIndex, filteredCommands]);
 
-  // ... resto del componente ...
-
-  // Manejo de Teclado (Flechas y Enter) dentro del Input
+  // --- KEYBOARD NAVIGATION (ARROWS, ENTER) ---
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -144,11 +131,9 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
     }
   };
 
-const scrollToSection = (section) => {
-    // 1. Cerramos el proyecto si hay uno abierto
+  const scrollToSection = (section) => {
     closeProject(); 
     
-    // 2. Navegamos
     scroller.scrollTo(section, {
       duration: 500,
       smooth: true,
@@ -168,7 +153,7 @@ const scrollToSection = (section) => {
     setToastMsg(null);
   }, [setIsOpen]);
 
-  // Listener Global para abrir/cerrar (Cmd+K / Esc)
+  // --- GLOBAL KEYBOARD SHORTCUTS (CMD+K / ESC) ---
   useEffect(() => {
     const handleGlobalKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -181,7 +166,7 @@ const scrollToSection = (section) => {
     };
     window.addEventListener('keydown', handleGlobalKeyDown);
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-  }, [setIsOpen, closeModal]); // <--- AHORA SÍ AGREGAMOS closeModal
+  }, [setIsOpen, closeModal]);
 
   return (
     <AnimatePresence>
@@ -201,7 +186,7 @@ const scrollToSection = (section) => {
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Input */}
+            {/* --- SEARCH INPUT --- */}
             <div className="palette-search">
               <FaSearch className="palette-icon" />
               <input 
@@ -215,14 +200,14 @@ const scrollToSection = (section) => {
               <span className="palette-shortcut">ESC</span>
             </div>
 
-            {/* Lista */}
+            {/* --- COMMANDS LIST --- */}
             <ul className="palette-list" ref={listRef}>
               {filteredCommands.map((cmd, index) => (
                 <li 
                   key={cmd.id} 
                   className={`palette-item ${index === selectedIndex ? 'selected' : ''}`}
                   onClick={() => cmd.action()}
-                  onMouseEnter={() => setSelectedIndex(index)} // Sincroniza mouse con teclado
+                  onMouseEnter={() => setSelectedIndex(index)}
                 >
                   <div className="palette-item-left">
                     <span className={`palette-icon ${index === selectedIndex ? 'active' : ''}`}>
@@ -245,7 +230,7 @@ const scrollToSection = (section) => {
               )}
             </ul>
 
-            {/* TOAST NOTIFICATION (Feedback visual) */}
+            {/* --- TOAST NOTIFICATION --- */}
             <AnimatePresence>
               {toastMsg && (
                 <motion.div 
@@ -259,7 +244,7 @@ const scrollToSection = (section) => {
               )}
             </AnimatePresence>
 
-            {/* Footer */}
+            {/* --- FOOTER --- */}
             <div className="palette-footer">
               <div style={{display:'flex', gap:'10px'}}>
                 <span>↑↓ Navegar</span>

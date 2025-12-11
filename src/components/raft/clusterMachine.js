@@ -20,10 +20,7 @@ export const clusterMachine = createMachine({
       on: {
         TICK: { actions: ['tickSimulation'] },
         KILL_NODE: { actions: 'killNode' },
-        
-        // --- NUEVO EVENTO ---
         REVIVE_NODE: { actions: 'reviveNode' },
-        
         INIT_NODES: { actions: 'initializeNodes' }
       }
     }
@@ -47,17 +44,15 @@ export const clusterMachine = createMachine({
       )
     }),
 
-    // --- NUEVA ACCIÓN: REVIVIR ---
     reviveNode: assign({
       nodes: ({ context, event }) => context.nodes.map(n => 
         n.id === event.id 
           ? { 
               ...n, 
-              state: 'follower', // Siempre revive como seguidor
-              timer: getRandomTimeout(), // Reinicia paciencia
+              state: 'follower',
+              timer: getRandomTimeout(),
               votedFor: null,
               votesReceived: 0
-              // Mantenemos el 'term' que tenía al morir (simulando persistencia)
             } 
           : n
       )
@@ -67,18 +62,17 @@ export const clusterMachine = createMachine({
       let nextNodes = [...context.nodes];
       let nextPackets = [...context.packets];
 
-      // 1. MOVER PAQUETES
+      {/* --- MOVE PACKETS --- */}
       nextPackets = nextPackets.map(p => ({ ...p, progress: p.progress + PACKET_SPEED }));
       const arrivedPackets = nextPackets.filter(p => p.progress >= 100);
       nextPackets = nextPackets.filter(p => p.progress < 100);
 
-      // 2. PROCESAR PAQUETES
+      {/* --- PROCESS PACKETS --- */}
       arrivedPackets.forEach(packet => {
         const targetNode = nextNodes.find(n => n.id === packet.to);
         
-        if (!targetNode || targetNode.state === 'dead') return; // Muertos no procesan
+        if (!targetNode || targetNode.state === 'dead') return;
 
-        // A. VOTE REQUEST
         if (packet.type === 'VOTE_REQ') {
           if (targetNode.term <= packet.term && (targetNode.votedFor === null || targetNode.votedFor === packet.from)) {
              targetNode.votedFor = packet.from;
@@ -90,7 +84,6 @@ export const clusterMachine = createMachine({
           }
         }
 
-        // B. VOTE ACK
         if (packet.type === 'VOTE_ACK') {
           if (targetNode.state === 'candidate' && targetNode.term === packet.term) {
             targetNode.votesReceived += 1;
@@ -102,12 +95,10 @@ export const clusterMachine = createMachine({
           }
         }
 
-        // C. HEARTBEAT
         if (packet.type === 'HEARTBEAT') {
-          // Si recibo heartbeat de alguien con término mayor o igual, me someto
           if (packet.term >= targetNode.term) {
             targetNode.state = 'follower';
-            targetNode.term = packet.term; // Actualizo mi término al del líder
+            targetNode.term = packet.term;
             targetNode.votedFor = null;
             targetNode.votesReceived = 0;
             targetNode.timer = getRandomTimeout(); 
@@ -115,7 +106,7 @@ export const clusterMachine = createMachine({
         }
       });
 
-      // 3. ACTUALIZAR ESTADOS
+      {/* --- UPDATE STATES --- */}
       nextNodes = nextNodes.map(node => {
         if (node.state === 'dead') return node;
 

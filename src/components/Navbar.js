@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-scroll'; // Importamos el Link inteligente
+import { Link } from 'react-scroll';
 import { FaBars, FaTimes, FaTerminal} from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion'; // Para animaciones suaves
+import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 import '../App.css';
 
@@ -30,31 +30,33 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
   ];
 
   const handleLinkClick = () => {
-    closeProject(); // <--- ESTO CIERRA EL MODAL SI ESTÁ ABIERTO
-    setIsOpen(false); // Cierra el menú móvil si está abierto
+    closeProject();
+    setIsOpen(false);
   };
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         
-        {/* LOGO AV. AHORA ABRE LA PALETA */}
+        {/* --- LOGO SECTION --- */}
         <div 
           className="navbar-logo" 
           onClick={openPalette} 
         >
           <span className="logo-prompt">~/AV</span>
-          <span className="logo-cursor">_</span> {/* Cursor parpadeante */}
+          <span className="logo-cursor">_</span>
           
           <span className="cmd-k-hint" title="Presiona Cmd+K">
              <FaTerminal size={10} /> Cmd+K
           </span>
         </div>
 
+        {/* --- MOBILE MENU TOGGLE --- */}
         <div className="menu-icon" onClick={toggleMenu}>
           {isOpen ? <FaTimes /> : <FaBars />}
         </div>
 
+        {/* --- DESKTOP NAVIGATION --- */}
         <ul className="nav-menu">
           {navLinks.map((link) => (
             <li key={link.name} className="nav-item">
@@ -74,7 +76,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
           ))}
         </ul>
 
-        {/* MENÚ MÓVIL */}
+        {/* --- MOBILE NAVIGATION --- */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -98,7 +100,6 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
                 </Link>
               ))}
 
-              {/* En móvil SI dejamos el Toggle porque no hay teclado para Cmd+K */}
               <div style={{ marginTop: '20px' }}>
                 <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
               </div>

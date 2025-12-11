@@ -1,5 +1,5 @@
 .raft-container {
-  background: #020c1b; /* Un poco más oscuro que el fondo normal */
+  background: #020c1b;
   border-radius: 12px;
   border: 1px solid rgba(100, 255, 218, 0.1);
   padding: 20px;
@@ -9,8 +9,7 @@
   position: relative;
   overflow: hidden;
   box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 50; /* Un número alto para estar seguro que está sobre las partículas */
+  z-index: 50;
   pointer-events: auto !important;
 }
 
@@ -34,19 +33,18 @@
 .raft-svg {
   max-width: 100%;
   height: auto;
-  /* background: radial-gradient(circle at center, #112240 0%, #020c1b 70%); */
   pointer-events: visiblePainted;
 }
 
-/* Modo claro */
+/* --- LIGHT MODE RAFT --- */
 [data-theme='light'] .raft-container {
   background: #f0f4f8;
   border-color: rgba(0,0,0,0.1);
   box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
 }
-/* ... estilos anteriores ... */
 
+/* --- RAFT PACKET --- */
 .raft-packet {
-  filter: drop-shadow(0 0 4px currentColor); /* Brillo del mismo color que el relleno */
+  filter: drop-shadow(0 0 4px currentColor);
   transition: fill 0.2s;
 }

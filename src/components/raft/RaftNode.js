@@ -2,12 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const RaftNode = ({ id, state, x, y, term, onKill }) => {
-  // Mapeo de colores según estado (Basado en tu idea)
   const colors = {
-    follower: "#ffffff",  // Blanco
-    candidate: "#ffbd2e", // Amarillo
-    leader: "#27c93f",    // Verde
-    dead: "#ff5f56"       // Rojo
+    follower: "#ffffff",
+    candidate: "#ffbd2e",
+    leader: "#27c93f",
+    dead: "#ff5f56"
   };
 
   const currentColor = colors[state] || colors.follower;
@@ -18,13 +17,13 @@ const RaftNode = ({ id, state, x, y, term, onKill }) => {
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      onContextMenu={(e) => { e.preventDefault(); onKill(id); }} // Click derecho para matar
+      onContextMenu={(e) => { e.preventDefault(); onKill(id); }}
       style={{ cursor: 'pointer' }}
     >
-      {/* Círculo Exterior (Aura) */}
+      {/* --- OUTER CIRCLE (AURA) --- */}
       <circle cx={x} cy={y} r="35" fill={currentColor} opacity="0.2" />
       
-      {/* Círculo Principal */}
+      {/* --- MAIN CIRCLE --- */}
       <circle 
         cx={x} 
         cy={y} 
@@ -34,7 +33,7 @@ const RaftNode = ({ id, state, x, y, term, onKill }) => {
         strokeWidth="3"
       />
 
-      {/* Texto ID */}
+      {/* --- ID TEXT --- */}
       <text 
         x={x} 
         y={y - 4} 
@@ -47,7 +46,7 @@ const RaftNode = ({ id, state, x, y, term, onKill }) => {
         N{id}
       </text>
 
-      {/* Texto Term (Término actual) */}
+      {/* --- TERM TEXT --- */}
       <text 
         x={x} 
         y={y + 12} 

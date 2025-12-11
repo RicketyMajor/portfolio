@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrollReveal from '../ScrollReveal';
 import { FaEnvelope, FaWhatsapp, FaGraduationCap } from 'react-icons/fa';
-import ContactForm from '../ContactForm'; // Importar formulario
+import ContactForm from '../ContactForm';
 
 const ContactSection = () => {
   return (
@@ -13,10 +13,10 @@ const ContactSection = () => {
             Estoy abierto a nuevas oportunidades, proyectos de investigación o simplemente a charlar sobre tecnología. ¡Envíame un mensaje directo!
           </p>
           
-          {/* NUEVO LAYOUT GRID */}
+          {/* --- CONTACT GRID --- */}
           <div className="contact-content-grid">
             
-            {/* Columna Izquierda: Métodos Directos */}
+            {/* --- CONTACT METHODS COLUMN --- */}
             <div className="contact-methods-column">
               <h3 style={{color: 'var(--text-primary)', marginBottom: '20px', textAlign: 'left'}}>
                 Información de Contacto
@@ -55,7 +55,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Columna Derecha: Formulario */}
+            {/* --- FORM COLUMN --- */}
             <div className="contact-form-column">
                <ContactForm />
             </div>

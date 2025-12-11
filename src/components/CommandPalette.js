@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { scroller } from 'react-scroll';
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
-  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaPaintBrush 
+  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaPaintBrush, FaNetworkWired 
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 
@@ -78,6 +78,21 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
         navigator.clipboard.writeText('alonsoveralarach@gmail.com'); 
         showToast("Email copiado al portapapeles");
         setTimeout(closeModal, 1500);
+      } 
+    },
+    { 
+      id: 'ping', 
+      label: 'Ping (Latency Check)', 
+      icon: <FaNetworkWired />, 
+      action: () => { 
+        const start = Date.now();
+        // Hacemos un fetch real a tu API de Geo para medir latencia real
+        fetch('/api/geo').then(() => {
+          const latency = Date.now() - start;
+          showToast(`Pong! 🏓 Latency: ${latency}ms`);
+          // Opcional: No cerrar el modal para ver el resultado
+          // closeModal(); 
+        });
       } 
     },
   ];

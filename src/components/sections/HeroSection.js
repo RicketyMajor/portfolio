@@ -56,7 +56,6 @@ const HeroSection = () => {
         <div className="hero-visual-content">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', alignItems: 'center' }}>
             <Terminal />
-            <LiveDashboard />
           </div>
         </div>
 

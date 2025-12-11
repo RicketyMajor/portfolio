@@ -1,120 +1,189 @@
-.dashboard-container {
-  background: rgba(10, 25, 47, 0.7);
-  border: 1px solid rgba(100, 255, 218, 0.2);
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 40px;
-  width: 100%;
-  max-width: 800px;
-  font-family: var(--font-code);
-  backdrop-filter: blur(5px);
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(136, 146, 176, 0.1);
-  padding-bottom: 10px;
-}
-
-.dashboard-header h3 {
-  color: var(--text-primary);
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-}
-
-.live-indicator {
-  color: #ff5f56;
-  font-size: 0.8rem;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
+/* --- DASHBOARD COMPACTO (BENTO GRID) --- */
 
 .dashboard-grid {
-  display: flex;
-  align-items: center;
+  display: grid;
+  /* Dos columnas de igual ancho para escritorio */
+  grid-template-columns: 1fr 1fr; 
   gap: 15px;
-  flex-wrap: wrap;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
+/* ESTILO BASE DE TARJETA */
 .stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid rgba(136, 146, 176, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column; /* Apilamos título y contenido verticalmente */
+  justify-content: center;
+  min-height: 100px; /* Altura uniforme */
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--accent);
+}
+
+/* TÍTULOS DE SECCIÓN DENTRO DE TARJETA */
+.card-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 10px 15px;
-  border-radius: 6px;
-  flex: 1;
-  min-width: 150px;
+  gap: 8px;
 }
 
-.stat-card.wide {
-  flex-basis: 100%; /* Ocupa toda la fila */
-  margin-top: 10px;
-  background: rgba(100, 255, 218, 0.05);
-  border: 1px dashed rgba(100, 255, 218, 0.3);
+/* --- TARJETA 1: NETWORK TOPOLOGY (Internamente horizontal) --- */
+.network-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.stat-icon {
-  color: var(--accent);
+.network-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado para que se vea limpio */
+  text-align: center;
+}
+
+.node-icon {
   font-size: 1.2rem;
-}
-
-.stat-info h4 {
-  color: var(--text-secondary);
-  font-size: 0.75rem;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.stat-info p {
   color: var(--text-primary);
-  font-size: 0.9rem;
-  margin: 2px 0 0 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
+  margin-bottom: 5px;
 }
 
-.commit-msg {
-  font-style: italic;
-  max-width: 400px !important;
+.node-text {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: bold;
 }
 
-.connection-line {
+.node-subtext {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* La flecha de conexión */
+.network-arrow {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 10px;
 }
 
-.dashed-line {
-  width: 50px;
-  height: 2px;
-  background-image: linear-gradient(to right, var(--text-secondary) 33%, rgba(255,255,255,0) 0%);
-  background-position: bottom;
-  background-size: 6px 1px;
-  background-repeat: repeat-x;
-}
-
-.latency-tag {
-  font-size: 0.7rem;
+.latency-badge {
+  background: rgba(255, 189, 46, 0.15);
   color: #ffbd2e;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
   margin-bottom: 2px;
 }
 
-[data-theme='light'] .dashboard-container {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(0, 0, 0, 0.1);
+.arrow-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--text-secondary), transparent);
+}
+
+/* --- TARJETA 2: CHRONOMETRY (Dos columnas internas) --- */
+.chrono-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: center;
+}
+
+.chrono-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chrono-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+/* --- TARJETA 3 & 4: APPS (Spotify & Github) --- */
+.app-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.app-text {
+  overflow: hidden; /* Para cortar textos largos */
+  white-space: nowrap;
+}
+
+.app-title {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.app-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* LOGS (Sin cambios) */
+.terminal-logs {
+  margin-top: 25px;
+  border-top: 1px dashed rgba(136, 146, 176, 0.2);
+  padding-top: 20px;
+  font-size: 1rem;
+  color: var(--accent);
+  min-height: 80px;
+}
+
+.prompt-line {
+  display: flex;
+  gap: 10px;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.prompt-user { color: #27c93f; }
+.prompt-path { color: #64ffda; }
+
+/* INDICADOR LIVE */
+.live-indicator {
+  color: #ff5f56;
+  font-size: 0.8rem;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+  margin-left: auto;
+  border: 1px solid #ff5f56;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; box-shadow: 0 0 0 rgba(255, 95, 86, 0.4); }
+  50% { opacity: 0.5; box-shadow: 0 0 10px rgba(255, 95, 86, 0); }
+  100% { opacity: 1; box-shadow: 0 0 0 rgba(255, 95, 86, 0.4); }
+}
+
+/* RESPONSIVE: En móvil todo se apila en 1 columna */
+@media screen and (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 }

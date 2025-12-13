@@ -20,6 +20,8 @@ Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos,
 - **Colaboración en Tiempo Real**: Canvas colaborativo con sincronización CRDT (Yjs + PartyKit)
 - **Cursores Multiplayer**: Visualización de cursores de otros usuarios en la aplicación
 - **Raft Consensus Visualization**: Simulación interactiva del algoritmo de consenso Raft con máquinas de estado (xstate)
+- **Cómputo Paralelo**: Web Workers para procesar fractales (Mandelbrot) en hilos secundarios sin bloquear UI
+- **Laboratorio Distribuido**: Sección centralizada con experimentos de consenso, colaboración y procesamiento paralelo
 - **Formulario de Contacto**: Integración con EmailJS para envío de emails
 - **Accesibilidad**: Semántica HTML correcta y navegación por teclado
 
@@ -58,8 +60,12 @@ src/
 │   │   ├── RaftSimulation.js    # Componente principal de la simulación
 │   │   ├── RaftNode.js          # Representación visual de nodos del clúster
 │   │   └── clusterMachine.js    # Máquina de estado xstate para lógica de Raft
+│   ├── compute/                 # Componentes para cómputo paralelo
+│   │   ├── DistributedCompute.js # Generador interactivo de fractales con Web Workers
+│   │   └── workerLogic.js       # Lógica del Web Worker para cálculos matemáticos
 │   └── sections/
-│       ├── RaftSection.js       # Sección para visualización de algoritmo Raft
+│       ├── DistributedLabSection.js # Laboratorio consolidado de sistemas distribuidos
+│       ├── RaftSection.js       # Sección anterior (mantenida por compatibilidad)
 ├── data/
 │   └── portfolioData.js         # Datos centralizados de proyectos, skills, timeline, etc.
 ├── hooks/
@@ -75,7 +81,8 @@ src/
 │   ├── dashboard.css            # Estilos del Live Dashboard
 │   ├── collaboration.css        # Estilos del canvas colaborativo
 │   ├── cursors.css              # Estilos de cursores multiplayer
-│   └── raft.css                 # Estilos de la simulación Raft
+│   ├── raft.css                 # Estilos de la simulación Raft
+│   └── compute.css              # Estilos del componente de cómputo paralelo
 ├── App.js                       # Componente raíz
 └── index.js                     # Punto de entrada
 
@@ -172,24 +179,40 @@ Línea de tiempo educativa y profesional expandible:
 - Premios y reconocimientos
 - Interactividad: Expandir/colapsar items para ver detalles
 
-### 6. **Raft Consensus Section** (`RaftSection.js`)
+### 6. **Distributed Lab Section** (`DistributedLabSection.js`)
 
-Visualización interactiva del algoritmo **Raft** para consenso distribuido:
+Laboratorio centralizado para experimentos sobre sistemas distribuidos con tres subsecciones:
 
-- Simulación de un clúster de 5 nodos
+**6.1 Consenso & Tolerancia a Fallos (Raft)**
+
+- Simulación de un clúster de 5 nodos con algoritmo Raft
 - Cambios de estado (Follower → Candidate → Leader)
-- Visualización de heartbeats del líder
-- Solicitudes y respuestas de votación
-- Capacidad de simular fallos (matar/revivir nodos)
+- Visualización de heartbeats, solicitudes de voto y respuestas
+- Simulación de fallos: matar/revivir nodos dinámicamente
 - Detección automática de nuevos líderes
-- Colores visuales para tipos de paquetes de red
+- Colores visuales para diferenciar tipos de paquetes de red
 
 **Componentes internos**:
-- `RaftSimulation.js`: Renderizador principal de la simulación
-- `RaftNode.js`: Representación visual de cada nodo
-- `clusterMachine.js`: Máquina de estado xstate para la lógica
 
-**Caso de uso educativo**: Entender cómo los sistemas distribuidos llegan a consenso sin autoridad central.
+- `RaftSimulation.js`: Renderizador principal
+- `RaftNode.js`: Representación visual de nodos
+- `clusterMachine.js`: Máquina de estado xstate
+
+**6.2 Consistencia Eventual (CRDTs)**
+
+- Canvas colaborativo en tiempo real
+- Sincronización sin conflictos mediante Yjs
+- Múltiples usuarios dibujando simultáneamente
+- Convergencia matemática al mismo estado
+
+**6.3 Procesamiento Paralelo (Web Workers)**
+
+- Generador interactivo de fractales (Mandelbrot)
+- Cálculos matemáticos pesados en Web Workers
+- Zoom dinámico en tiempo real
+- Interfaz para donar CPU y visualizar progreso
+
+**Caso de uso educativo**: Comprender consenso distribuido, consistencia eventual y paralelismo en navegadores modernos.
 
 ### 7. **Contact Section** (`ContactSection.js`)
 
@@ -201,15 +224,7 @@ Formulario de contacto con múltiples canales:
 - Mensajes de error/éxito animados
 - Información de contacto centralizada
 
-### 8. **Collaboration Section** (`CollaborationSection.js`)
-
-Sección experimental de colaboración en tiempo real:
-
-- Canvas colaborativo donde múltiples usuarios pueden dejar marcas simultáneamente
-- Sincronización sin conflictos mediante CRDTs (Yjs)
-- Persistencia de datos mediante PartyKit
-- Explicación educativa sobre consistencia eventual
-- Interacción simple: hacer clic para marcar
+> **Nota**: La sección `RaftSection.js` anterior se mantiene por compatibilidad, pero ha sido consolidada en `DistributedLabSection.js` como la sección principal para experimentos distribuidos.
 
 ---
 
@@ -226,9 +241,10 @@ Sistema distribuido de sincronización de estado:
 - **Escalabilidad**: Demostra arquitectura distribuida sin conflictos
 
 **Tecnología detrás**:
+
 ```javascript
 // Yjs gestiona conflictos automáticamente
-yDotsRef.current.push([newDot]);  // Se propaga sin conflictos
+yDotsRef.current.push([newDot]); // Se propaga sin conflictos
 ```
 
 ### Cursores Multiplayer (`MultiplayerCursors.js`)
@@ -241,53 +257,61 @@ Visualización de presencia de otros usuarios:
 - Integración con Awareness (protocolo de PartyKit)
 - Desaparición automática cuando el usuario se desconecta
 
-### Algoritmos de Consenso - Raft (`RaftSection.js` + `raft/`)
-
-Visualización interactiva del algoritmo **Raft** para consenso distribuido:
-
-- **RaftSimulation.js**: Componente principal que renderiza la simulación
-- **RaftNode.js**: Representación visual de cada nodo del clúster (líder, seguidor, candidato)
-- **clusterMachine.js**: Máquina de estado xstate que implementa la lógica de Raft
-
-**Características**:
-- Simulación de 5 nodos en clúster
-- Cambios de estado: Follower → Candidate → Leader
-- Visualización de heartbeats (latidos del líder)
-- Solicitudes de voto (VOTE_REQ) y respuestas (VOTE_ACK)
-- Capacidad de matar/revivir nodos para simular fallos
-- Detección automática de nuevos líderes cuando uno falla
-- Colores visuales para diferenciar tipos de paquetes de red
-
-**Tecnología**:
-- **xstate**: Máquina de estado determinista para la lógica de Raft
-- **@xstate/react**: Hook `useMachine` para integración con React
-- **SVG**: Renderización de nodos y paquetes de red
-- **Animaciones**: Transiciones suaves con CSS
-
 ### APIs Serverless (Vercel Functions)
 
 APIs implementadas en `/api` que proveen datos en tiempo real:
 
 **`/api/geo.js`** - Geolocalización del usuario
+
 - Extrae ubicación del cliente desde headers de Vercel
 - Retorna ciudad, región, país
 - Simula latencia de conexión entre cliente y servidor
 
 **`/api/github.js`** - Actividad de GitHub
+
 - Obtiene datos del perfil (followers, repos públicos)
 - Extrae último commit del usuario
 - Cachea respuesta para optimizar API calls
 - Fallback elegante si GitHub API no está disponible
 
 **`/api/spotify.js`** - Canción actual reproduciendo
+
 - Usa OAuth 2.0 con Spotify API
 - Obtiene canción actual en tiempo real
 - Incluye cover del álbum, artista, link a Spotify
 - Detecta cuando no hay música reproduciendo
 
 **`/api/wakatime.js`** - Estadísticas de productividad (opcional)
+
 - Integración con WakaTime para tracking de código
 - Muestra horas de código y lenguaje top
+
+### Laboratorio Distribuido (`DistributedLabSection.js`)
+
+Sección consolidada que integra tres experimentos fundamentales:
+
+**1. Algoritmos de Consenso - Raft**
+
+- Simulación visual de 5 nodos en clúster
+- Máquina de estado xstate para lógica determinista
+- Click derecho en nodos para simular fallos
+- Visualización de heartbeats y votaciones
+
+**2. Colaboración sin Conflictos (CRDTs)**
+
+- Canvas colaborativo con Yjs y PartyKit
+- Múltiples usuarios sincronizados en tiempo real
+- Resolución automática de conflictos
+- Persistencia entre sesiones
+
+**3. Cómputo Paralelo (Web Workers)**
+
+- Generación de fractales Mandelbrot
+- Procesamiento en hilos secundarios
+- Interfaz interactiva con zoom dinámico
+- Visualización de progreso sin bloquear UI
+
+**Valor Educativo**: Demuestra tres pilares de sistemas distribuidos: consenso, consistencia y paralelismo.
 
 ### Live Dashboard (`LiveDashboard.js`)
 
@@ -303,7 +327,7 @@ Panel dinámico que muestra datos en tiempo real:
 
 Paleta de comandos rápida que permite:
 
-- Navegar a secciones específicas
+- Navegar a Proyectos, Habilidades, Trayectoria, Laboratorio Distribuido, Contacto
 - Cambiar tema (claro/oscuro)
 - Descargar CV
 - Copiar email al portapapeles
@@ -360,13 +384,13 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "React": "19.2.0",                      // UI Framework
-  "Framer Motion": "12.23.24",            // Animaciones y transiciones
-  "React Icons": "5.5.0",                 // Librería de iconos
-  "React Scroll": "1.9.3",                // Smooth scrolling entre secciones
-  "React Type Animation": "3.2.0",        // Animaciones de tipeo
-  "React Parallax Tilt": "1.7.314",       // Efectos 3D en tarjetas
-  "Tsparticles": "3.9.1"                  // Partículas animadas interactivas
+  "React": "19.2.0", // UI Framework
+  "Framer Motion": "12.23.24", // Animaciones y transiciones
+  "React Icons": "5.5.0", // Librería de iconos
+  "React Scroll": "1.9.3", // Smooth scrolling entre secciones
+  "React Type Animation": "3.2.0", // Animaciones de tipeo
+  "React Parallax Tilt": "1.7.314", // Efectos 3D en tarjetas
+  "Tsparticles": "3.9.1" // Partículas animadas interactivas
 }
 ```
 
@@ -374,10 +398,10 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "Yjs": "13.6.27",                       // CRDT para sincronización sin conflictos
-  "PartyKit": "0.0.115",                  // Servidor WebSocket para room-based sync
-  "Y-PartyKit": "0.0.33",                 // Provider de Yjs para PartyKit
-  "PartySocket": "1.1.6"                  // Cliente WebSocket persistente
+  "Yjs": "13.6.27", // CRDT para sincronización sin conflictos
+  "PartyKit": "0.0.115", // Servidor WebSocket para room-based sync
+  "Y-PartyKit": "0.0.33", // Provider de Yjs para PartyKit
+  "PartySocket": "1.1.6" // Cliente WebSocket persistente
 }
 ```
 
@@ -385,8 +409,17 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "xstate": "5.24.0",                     // State machine para lógica determinista
-  "@xstate/react": "6.0.0"                // Integración de xstate con React (useMachine)
+  "xstate": "5.24.0", // State machine para lógica determinista
+  "@xstate/react": "6.0.0" // Integración de xstate con React (useMachine)
+}
+```
+
+### Cómputo Paralelo
+
+```json
+{
+  "Web Workers API": "native", // Hilos secundarios del navegador
+  "Fractales (Mandelbrot)": "custom" // Generador matemático de fractales
 }
 ```
 
@@ -394,8 +427,8 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "SWR": "2.3.7",                         // Fetching de datos con revalidación automática
-  "QueryString": "0.2.1"                  // Parsing de query parameters
+  "SWR": "2.3.7", // Fetching de datos con revalidación automática
+  "QueryString": "0.2.1" // Parsing de query parameters
 }
 ```
 
@@ -403,7 +436,7 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "EmailJS": "4.4.1"                      // Envío de emails desde cliente (sin backend)
+  "EmailJS": "4.4.1" // Envío de emails desde cliente (sin backend)
 }
 ```
 
@@ -411,7 +444,7 @@ HOC que anima elementos cuando:
 
 ```json
 {
-  "RandomColor": "0.6.2"                  // Generación de colores aleatorios para usuarios
+  "RandomColor": "0.6.2" // Generación de colores aleatorios para usuarios
 }
 ```
 
@@ -499,13 +532,13 @@ npm start
 
 ## Scripts Disponibles
 
-| Script | Comando | Descripción |
-|--------|---------|-------------|
-| **Desarrollo** | `npm start` | Inicia React en puerto 3000 (sin PartyKit local) |
-| **Dev PartyKit** | `npm run dev` | Inicia React + PartyKit dev server |
-| **Build** | `npm run build` | Compila para producción en carpeta `build/` |
-| **Testing** | `npm test` | Ejecuta tests en modo watch |
-| **Eject** | `npm run eject` | Expone configuración de Webpack (irreversible) |
+| Script           | Comando         | Descripción                                      |
+| ---------------- | --------------- | ------------------------------------------------ |
+| **Desarrollo**   | `npm start`     | Inicia React en puerto 3000 (sin PartyKit local) |
+| **Dev PartyKit** | `npm run dev`   | Inicia React + PartyKit dev server               |
+| **Build**        | `npm run build` | Compila para producción en carpeta `build/`      |
+| **Testing**      | `npm test`      | Ejecuta tests en modo watch                      |
+| **Eject**        | `npm run eject` | Expone configuración de Webpack (irreversible)   |
 
 ### Modo Desarrollo con PartyKit
 

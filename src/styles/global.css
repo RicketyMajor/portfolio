@@ -119,7 +119,9 @@ section {
 .contact-form-wrapper,
 .collaboration-wrapper,
 .canvas-container,
-.raft-container {
+.raft-container,
+.compute-container,
+.compute-btn {
   pointer-events: auto;
 }
 

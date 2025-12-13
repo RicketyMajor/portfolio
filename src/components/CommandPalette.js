@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { scroller } from 'react-scroll';
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
-  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaPaintBrush, FaNetworkWired 
+  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaPaintBrush, FaNetworkWired, FaFlask
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 
@@ -36,16 +36,10 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
       action: () => scrollToSection('trajectory') 
     },
     { 
-      id: 'raft', 
-      label: 'Ir a Raft Consensus', 
-      icon: <FaProjectDiagram />, 
-      action: () => scrollToSection('raft') 
-    },
-    { 
-      id: 'collaboration', 
-      label: 'Ir a Colaboración (Guestbook)', 
-      icon: <FaPaintBrush />, 
-      action: () => scrollToSection('collaboration') 
+      id: 'lab', 
+      label: 'Ir al Laboratorio Distribuido', 
+      icon: <FaFlask />, 
+      action: () => scrollToSection('lab') 
     },
     { 
       id: 'contact', 

@@ -1,24 +1,23 @@
 export const workerFunction = () => {
   /* eslint-disable-next-line no-restricted-globals */
   self.onmessage = (e) => {
-    const { width, height, startY, endY, maxIter } = e.data;
+    // AHORA RECIBIMOS LAS COORDENADAS (props) DEL MENSAJE PRINCIPAL
+    const { width, height, startY, endY, maxIter, centerX, centerY, zoom } = e.data;
     
     const totalPixels = width * (endY - startY);
     const data = new Uint8ClampedArray(totalPixels * 4);
 
-    const zoom = 250;
-    const panX = 2;
-    const panY = 1.5;
-
     let offset = 0;
 
-    {/* --- MANDELBROT ALGORITHM --- */}
     for (let y = startY; y < endY; y++) {
       for (let x = 0; x < width; x++) {
+        // MATEMÁTICA AJUSTADA PARA ZOOM DINÁMICO
+        // Convertimos píxel (x,y) a coordenada compleja
+        let cX = (x - width / 2) / zoom + centerX;
+        let cY = (y - height / 2) / zoom + centerY;
+        
         let zx = 0;
         let zy = 0;
-        let cX = (x / zoom) - panX;
-        let cY = (y / zoom) - panY;
         let iter = 0;
 
         while (zx * zx + zy * zy < 4 && iter < maxIter) {
@@ -36,10 +35,11 @@ export const workerFunction = () => {
           data[p + 2] = 0;
           data[p + 3] = 255;
         } else {
-          const colorVal = iter * 8;
-          data[p] = 0;
-          data[p + 1] = colorVal;
-          data[p + 2] = colorVal * 2;
+          // Un esquema de color un poco más vibrante para el zoom
+          const colorVal = iter * 5;
+          data[p] = colorVal * 2;     // R (Un poco de rojo para variedad)
+          data[p + 1] = colorVal;     // G
+          data[p + 2] = colorVal * 4; // B
           data[p + 3] = 255;
         }
         
@@ -47,7 +47,6 @@ export const workerFunction = () => {
       }
     }
 
-    {/* --- RETURN PROCESSED DATA --- */}
     /* eslint-disable-next-line no-restricted-globals */
     self.postMessage({ data, startY, endY }, [data.buffer]);
   };

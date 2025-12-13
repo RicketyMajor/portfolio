@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaServer, FaGlobe, FaMicrochip, FaSpotify, FaGithub, FaUsers, FaBolt } from 'react-icons/fa';
+import { FaServer, FaGlobe, FaUsers, FaBolt } from 'react-icons/fa';
 import ScrollReveal from '../ScrollReveal';
 import '../../styles/architecture.css'; // Crearemos este CSS
 

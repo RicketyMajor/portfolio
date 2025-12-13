@@ -16,6 +16,7 @@ import './styles/commandPalette.css';
 import MultiplayerCursors from './components/MultiplayerCursors';
 import DistributedLabSection from './components/sections/DistributedLabSection';
 import Footer from './components/Footer';
+import ArchitectureSection from './components/sections/ArchitectureSection';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -48,6 +49,7 @@ function App() {
       <AboutSection />
       <TrajectorySection />
       <DistributedLabSection />
+      <ArchitectureSection />
       <ContactSection />
       <ScrollToTop />
       <Footer />

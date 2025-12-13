@@ -25,6 +25,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
     { name: "Sobre Mí", to: "about" },
     { name: "Trayectoria", to: "trajectory" },
     { name: "Laboratorio", to: "lab" },
+    { name: "Arquitectura", to: "architecture" },
     { name: "Contacto", to: "contact" },
   ];
 
@@ -42,7 +43,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
           className="navbar-logo" 
           onClick={openPalette} 
         >
-          <span className="logo-prompt">~/AV</span>
+          <span className="logo-prompt">~/AVL</span>
           <span className="logo-cursor">_</span>
           
           <span className="cmd-k-hint" title="Presiona Cmd+K">

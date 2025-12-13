@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import useSWR from 'swr';
-import { FaGithub, FaServer, FaGlobeAmericas, FaSpotify, FaClock, FaStopwatch, FaNetworkWired } from 'react-icons/fa';
+import { FaGithub, FaServer, FaGlobeAmericas, FaSpotify, FaClock, FaNetworkWired } from 'react-icons/fa';
 import { getApiUrl } from '../utils/apiConfig'; // Importar
 import '../styles/components.css'; 
 import '../styles/dashboard.css';
@@ -11,7 +11,7 @@ const Terminal = () => {
   const { data: geoData } = useSWR('/api/geo', fetcher); 
   const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });
   const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); 
-
+  
   const [loaded, setLoaded] = useState(false);
   const [latency, setLatency] = useState(null);
   const [time, setTime] = useState(new Date());
@@ -34,6 +34,14 @@ const Terminal = () => {
     const secs = seconds % 60;
     return `${mins}m ${secs}s`;
   };
+  const PromptSignature = () => (
+    <div style={{ display: 'inline-block' }}>
+      <span className="prompt-user">alonso@portfolio</span>
+      <span style={{ color: 'var(--text-secondary)' }}>:</span>
+      <span className="prompt-path">~</span>
+      <span style={{ color: 'var(--text-secondary)' }}>$</span>
+    </div>
+  );
 
   return (
     <div className="terminal-window">
@@ -49,13 +57,11 @@ const Terminal = () => {
 
       <div className="terminal-body" style={{ padding: '25px' }}>
         
-        {/* --- PROMPT --- */}
+        {/* --- PROMPT 1: COMANDO INICIAL --- */}
         <div className="prompt-line">
-          <div>
-            <span className="prompt-user">alonso@portfolio</span>:
-            <span className="prompt-path">~</span>$ 
-            <span> ./dashboard.sh --grid</span>
-          </div>
+          <PromptSignature />
+          <span>./dashboard.sh --grid --verbose</span>
+          
           {loaded && <span className="live-indicator">● LIVE</span>}
         </div>
 
@@ -157,13 +163,12 @@ const Terminal = () => {
           </div>
         )}
 
-        {/* --- LOGS --- */}
+        {/* --- PROMPT 2: LOGS AL FINAL --- */}
         {loaded && (
           <div className="terminal-logs">
             <div className="prompt-line">
-              <span className="prompt-user">alonso@portfolio</span>:
-              <span className="prompt-path">~</span>$ 
-              <span> tail -f /dev/thoughts</span>
+              <PromptSignature />
+              <span>tail -f /dev/thoughts</span>
             </div>
             <span style={{ color: 'var(--text-primary)' }}>{'>'} </span>
             <TypeAnimation

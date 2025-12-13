@@ -42,6 +42,12 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
       action: () => scrollToSection('lab') 
     },
     { 
+      id: 'architecture', 
+      label: 'Ir a Arquitectura', 
+      icon: <FaProjectDiagram />, 
+      action: () => scrollToSection('architecture') 
+    },
+    { 
       id: 'contact', 
       label: 'Ir a Contacto', 
       icon: <FaEnvelope />, 

@@ -153,14 +153,17 @@
 
 .prompt-line {
   display: flex;
-  gap: 10px;
-  color: var(--text-secondary);
-  margin-bottom: 15px;
   align-items: center;
+  gap: 12px; /* Espacio entre el '$' y el comando */
+  color: var(--text-primary); /* Color del comando por defecto */
+  font-family: var(--font-code);
+  margin-bottom: 15px;
   flex-wrap: wrap;
 }
-.prompt-user { color: #27c93f; }
-.prompt-path { color: #64ffda; }
+
+/* Forzamos que los caracteres de puntuación no hereden colores raros */
+.prompt-user { color: #27c93f; font-weight: bold; }
+.prompt-path { color: #64ffda; font-weight: bold; }
 
 /* --- LIVE INDICATOR --- */
 .live-indicator {

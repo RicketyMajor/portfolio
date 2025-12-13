@@ -1,0 +1,30 @@
+.footer {
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(136, 146, 176, 0.1);
+  margin-top: 50px;
+  background: rgba(2, 12, 27, 0.5);
+}
+
+.ipfs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  background: rgba(100, 255, 218, 0.05);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  color: var(--text-secondary);
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  transition: all 0.3s;
+  cursor: help;
+}
+
+.ipfs-badge.active {
+  background: rgba(100, 255, 218, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
+}

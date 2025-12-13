@@ -5,7 +5,6 @@ import { useTheme } from './hooks/useTheme';
 import Navbar from './components/Navbar';
 import ParticlesBackground from './components/ParticlesBackground';
 import ScrollToTop from './components/ScrollToTop';
-
 import HeroSection from './components/sections/HeroSection';
 import ProjectsSection from './components/sections/ProjectsSection';
 import SkillsSection from './components/sections/SkillsSection';
@@ -16,6 +15,7 @@ import CommandPalette from './components/CommandPalette';
 import './styles/commandPalette.css';
 import MultiplayerCursors from './components/MultiplayerCursors';
 import DistributedLabSection from './components/sections/DistributedLabSection';
+import Footer from './components/Footer';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -50,6 +50,7 @@ function App() {
       <DistributedLabSection />
       <ContactSection />
       <ScrollToTop />
+      <Footer />
       
 
     </div>

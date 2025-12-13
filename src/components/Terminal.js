@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import useSWR from 'swr';
 import { FaGithub, FaServer, FaGlobeAmericas, FaSpotify, FaClock, FaStopwatch, FaNetworkWired } from 'react-icons/fa';
+import { getApiUrl } from '../utils/apiConfig'; // Importar
 import '../styles/components.css'; 
 import '../styles/dashboard.css';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
+const fetcher = (endpoint) => fetch(getApiUrl(endpoint)).then((res) => res.json());
 const Terminal = () => {
   const { data: geoData } = useSWR('/api/geo', fetcher); 
   const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });

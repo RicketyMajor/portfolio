@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { FaGithub, FaServer, FaGlobeAmericas, FaBolt, FaSpotify } from 'react-icons/fa';
+import { getApiUrl } from '../utils/apiConfig'; // Importar
 import '../styles/dashboard.css';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
+const fetcher = (endpoint) => fetch(getApiUrl(endpoint)).then((res) => res.json());
 const LiveDashboard = () => {
   const { data: geoData } = useSWR('/api/geo', fetcher, { refreshInterval: 0 }); 
   

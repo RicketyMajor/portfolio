@@ -13,9 +13,12 @@ const MultiplayerCursors = () => {
   useEffect(() => {
     {/* --- CONNECTION TO PARTYKIT SERVER --- */}
     const yDoc = new Y.Doc();
+    const partykitHost = process.env.NODE_ENV === 'production'
+      ? "alonso-portfolio.ricketymajor.partykit.dev" // <--- TU URL PRODUCCIÓN (sin https://)
+      : "127.0.0.1:1999";
     
     const provider = new YPartyKitProvider(
-      "127.0.0.1:1999", 
+      partykitHost, 
       "portfolio-room",
       yDoc
     );

@@ -15,8 +15,11 @@ const CollaborationCanvas = () => {
   useEffect(() => {
     {/* --- CONNECT TO PARTYKIT ROOM --- */}
     const yDoc = new Y.Doc();
+    const partykitHost = process.env.NODE_ENV === 'production'
+      ? "alonso-portfolio.partykit.dev" // <--- PEGA AQUÍ TU URL DE PARTYKIT (sin https://)
+      : "127.0.0.1:1999";
     const provider = new YPartyKitProvider(
-      "127.0.0.1:1999", 
+      partykitHost, 
       "portfolio-room", 
       yDoc
     );

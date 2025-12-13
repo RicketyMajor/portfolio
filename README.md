@@ -22,6 +22,7 @@ Portafolio interactivo desarrollado con **React 19** que presenta mis proyectos,
 - **Raft Consensus Visualization**: Simulación interactiva del algoritmo de consenso Raft con máquinas de estado (xstate)
 - **Cómputo Paralelo**: Web Workers para procesar fractales (Mandelbrot) en hilos secundarios sin bloquear UI
 - **Laboratorio Distribuido**: Sección centralizada con experimentos de consenso, colaboración y procesamiento paralelo
+- **Arquitectura del Sistema**: Visualización interactiva de la arquitectura híbrida con nodos de red, flujos y conexiones
 - **Formulario de Contacto**: Integración con EmailJS para envío de emails
 - **Accesibilidad**: Semántica HTML correcta y navegación por teclado
 
@@ -40,6 +41,8 @@ src/
 │   │   ├── SkillsSection.js      # Habilidades técnicas categorizadas
 │   │   ├── AboutSection.js       # Información personal con tabs
 │   │   ├── TrajectorySection.js  # Trayectoria educativa y profesional expandible
+│   │   ├── DistributedLabSection.js # Laboratorio consolidado de sistemas distribuidos
+│   │   ├── ArchitectureSection.js # Visualización interactiva de la arquitectura del sistema
 │   │   ├── ContactSection.js     # Formulario de contacto
 │   │   └── CollaborationSection.js # Sección de colaboración en tiempo real
 │   ├── CommandPalette.js        # Paleta de comandos rápidos
@@ -56,16 +59,13 @@ src/
 │   ├── LiveDashboard.js         # Panel en tiempo real de estadísticas
 │   ├── CollaborationCanvas.js   # Canvas colaborativo con Yjs
 │   ├── MultiplayerCursors.js    # Visualización de cursores multiplayer
-│   ├── raft/                    # Componentes para simulación de consenso Raft
-│   │   ├── RaftSimulation.js    # Componente principal de la simulación
-│   │   ├── RaftNode.js          # Representación visual de nodos del clúster
-│   │   └── clusterMachine.js    # Máquina de estado xstate para lógica de Raft
-│   ├── compute/                 # Componentes para cómputo paralelo
-│   │   ├── DistributedCompute.js # Generador interactivo de fractales con Web Workers
+│   ├── compute/                 # Componentes para cómputo paralelo con Web Workers
+│   │   ├── DistributedCompute.js # Generador interactivo de fractales Mandelbrot con Web Workers
 │   │   └── workerLogic.js       # Lógica del Web Worker para cálculos matemáticos
-│   └── sections/
-│       ├── DistributedLabSection.js # Laboratorio consolidado de sistemas distribuidos
-│       ├── RaftSection.js       # Sección anterior (mantenida por compatibilidad)
+│   └── raft/                    # Componentes para simulación de consenso Raft
+│       ├── RaftSimulation.js    # Componente principal de la simulación
+│       ├── RaftNode.js          # Representación visual de nodos del clúster
+│       └── clusterMachine.js    # Máquina de estado xstate para lógica de Raft
 ├── data/
 │   └── portfolioData.js         # Datos centralizados de proyectos, skills, timeline, etc.
 ├── hooks/
@@ -82,7 +82,8 @@ src/
 │   ├── collaboration.css        # Estilos del canvas colaborativo
 │   ├── cursors.css              # Estilos de cursores multiplayer
 │   ├── raft.css                 # Estilos de la simulación Raft
-│   └── compute.css              # Estilos del componente de cómputo paralelo
+│   ├── compute.css              # Estilos del componente de cómputo paralelo
+│   └── architecture.css         # Estilos de la visualización de arquitectura
 ├── App.js                       # Componente raíz
 └── index.js                     # Punto de entrada
 
@@ -116,6 +117,14 @@ partykit.json                     # Configuración de PartyKit
 ---
 
 ## Secciones Principales
+
+El portafolio está organizado en 8 secciones principales que se renderizan en orden en `src/App.js`:
+
+**Flujo de Secciones**:
+
+1. Hero → 2. Proyectos → 3. Skills → 4. Sobre Mí → 5. Trayectoria → 6. Laboratorio Distribuido → 7. Arquitectura → 8. Contacto
+
+Cada sección incluye interactividad, animaciones y datos contextuales. Las secciones 6 y 7 son nuevas adiciones que demuestran conceptos avanzados de sistemas distribuidos y arquitectura de aplicaciones modernas.
 
 ### 1. **Hero Section** (`HeroSection.js`)
 
@@ -214,7 +223,23 @@ Laboratorio centralizado para experimentos sobre sistemas distribuidos con tres 
 
 **Caso de uso educativo**: Comprender consenso distribuido, consistencia eventual y paralelismo en navegadores modernos.
 
-### 7. **Contact Section** (`ContactSection.js`)
+### 7. **Architecture Section** (`ArchitectureSection.js`)
+
+Visualización interactiva de la arquitectura del sistema:
+
+- **Diagrama SVG Dinámico**: Representación gráfica de nodos y conexiones
+- **Nodos Interactivos**:
+  - Browser Client (Web Workers, Zustand)
+  - Vercel Edge (Hosting, Serverless Functions, GeoIP)
+  - PartyKit Cloud (WebSocket stateful, CRDTs)
+  - External APIs (Spotify, GitHub, REST)
+- **Conexiones Visuales**: HTTPS, WebSocket (WSS), API Gateway, Web Worker Thread
+- **Animaciones**: Líneas de conexión con stroke animation y transiciones suaves
+- **Información Contextual**: Descripciones detalladas al interactuar con nodos
+
+**Concepto**: Muestra cómo el portafolio combina arquitectura serverless (Vercel) con stateful edge computing (PartyKit) para ofrecer funcionalidad distribuida.
+
+### 8. **Contact Section** (`ContactSection.js`)
 
 Formulario de contacto con múltiples canales:
 
@@ -313,6 +338,17 @@ Sección consolidada que integra tres experimentos fundamentales:
 
 **Valor Educativo**: Demuestra tres pilares de sistemas distribuidos: consenso, consistencia y paralelismo.
 
+### Architecture Section (`ArchitectureSection.js`)
+
+Visualización interactiva de la arquitectura del sistema:
+
+- **Diagrama SVG Dinámico**: Nodos y conexiones animadas
+- **Nodos Interactivos**: Browser Client, Vercel Edge, PartyKit Cloud, External APIs
+- **Conexiones**: HTTPS, WebSocket (WSS), API Gateway, Web Worker Thread
+- **Animaciones SVG**: Líneas con stroke animation y transiciones suaves
+- **Información Contextual**: Hover para ver detalles de cada componente
+- **Arquitectura Híbrida**: Combina serverless (Vercel) + stateful edge (PartyKit) + Web Workers
+
 ### Live Dashboard (`LiveDashboard.js`)
 
 Panel dinámico que muestra datos en tiempo real:
@@ -327,10 +363,11 @@ Panel dinámico que muestra datos en tiempo real:
 
 Paleta de comandos rápida que permite:
 
-- Navegar a Proyectos, Habilidades, Trayectoria, Laboratorio Distribuido, Contacto
+- Navegar a Proyectos, Habilidades, Trayectoria, Laboratorio Distribuido, Arquitectura, Contacto
 - Cambiar tema (claro/oscuro)
 - Descargar CV
 - Copiar email al portapapeles
+- Ping (Latency Check)
 - Búsqueda fuzzy de comandos
 
 Características técnicas:
@@ -354,20 +391,27 @@ Características técnicas:
 - Detalles enriquecidos en cada item
 - Orden cronológico descendente
 
+### Navegación Principal y Complementaria
+
+**Barra de Navegación (Navbar)**:
+
+- Enlaces rápidos a: Proyectos, Skills, Sobre Mí, Trayectoria, Laboratorio, Arquitectura, Contacto
+- Menú responsivo con hamburguesa en móvil
+- Indicador de scroll (efectos visuales)
+- Integración con Command Palette (Cmd+K)
+
+**Scroll Reveal (`ScrollReveal.js`)**:
+
+- HOC que anima elementos cuando entran en el viewport
+- Usa Intersection Observer para eficiencia
+- Soporta variaciones de animación
+
 ### Theme Toggle (`useTheme.js` Hook)
 
 - Respeta preferencia del sistema operativo
 - Persiste la selección en localStorage
 - Variables CSS dinámicas para cambio de colores instantáneo
 - Compatible con reducción de movimiento (prefers-reduced-motion)
-
-### Scroll Reveal (`ScrollReveal.js`)
-
-HOC que anima elementos cuando:
-
-- Entran en el viewport
-- Usa Intersection Observer para eficiencia
-- Soporta variaciones de animación
 
 ### Partículas Interactivas (`ParticlesBackground.js`)
 
@@ -807,6 +851,17 @@ Inspirado en portafolios modernos y buenas prácticas en desarrollo web. Gracias
 
 ---
 
-**Última actualización**: Enero 2025  
-**Versión**: 1.2.0  
+---
+
+**Última actualización**: Diciembre 2025  
+**Versión**: 1.3.0  
 **Estado**: En desarrollo activo
+
+### Cambios Recientes (v1.3.0)
+
+- Agregada **ArchitectureSection** con visualización SVG interactiva de la arquitectura del sistema
+- Nueva sección en Navbar y Command Palette para navegar a Arquitectura
+- Mejoras en Terminal.js con mejor layout del Live Dashboard
+- Actualización de estilos en components.css y dashboard.css para mejor responsividad
+- Documentación completa de todas las secciones incluida Architecture
+- Navegación mejorada con nuevas opciones en la paleta de comandos

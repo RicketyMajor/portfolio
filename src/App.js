@@ -15,10 +15,7 @@ import ContactSection from './components/sections/ContactSection';
 import CommandPalette from './components/CommandPalette';
 import './styles/commandPalette.css';
 import MultiplayerCursors from './components/MultiplayerCursors';
-import CollaborationSection from './components/sections/CollaborationSection';
 import DistributedLabSection from './components/sections/DistributedLabSection';
-
-import RaftSection from './components/sections/RaftSection';
 
 function App() {
   const { theme, toggleTheme } = useTheme();

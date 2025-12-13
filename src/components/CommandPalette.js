@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { scroller } from 'react-scroll';
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
-  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaPaintBrush, FaNetworkWired, FaFlask
+  FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaNetworkWired, FaFlask
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
 

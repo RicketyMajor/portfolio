@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom'; // Importación añadida
+import React, { useState, Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom'; 
 import './App.css';
 import { useTheme } from './hooks/useTheme';
 
@@ -15,13 +15,15 @@ import ContactSection from './components/sections/ContactSection';
 import CommandPalette from './components/CommandPalette';
 import './styles/commandPalette.css';
 import MultiplayerCursors from './components/MultiplayerCursors';
-import DistributedLabSection from './components/sections/DistributedLabSection';
 import Footer from './components/Footer';
-import ArchitectureSection from './components/sections/ArchitectureSection';
+import SkeletonLoader from './components/SkeletonLoader'; // Importamos tu loader
 
-// --- VISTAS LOCALES (Separación lógica Fase 1) ---
-// Agrupamos las secciones para no romper nada
+// --- LAZY LOADING PARA EL LABORATORIO (Fase 3) ---
+// Estas secciones solo se descargarán cuando el usuario visite la ruta /lab
+const DistributedLabSection = lazy(() => import('./components/sections/DistributedLabSection'));
+const ArchitectureSection = lazy(() => import('./components/sections/ArchitectureSection'));
 
+// --- VISTAS LOCALES ---
 const HomeView = ({ selectedProjectId, setSelectedProjectId }) => (
   <>
     <HeroSection />
@@ -36,11 +38,33 @@ const HomeView = ({ selectedProjectId, setSelectedProjectId }) => (
   </>
 );
 
+// Pantalla de carga (Fallback) mientras se descarga el código del Lab
+const LabLoadingScreen = () => (
+  <div style={{ 
+    minHeight: '100vh', 
+    display: 'flex', 
+    flexDirection: 'column',
+    justifyContent: 'center', 
+    alignItems: 'center',
+    padding: '20px',
+    textAlign: 'center'
+  }}>
+    <h2 style={{ fontFamily: 'var(--font-code)', color: 'var(--accent)', marginBottom: '20px' }}>
+       Inicializando Entorno Distribuido...
+    </h2>
+    <div style={{ width: '100%', maxWidth: '800px', height: '400px', borderRadius: '8px', overflow: 'hidden' }}>
+      {/* Reutilizamos tu SkeletonLoader para mantener la coherencia visual */}
+      <SkeletonLoader style={{ width: '100%', height: '100%' }} />
+    </div>
+  </div>
+);
+
 const LabView = () => (
-  <>
+  // Suspense "pausa" el renderizado y muestra el Fallback hasta que los Lazy components estén listos
+  <Suspense fallback={<LabLoadingScreen />}>
     <DistributedLabSection />
     <ArchitectureSection />
-  </>
+  </Suspense>
 );
 
 function App() {
@@ -52,7 +76,6 @@ function App() {
   return (
     <div className="App">
       {/* --- COMPONENTES GLOBALES PERSISTENTES --- */}
-      {/* Estos nunca se desmontan al cambiar de página */}
       <Navbar 
         theme={theme} 
         toggleTheme={toggleTheme} 
@@ -68,7 +91,7 @@ function App() {
       />
       <ParticlesBackground theme={theme} />
       
-      {/* El multijugador sigue activo en toda la app */}
+      {/* El multijugador sigue activo en toda la app sin interrupciones */}
       <MultiplayerCursors />
 
       {/* --- ENRUTAMIENTO DINÁMICO --- */}

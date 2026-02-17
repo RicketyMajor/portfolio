@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
+import { Link, scroller } from 'react-scroll'; // Agregamos scroller
+import { useLocation, useNavigate } from 'react-router-dom'; // Rutas
 import { FaBars, FaTimes, FaTerminal} from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
@@ -8,6 +9,10 @@ import '../App.css';
 const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  
+  // Hooks de enrutamiento
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,14 +24,15 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  // Mapeo inteligente: ahora cada link sabe cuál es su ruta madre
   const navLinks = [
-    { name: "Proyectos", to: "projects" },
-    { name: "Skills", to: "skills" },
-    { name: "Sobre Mí", to: "about" },
-    { name: "Trayectoria", to: "trajectory" },
-    { name: "Laboratorio", to: "lab" },
-    { name: "Arquitectura", to: "architecture" },
-    { name: "Contacto", to: "contact" },
+    { name: "Proyectos", to: "projects", path: "/" },
+    { name: "Skills", to: "skills", path: "/" },
+    { name: "Sobre Mí", to: "about", path: "/" },
+    { name: "Trayectoria", to: "trajectory", path: "/" },
+    { name: "Laboratorio", to: "lab", path: "/lab" },
+    { name: "Arquitectura", to: "architecture", path: "/lab" },
+    { name: "Contacto", to: "contact", path: "/" },
   ];
 
   const handleLinkClick = () => {
@@ -34,18 +40,24 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
     setIsOpen(false);
   };
 
+  // Función híbrida para navegación cruzada entre páginas
+  const handleCrossNav = (path, to) => {
+    handleLinkClick();
+    navigate(path);
+    // Esperamos 100ms para que el DOM de la nueva ruta se renderice antes de hacer scroll
+    setTimeout(() => {
+      scroller.scrollTo(to, { smooth: true, offset: -80, duration: 500 });
+    }, 100);
+  };
+
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         
         {/* --- LOGO SECTION --- */}
-        <div 
-          className="navbar-logo" 
-          onClick={openPalette} 
-        >
+        <div className="navbar-logo" onClick={openPalette}>
           <span className="logo-prompt">~/AVL</span>
           <span className="logo-cursor">_</span>
-          
           <span className="cmd-k-hint" title="Presiona Cmd+K">
              <FaTerminal size={10} /> Cmd+K
           </span>
@@ -60,18 +72,30 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
         <ul className="nav-menu">
           {navLinks.map((link) => (
             <li key={link.name} className="nav-item">
-              <Link
-                activeClass="active"
-                to={link.to}
-                spy={true}
-                smooth={true}
-                offset={-50}
-                duration={400}
-                className="nav-links"
-                onClick={handleLinkClick}
-              >
-                {link.name}
-              </Link>
+              {location.pathname === link.path ? (
+                /* Si estamos en la misma ruta, usamos el scroll normal con "spy" */
+                <Link
+                  activeClass="active"
+                  to={link.to}
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={400}
+                  className="nav-links"
+                  onClick={handleLinkClick}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                /* Si vamos a otra ruta, usamos la función híbrida (etiqueta a con cursor) */
+                <a 
+                  className="nav-links" 
+                  onClick={() => handleCrossNav(link.path, link.to)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {link.name}
+                </a>
+              )}
             </li>
           ))}
         </ul>
@@ -87,17 +111,28 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
               className="nav-menu-mobile"
             >
               {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.to}
-                  smooth={true}
-                  offset={-80}
-                  duration={400}
-                  className="nav-links-mobile-item"
-                  onClick={handleLinkClick}
-                >
-                  {link.name}
-                </Link>
+                location.pathname === link.path ? (
+                  <Link
+                    key={link.name}
+                    to={link.to}
+                    smooth={true}
+                    offset={-80}
+                    duration={400}
+                    className="nav-links-mobile-item"
+                    onClick={handleLinkClick}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a 
+                    key={link.name}
+                    className="nav-links-mobile-item" 
+                    onClick={() => handleCrossNav(link.path, link.to)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {link.name}
+                  </a>
+                )
               ))}
 
               <div style={{ marginTop: '20px' }}>

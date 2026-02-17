@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { scroller } from 'react-scroll';
+import { useLocation, useNavigate } from 'react-router-dom'; // Rutas agregadas
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
   FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaNetworkWired, FaFlask
 } from 'react-icons/fa';
 import '../styles/commandPalette.css';
-
 
 const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject }) => {
   const [query, setQuery] = useState("");
@@ -14,44 +14,72 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
   const [toastMsg, setToastMsg] = useState(null);
 
   const listRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // --- COMMANDS DEFINITION ---
+  // Función híbrida para la Paleta
+  const scrollToSection = (section, path) => {
+    closeProject(); 
+    
+    if (location.pathname === path) {
+      scroller.scrollTo(section, { duration: 500, smooth: true, offset: -80 });
+    } else {
+      navigate(path);
+      setTimeout(() => {
+        scroller.scrollTo(section, { duration: 500, smooth: true, offset: -80 });
+      }, 100);
+    }
+    closeModal();
+  };
+
+  const showToast = (msg) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 2000);
+  };
+
+  const closeModal = useCallback(() => {
+    setIsOpen(false);
+    setQuery("");
+    setToastMsg(null);
+  }, [setIsOpen]);
+
+  // --- COMMANDS DEFINITION (Actualizado con rutas) ---
   const commands = [
     { 
       id: 'projects', 
       label: 'Ir a Proyectos', 
       icon: <FaProjectDiagram />, 
-      action: () => scrollToSection('projects') 
+      action: () => scrollToSection('projects', '/') 
     },
     { 
       id: 'skills', 
       label: 'Ir a Habilidades', 
       icon: <FaUser />, 
-      action: () => scrollToSection('skills') 
+      action: () => scrollToSection('skills', '/') 
     },
     { 
       id: 'trajectory', 
       label: 'Ir a Trayectoria', 
       icon: <FaHistory />, 
-      action: () => scrollToSection('trajectory') 
+      action: () => scrollToSection('trajectory', '/') 
     },
     { 
       id: 'lab', 
       label: 'Ir al Laboratorio Distribuido', 
       icon: <FaFlask />, 
-      action: () => scrollToSection('lab') 
+      action: () => scrollToSection('lab', '/lab') 
     },
     { 
       id: 'architecture', 
       label: 'Ir a Arquitectura', 
       icon: <FaProjectDiagram />, 
-      action: () => scrollToSection('architecture') 
+      action: () => scrollToSection('architecture', '/lab') 
     },
     { 
       id: 'contact', 
       label: 'Ir a Contacto', 
       icon: <FaEnvelope />, 
-      action: () => scrollToSection('contact') 
+      action: () => scrollToSection('contact', '/') 
     },
     { 
       id: 'theme', 
@@ -101,11 +129,9 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
     setSelectedIndex(0);
   }, [query]);
 
-  // --- AUTO-SCROLL ON KEYBOARD NAVIGATION ---
   useEffect(() => {
     if (listRef.current && filteredCommands.length > 0) {
       const selectedElement = listRef.current.children[selectedIndex];
-      
       if (selectedElement) {
         selectedElement.scrollIntoView({
           block: 'nearest',
@@ -115,7 +141,6 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
     }
   }, [selectedIndex, filteredCommands]);
 
-  // --- KEYBOARD NAVIGATION (ARROWS, ENTER) ---
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -131,29 +156,6 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
     }
   };
 
-  const scrollToSection = (section) => {
-    closeProject(); 
-    
-    scroller.scrollTo(section, {
-      duration: 500,
-      smooth: true,
-      offset: -80,
-    });
-    closeModal();
-  };
-
-  const showToast = (msg) => {
-    setToastMsg(msg);
-    setTimeout(() => setToastMsg(null), 2000);
-  };
-
-  const closeModal = useCallback(() => {
-    setIsOpen(false);
-    setQuery("");
-    setToastMsg(null);
-  }, [setIsOpen]);
-
-  // --- GLOBAL KEYBOARD SHORTCUTS (CMD+K / ESC) ---
   useEffect(() => {
     const handleGlobalKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -186,7 +188,6 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* --- SEARCH INPUT --- */}
             <div className="palette-search">
               <FaSearch className="palette-icon" />
               <input 
@@ -200,7 +201,6 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
               <span className="palette-shortcut">ESC</span>
             </div>
 
-            {/* --- COMMANDS LIST --- */}
             <ul className="palette-list" ref={listRef}>
               {filteredCommands.map((cmd, index) => (
                 <li 
@@ -230,7 +230,6 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
               )}
             </ul>
 
-            {/* --- TOAST NOTIFICATION --- */}
             <AnimatePresence>
               {toastMsg && (
                 <motion.div 
@@ -244,7 +243,6 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
               )}
             </AnimatePresence>
 
-            {/* --- FOOTER --- */}
             <div className="palette-footer">
               <div style={{display:'flex', gap:'10px'}}>
                 <span>↑↓ Navegar</span>

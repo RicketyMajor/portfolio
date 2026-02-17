@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom'; // Importación añadida
 import './App.css';
 import { useTheme } from './hooks/useTheme';
 
@@ -18,13 +19,40 @@ import DistributedLabSection from './components/sections/DistributedLabSection';
 import Footer from './components/Footer';
 import ArchitectureSection from './components/sections/ArchitectureSection';
 
+// --- VISTAS LOCALES (Separación lógica Fase 1) ---
+// Agrupamos las secciones para no romper nada
+
+const HomeView = ({ selectedProjectId, setSelectedProjectId }) => (
+  <>
+    <HeroSection />
+    <ProjectsSection 
+      selectedId={selectedProjectId} 
+      setSelectedId={setSelectedProjectId}
+    />
+    <SkillsSection />
+    <AboutSection />
+    <TrajectorySection />
+    <ContactSection />
+  </>
+);
+
+const LabView = () => (
+  <>
+    <DistributedLabSection />
+    <ArchitectureSection />
+  </>
+);
+
 function App() {
   const { theme, toggleTheme } = useTheme();
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const closeProjectModal = () => setSelectedProjectId(null);
+  
   return (
     <div className="App">
+      {/* --- COMPONENTES GLOBALES PERSISTENTES --- */}
+      {/* Estos nunca se desmontan al cambiar de página */}
       <Navbar 
         theme={theme} 
         toggleTheme={toggleTheme} 
@@ -39,22 +67,24 @@ function App() {
         closeProject={closeProjectModal}
       />
       <ParticlesBackground theme={theme} />
+      
+      {/* El multijugador sigue activo en toda la app */}
       <MultiplayerCursors />
-      <HeroSection />
-      <ProjectsSection 
-        selectedId={selectedProjectId} 
-        setSelectedId={setSelectedProjectId}
-      />
-      <SkillsSection />
-      <AboutSection />
-      <TrajectorySection />
-      <DistributedLabSection />
-      <ArchitectureSection />
-      <ContactSection />
+
+      {/* --- ENRUTAMIENTO DINÁMICO --- */}
+      <Routes>
+        <Route path="/" element={
+          <HomeView 
+            selectedProjectId={selectedProjectId} 
+            setSelectedProjectId={setSelectedProjectId} 
+          />
+        } />
+        <Route path="/lab" element={<LabView />} />
+      </Routes>
+
+      {/* --- FOOTER GLOBAL --- */}
       <ScrollToTop />
       <Footer />
-      
-
     </div>
   );
 }

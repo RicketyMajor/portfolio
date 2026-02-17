@@ -1,24 +1,71 @@
 import React from 'react';
-// Importamos los iconos aquí porque se definen dentro de los objetos de datos
+// Mantenemos los imports originales y agregamos algunos útiles para la nueva estructura si fuera necesario en el futuro
 import { 
   FaChalkboardTeacher, FaBriefcase, FaTrophy, FaGraduationCap, FaCertificate,
-  FaNodeJs, FaPython, FaJava, FaGitAlt, FaLinux, FaDocker, FaDatabase 
+  FaNodeJs, FaPython, FaJava, FaGitAlt, FaLinux, FaDocker, FaDatabase, FaFilePdf, FaCode
 } from 'react-icons/fa';
 import { 
-  SiCplusplus, SiOracle, SiPytorch, SiTensorflow 
+  SiCplusplus, SiOracle, SiPytorch, SiTensorflow, SiReact, SiJavascript 
 } from 'react-icons/si';
 
 {/* --- PROJECTS DATA --- */}
+// ESTRATEGIA FASE 1:
+// 1. Mantenemos campos 'legacy' (title, description, image) para compatibilidad con ProjectCard.
+// 2. Agregamos campos 'extended' (longDescription, gallery, technical) para el futuro Modal avanzado.
+
 export const projects = [
   {
     id: 1,
     title: "PAWS - Ingeniería de Software",
     category: "Desarrollo Web",
+    // Campo Legacy (usado en Card):
     description: "Proyecto ganador del 1er Lugar en la Feria EIT 2025 (Team Dots). Solución de software enfocada en la gestión eficiente.",
+    // Campo Legacy (Thumbnail principal):
     image: "https://placehold.co/600x400/112240/64ffda?text=PAWS+Project", 
     technologies: ["Ingeniería de Software", "Trabajo en Equipo", "Gestión de Proyectos"],
     repoLink: "https://github.com/RicketyMajor",
-    demoLink: "https://paws-demo.com"
+    demoLink: "https://paws-demo.com",
+    
+    // --- NUEVOS DATOS EXTENDIDOS (Fase 2 Ready) ---
+    extended: {
+      // Descripción completa que soportará Markdown
+      overview: `
+        PAWS (Platform for Animal Welfare Support) nació como respuesta a la necesidad de modernizar la gestión de refugios de animales.
+        
+        Como líder del equipo backend, diseñé una arquitectura modular que permite:
+        * Gestión de expedientes médicos digitales.
+        * Seguimiento de adopciones en tiempo real.
+        * Control de inventario de medicamentos y alimentos.
+        
+        El proyecto fue galardonado por su impacto social y calidad técnica.
+      `,
+      // Galería Multimedia (Imágenes extra, diagramas, videos)
+      gallery: [
+        { 
+          type: "image", 
+          src: "https://placehold.co/800x450/1d2d50/64ffda?text=PAWS+Dashboard", 
+          caption: "Dashboard Administrativo Principal" 
+        },
+        { 
+          type: "image", 
+          src: "https://placehold.co/800x450/1d2d50/64ffda?text=Mobile+View", 
+          caption: "Diseño Responsive para Voluntarios en Terreno" 
+        }
+        // Futuro: Podríamos agregar { type: "video", src: "..." }
+      ],
+      // Pestaña Técnica
+      technical: {
+        stack: [
+          { name: "Frontend", items: ["React", "TailwindCSS", "Framer Motion"] },
+          { name: "Backend", items: ["Node.js", "Express", "PostgreSQL"] },
+          { name: "DevOps", items: ["Docker", "GitHub Actions"] }
+        ],
+        challenges: [
+          "Implementación de actualizaciones en tiempo real para el estado de adopciones.",
+          "Diseño de base de datos relacional normalizada para manejar historiales médicos complejos."
+        ]
+      }
+    }
   },
   {
     id: 2,
@@ -27,6 +74,42 @@ export const projects = [
     description: "Implementación y documentación técnica exhaustiva del sistema GLPI. Integración con Oracle APEX y optimización SQL.",
     image: "https://placehold.co/600x400/112240/64ffda?text=S2T+GLPI+System",
     technologies: ["SQL", "Oracle APEX", "BizAgi", "Documentación Técnica"],
+    
+    extended: {
+      overview: `
+        Durante mi práctica profesional en S2T, lideré la optimización del sistema de mesa de ayuda GLPI.
+        
+        El desafío principal no fue solo técnico, sino de procesos: el sistema existía pero carecía de flujos definidos y documentación.
+        Mi intervención logró reducir el tiempo de resolución de tickets en un 30% mediante la automatización de asignaciones y la creación de una base de conocimiento estructurada.
+      `,
+      gallery: [
+        { 
+          type: "image", 
+          src: "https://placehold.co/800x450/233554/64ffda?text=BPMN+Diagram", 
+          caption: "Modelado del Flujo de Atención (BizAgi)" 
+        },
+        { 
+          type: "image", 
+          src: "https://placehold.co/800x450/233554/64ffda?text=Oracle+Apex+Panel", 
+          caption: "Panel de Métricas integrado en Oracle APEX" 
+        }
+      ],
+      technical: {
+        stack: [
+          { name: "Base de Datos", items: ["MySQL (GLPI)", "Oracle DB"] },
+          { name: "Herramientas", items: ["BizAgi Modeler", "Oracle APEX"] }
+        ],
+        challenges: [
+          "Optimización de consultas SQL legacy que tardaban +10s en generar reportes.",
+          "Integración de autenticación LDAP para 500+ usuarios."
+        ]
+      },
+      // Pestaña de Documentación (Nueva funcionalidad clave)
+      documents: [
+        { title: "Manual Técnico de Implementación", type: "pdf", size: "65 Páginas", url: "#" },
+        { title: "Diagramas de Flujo BPMN", type: "link", url: "#" }
+      ]
+    }
   },
   {
     id: 3,
@@ -35,11 +118,49 @@ export const projects = [
     description: "Exploración académica sobre arquitecturas escalables y sistemas distribuidos, enfocada en el rendimiento.",
     image: "https://placehold.co/600x400/112240/64ffda?text=Distributed+Systems",
     technologies: ["C++", "Linux", "Docker", "Networking"],
-    repoLink: "https://github.com/RicketyMajor"
+    repoLink: "https://github.com/RicketyMajor",
+    
+    extended: {
+      overview: `
+        Investigación profunda sobre algoritmos de consenso y paralelismo. Este proyecto sirvió como base para el "Laboratorio Distribuido" que ves en este portafolio.
+        
+        Analicé el comportamiento de algoritmos como Raft y Paxos bajo condiciones de red inestables simuladas en contenedores Docker.
+      `,
+      gallery: [
+        { 
+          type: "image", 
+          src: "https://placehold.co/800x450/0a192f/64ffda?text=Consensus+Sim", 
+          caption: "Simulación de Nodos y Latencia de Red" 
+        }
+      ],
+      technical: {
+        stack: [
+          { name: "Core", items: ["C++17", "Threads/Mutex", "Sockets"] },
+          { name: "Infraestructura", items: ["Docker Compose", "Bash Scripts"] }
+        ],
+        // Snippets de código para mostrar calidad técnica
+        codeSnippets: [
+          {
+            language: "cpp",
+            title: "Implementación de Leader Election (Fragmento)",
+            code: `void RaftNode::startElection() {
+  state = CANDIDATE;
+  currentTerm++;
+  votedFor = id;
+  voteCount = 1;
+  // Broadcast RequestVote RPC
+  for (const auto& peer : peers) {
+    sendRequestVote(peer);
+  }
+}`
+          }
+        ]
+      }
+    }
   }
 ];
 
-{/* --- SKILLS DATA --- */}
+{/* --- SKILLS DATA (Sin cambios, se mantiene igual) --- */}
 export const skills = {
   "Inteligencia Artificial & Datos": [
     { 
@@ -121,7 +242,7 @@ export const skills = {
   ]
 };
 
-{/* --- TIMELINE DATA --- */}
+{/* --- TIMELINE DATA (Sin cambios) --- */}
 export const timeline = [
   {
     id: 5,
@@ -197,7 +318,7 @@ export const timeline = [
   }
 ];
 
-// --- 4. NUEVO: DATOS "SOBRE MÍ" (PARA PESTAÑAS) ---
+// --- 4. DATOS "SOBRE MÍ" (Sin cambios) ---
 export const aboutMeData = {
   bio: {
     title: "Mi Historia",

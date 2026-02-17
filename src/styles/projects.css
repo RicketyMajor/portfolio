@@ -1,4 +1,6 @@
-/* --- FILTER BAR --- */
+/* =========================================
+   1. FILTER BAR & SEARCH
+   ========================================= */
 .project-filter {
   display: flex;
   justify-content: center;
@@ -33,50 +35,124 @@
   box-shadow: 0 0 15px var(--accent-glow);
 }
 
-/* --- LIGHT MODE ACTIVE BUTTON --- */
 [data-theme='light'] .filter-btn.active {
   color: #ffffff;
 }
 
-/* --- PROJECTS GRID --- */
+/* =========================================
+   2. PROJECTS GRID LAYOUT
+   ========================================= */
 .projects-section {
   padding: 120px 50px;
   max-width: 1200px;
   margin: 0 auto;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
+  gap: 30px;
 }
 
-/* --- CARD --- */
+/* =========================================
+   3. PROJECT CARD (Miniatura)
+   ========================================= */
 .project-card {
   background-color: var(--bg-secondary);
   border-radius: 4px;
   overflow: hidden;
   transition: transform 0.3s ease;
   box-shadow: var(--shadow-card);
+  height: 100%; /* Asegura altura consistente */
+  display: flex;
+  flex-direction: column;
 }
-.project-card:hover { transform: translateY(-7px); }
-.card-image { overflow: hidden; }
-.card-image img { width: 100%; height: 200px; object-fit: cover; opacity: 0.85; transition: transform 0.5s ease, opacity 0.3s ease; }
-.project-card:hover .card-image img { opacity: 1; transform: scale(1.1); }
-.card-content { padding: 25px; }
-.card-title { font-family: var(--font-title); color: var(--text-primary); font-size: 1.4rem; margin-bottom: 15px; font-weight: 700; }
-.card-description { color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px; }
-.card-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
-.tag { font-size: 0.8rem; color: var(--accent); font-family: var(--font-code); }
-.card-links { display: flex; gap: 20px; }
-.btn-card { text-decoration: none; color: #e6f1ff; display: flex; align-items: center; gap: 5px; font-size: 0.9rem; font-family: var(--font-code); }
-.btn-card:hover { color: var(--accent); }
-.btn-card:active { transform: scale(0.95); transition: transform 0.1s; }
 
-/* --- MODAL --- */
+.project-card:hover { 
+  transform: translateY(-7px); 
+}
+
+.card-image { 
+  overflow: hidden; 
+  position: relative;
+}
+
+.card-image img { 
+  width: 100%; 
+  height: 200px; 
+  object-fit: cover; 
+  opacity: 0.85; 
+  transition: transform 0.5s ease, opacity 0.3s ease; 
+}
+
+.project-card:hover .card-image img { 
+  opacity: 1; 
+  transform: scale(1.1); 
+}
+
+.card-content { 
+  padding: 25px; 
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title { 
+  font-family: var(--font-title); 
+  color: var(--text-primary); 
+  font-size: 1.4rem; 
+  margin-bottom: 15px; 
+  font-weight: 700; 
+}
+
+.card-description { 
+  color: var(--text-secondary); 
+  font-size: 1rem; 
+  margin-bottom: 20px; 
+  flex-grow: 1;
+}
+
+.card-tags { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 10px; 
+  margin-bottom: 25px; 
+}
+
+.tag { 
+  font-size: 0.8rem; 
+  color: var(--accent); 
+  font-family: var(--font-code); 
+}
+
+.card-links { 
+  display: flex; 
+  gap: 20px; 
+}
+
+.btn-card { 
+  text-decoration: none; 
+  color: var(--text-primary); 
+  display: flex; 
+  align-items: center; 
+  gap: 5px; 
+  font-size: 0.9rem; 
+  font-family: var(--font-code); 
+  transition: all 0.2s;
+}
+
+.btn-card:hover { 
+  color: var(--accent); 
+}
+
+.btn-card:active { 
+  transform: scale(0.95); 
+}
+
+/* =========================================
+   4. MODAL CORE (Container)
+   ========================================= */
 .project-overlay {
   position: fixed;
   top: 0;
@@ -101,7 +177,7 @@
 
 .project-modal {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   background-color: var(--bg-secondary);
   border-radius: 12px;
   overflow: hidden;
@@ -113,29 +189,410 @@
   overflow-y: auto;
   pointer-events: auto;
   user-select: text;
+  border: 1px solid rgba(100, 255, 218, 0.1);
 }
-.modal-image img { width: 100%; height: 350px; object-fit: cover; display: block; }
-.modal-content { padding: 40px; }
+
 .modal-close-btn {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.5);
+  top: 15px;
+  right: 15px;
+  background: rgba(0,0,0,0.5);
   border: none;
-  color: #fff;
-  width: 40px;
-  height: 40px;
+  color: var(--text-primary);
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
-  z-index: 10;
+  transition: all 0.2s;
 }
-.modal-close-btn:hover { background: var(--accent); color: var(--bg-primary); }
 
-@media screen and (max-width: 768px) {
-  .project-modal { flex-direction: column; }
-  .modal-image img { height: 250px; }
+.modal-close-btn:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+/* =========================================
+   5. GALLERY & MEDIA
+   ========================================= */
+.gallery-container {
+  position: relative;
+  width: 100%;
+  height: 350px; /* Altura fija para la galería */
+  background: #000;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.gallery-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cambiar a 'contain' si prefieres ver toda la imagen */
+  object-position: center;
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px 20px;
+  background: linear-gradient(to top, rgba(10, 25, 47, 0.95), transparent);
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.gallery-thumb {
+  width: 60px;
+  height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.5;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  object-fit: cover;
+}
+
+.gallery-thumb:hover { opacity: 0.8; }
+.gallery-thumb.active { opacity: 1; border-color: var(--accent); }
+
+/* =========================================
+   6. TABS NAVIGATION (Restaurado)
+   ========================================= */
+.modal-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+  background: var(--bg-secondary);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Asegura que quede sobre el contenido al scrollear */
+}
+
+.tab-btn {
+  padding: 15px 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-code);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.tab-btn:hover { color: var(--accent); }
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: rgba(100, 255, 218, 0.05);
+}
+
+/* =========================================
+   7. MODAL CONTENT AREA
+   ========================================= */
+.modal-content {
+  padding: 30px;
+  overflow-y: visible; /* El scroll lo maneja el padre .project-modal */
+}
+
+/* =========================================
+   8. MARKDOWN STYLES (Fase 3)
+   ========================================= */
+.markdown-content {
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.markdown-content p { margin-bottom: 1.2rem; }
+.markdown-content strong { color: var(--accent); font-weight: 600; }
+.markdown-content ul, .markdown-content ol { margin-bottom: 1.2rem; padding-left: 1.5rem; }
+.markdown-content li { margin-bottom: 0.5rem; color: var(--text-secondary); }
+.markdown-content li::marker { color: var(--accent); }
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+}
+
+/* =========================================
+   9. TECHNICAL SECTION (Restaurado)
+   ========================================= */
+.section-subtitle {
+  color: var(--text-primary);
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+  display: inline-block;
+}
+
+/* Grilla para las listas de tecnologías */
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.tech-category h4 {
+  color: var(--accent);
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+  padding-bottom: 5px;
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tech-list li {
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.tech-list li::before {
+  content: "▹";
+  color: var(--accent);
+  margin-right: 8px;
+  font-size: 1.2em;
+}
+
+/* Estilo específico para lista de Challenges */
+.tech-list.challenges li {
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.tech-list.challenges li::before {
+  margin-top: 2px; /* Alineación óptica */
+}
+
+/* =========================================
+   10. CODE SNIPPETS (Fase 3)
+   ========================================= */
+.code-snippet-wrapper {
+  margin-top: 20px;
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  background: #011627;
+}
+
+.code-snippet-header {
+  background: #0a192f;
+  padding: 8px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.code-snippet-header span {
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.lang-badge {
+  color: var(--accent) !important;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75rem;
+  border: 1px solid var(--accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* =========================================
+   11. DOCUMENT CARDS (Fase 3)
+   ========================================= */
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.doc-card {
+  display: flex;
+  align-items: center;
+  background: rgba(136, 146, 176, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.doc-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  background: rgba(136, 146, 176, 0.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.doc-icon-wrapper {
+  font-size: 1.8rem;
+  color: var(--text-secondary);
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.doc-card:hover .doc-icon-wrapper { color: var(--accent); }
+
+.doc-info { flex: 1; }
+
+.doc-info h5 {
+  margin: 0 0 5px 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: var(--font-code);
+  text-transform: uppercase;
+}
+
+.doc-arrow {
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s;
+}
+
+.doc-card:hover .doc-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--accent);
+}
+
+/* =========================================
+   12. RESPONSIVE & MOBILE FIRST (Fase 4)
+   ========================================= */
+@media (max-width: 768px) {
+  .projects-section { 
+    padding: 80px 20px; 
+  }
+  
+  /* El overlay no necesita padding en móvil para aprovechar toda la pantalla */
+  .project-overlay {
+    padding: 0;
+  }
+
+  /* El modal ocupa el 100% de la pantalla dinámica (evita cortes con la barra de Safari/Chrome) */
+  .project-modal {
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    border: none;
+  }
+
+  /* Reducir altura de la galería para dar más espacio al contenido de lectura */
+  .gallery-container { 
+    height: 250px; 
+  }
+
+  .modal-close-btn {
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Navegación por pestañas fluida tipo App Nativa */
+  .modal-tabs { 
+    overflow-x: auto; 
+    padding: 0 10px; 
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
+  }
+  .modal-tabs::-webkit-scrollbar {
+    display: none; /* Ocultar scrollbar en Chrome/Safari */
+  }
+
+  .tab-btn { 
+    padding: 12px 15px; 
+    white-space: nowrap; 
+    font-size: 0.85rem;
+  }
+
+  /* Ajustar los espacios del contenido para ganar área de lectura */
+  .modal-content {
+    padding: 20px 15px;
+  }
+
+  .card-title {
+    font-size: 1.5rem !important; /* Títulos ligeramente más pequeños */
+  }
+
+  /* Stack Tecnológico: Forzar 1 columna en teléfonos pequeños */
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  /* Documentos: 1 columna y botones más accesibles al pulgar */
+  .documents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Ajustes finos para el renderizado de código y markdown */
+  .code-snippet-wrapper {
+    margin-top: 15px;
+  }
+  
+  .code-snippet-header {
+    padding: 8px 10px;
+  }
+
+  .card-links {
+    flex-direction: column; /* Botones de acción (Repo/Demo) apilados */
+    gap: 10px;
+  }
+  
+  .card-links .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
 }

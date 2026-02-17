@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, scroller } from 'react-scroll'; // Agregamos scroller
-import { useLocation, useNavigate } from 'react-router-dom'; // Rutas
-import { FaBars, FaTimes, FaTerminal} from 'react-icons/fa';
+import { Link, scroller } from 'react-scroll';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FaBars, FaTimes, FaTerminal } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 import '../App.css';
@@ -10,7 +10,6 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
-  // Hooks de enrutamiento
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,15 +23,21 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Mapeo inteligente: ahora cada link sabe cuál es su ruta madre
-  const navLinks = [
+  // --- REFACTORIZACIÓN LÓGICA: SEPARACIÓN DE RUTAS ---
+  
+  // Grupo 1: Carta de Presentación (Ruta /)
+  const mainLinks = [
     { name: "Proyectos", to: "projects", path: "/" },
     { name: "Skills", to: "skills", path: "/" },
     { name: "Sobre Mí", to: "about", path: "/" },
     { name: "Trayectoria", to: "trajectory", path: "/" },
+    { name: "Contacto", to: "contact", path: "/" },
+  ];
+
+  // Grupo 2: Entorno Interactivo (Ruta /lab)
+  const labLinks = [
     { name: "Laboratorio", to: "lab", path: "/lab" },
     { name: "Arquitectura", to: "architecture", path: "/lab" },
-    { name: "Contacto", to: "contact", path: "/" },
   ];
 
   const handleLinkClick = () => {
@@ -40,14 +45,46 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
     setIsOpen(false);
   };
 
-  // Función híbrida para navegación cruzada entre páginas
   const handleCrossNav = (path, to) => {
     handleLinkClick();
     navigate(path);
-    // Esperamos 100ms para que el DOM de la nueva ruta se renderice antes de hacer scroll
     setTimeout(() => {
       scroller.scrollTo(to, { smooth: true, offset: -80, duration: 500 });
     }, 100);
+  };
+
+  // Función auxiliar para renderizar los enlaces (mantiene el código limpio)
+  const renderLinkItem = (link, isMobile = false) => {
+    const className = isMobile ? "nav-links-mobile-item" : "nav-links";
+    
+    if (location.pathname === link.path) {
+      return (
+        <Link
+          key={link.name}
+          activeClass="active"
+          to={link.to}
+          spy={true}
+          smooth={true}
+          offset={isMobile ? -80 : -50}
+          duration={400}
+          className={className}
+          onClick={handleLinkClick}
+        >
+          {link.name}
+        </Link>
+      );
+    } else {
+      return (
+        <a 
+          key={link.name}
+          className={className} 
+          onClick={() => handleCrossNav(link.path, link.to)}
+          style={{ cursor: 'pointer' }}
+        >
+          {link.name}
+        </a>
+      );
+    }
   };
 
   return (
@@ -70,32 +107,20 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
 
         {/* --- DESKTOP NAVIGATION --- */}
         <ul className="nav-menu">
-          {navLinks.map((link) => (
+          {/* Renderizamos Grupo 1 */}
+          {mainLinks.map((link) => (
             <li key={link.name} className="nav-item">
-              {location.pathname === link.path ? (
-                /* Si estamos en la misma ruta, usamos el scroll normal con "spy" */
-                <Link
-                  activeClass="active"
-                  to={link.to}
-                  spy={true}
-                  smooth={true}
-                  offset={-50}
-                  duration={400}
-                  className="nav-links"
-                  onClick={handleLinkClick}
-                >
-                  {link.name}
-                </Link>
-              ) : (
-                /* Si vamos a otra ruta, usamos la función híbrida (etiqueta a con cursor) */
-                <a 
-                  className="nav-links" 
-                  onClick={() => handleCrossNav(link.path, link.to)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {link.name}
-                </a>
-              )}
+              {renderLinkItem(link)}
+            </li>
+          ))}
+
+          {/* Separador Visual Desktop */}
+          <li className="nav-separator"></li>
+
+          {/* Renderizamos Grupo 2 */}
+          {labLinks.map((link) => (
+            <li key={link.name} className="nav-item">
+              {renderLinkItem(link)}
             </li>
           ))}
         </ul>
@@ -110,30 +135,14 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
               transition={{ type: "spring", stiffness: 80, damping: 15 }}
               className="nav-menu-mobile"
             >
-              {navLinks.map((link) => (
-                location.pathname === link.path ? (
-                  <Link
-                    key={link.name}
-                    to={link.to}
-                    smooth={true}
-                    offset={-80}
-                    duration={400}
-                    className="nav-links-mobile-item"
-                    onClick={handleLinkClick}
-                  >
-                    {link.name}
-                  </Link>
-                ) : (
-                  <a 
-                    key={link.name}
-                    className="nav-links-mobile-item" 
-                    onClick={() => handleCrossNav(link.path, link.to)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {link.name}
-                  </a>
-                )
-              ))}
+              {/* Renderizamos Grupo 1 Mobile */}
+              {mainLinks.map((link) => renderLinkItem(link, true))}
+
+              {/* Separador Visual Mobile con texto descriptivo */}
+              <div className="nav-separator-mobile">ZONA INTERACTIVA</div>
+
+              {/* Renderizamos Grupo 2 Mobile */}
+              {labLinks.map((link) => renderLinkItem(link, true))}
 
               <div style={{ marginTop: '20px' }}>
                 <ThemeToggle theme={theme} toggleTheme={toggleTheme} />

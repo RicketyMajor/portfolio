@@ -182,3 +182,46 @@
     display: none;
   }
 }
+
+/* =========================================
+   SEPARADORES DE RUTAS (Fase de Pulido)
+   ========================================= */
+
+/* --- Separador Desktop (Línea vertical sutil) --- */
+.nav-separator {
+  width: 1px;
+  height: 24px;
+  background-color: var(--text-secondary);
+  opacity: 0.3;
+  margin: 0 10px;
+  align-self: center; /* Centra la línea con respecto a los textos */
+}
+
+/* --- Separador Mobile (Línea horizontal con texto) --- */
+.nav-separator-mobile {
+  display: flex;
+  align-items: center;
+  margin: 25px 0 15px 0;
+  color: var(--text-secondary);
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  width: 100%;
+}
+
+.nav-separator-mobile::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--text-secondary);
+  opacity: 0.3;
+  margin-left: 15px; /* Separa la línea del texto */
+}
+
+/* Modo claro para el separador mobile (Mantiene la visibilidad) */
+[data-theme='light'] .nav-separator-mobile,
+[data-theme='light'] .nav-separator-mobile::after {
+  color: var(--text-secondary);
+  background-color: var(--text-secondary);
+}

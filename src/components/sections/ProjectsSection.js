@@ -11,6 +11,7 @@ const ProjectModal = lazy(loadProjectModal);
 
 const ProjectsSection = ({ selectedId, setSelectedId }) => {
   const [filter, setFilter] = React.useState('Todos'); // El filtro sí puede quedarse local
+  const openerRef = React.useRef(null);
 
   const categories = ['Todos', ...new Set(projects.map(p => p.category))];
 
@@ -20,10 +21,33 @@ const ProjectsSection = ({ selectedId, setSelectedId }) => {
 
   const selectedProject = projects.find(p => p.id === selectedId);
 
+  // Both of these belong to the selection rather than to the modal's lifetime, because
+  // AnimatePresence never unmounts the modal in this app (see context/decisions/log.md).
+  // A lock released on unmount would never be released, and the faded overlay it leaves behind
+  // sits at z-index 10000 over the whole viewport and swallows every click on the page.
+  React.useEffect(() => {
+    document.body.style.overflow = selectedProject ? 'hidden' : 'unset';
+    if (selectedProject) return undefined;
+
+    // Closing has to hand focus back to the card the visitor opened, for the same reason.
+    openerRef.current?.focus({ preventScroll: true });
+    openerRef.current = null;
+
+    const timer = setTimeout(() => {
+      document.querySelectorAll('.project-overlay').forEach((node) => {
+        node.style.pointerEvents = 'none';
+      });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [selectedProject]);
+
   // No scrolling on open: .project-overlay is fixed and covers the viewport, so the page position
   // behind it is invisible. Scrolling here only animated the background under a translucent blur
   // and moved the card while framer-motion was measuring it for the shared layout transition.
-  const handleCardClick = (id) => setSelectedId(id);
+  const handleCardClick = (id) => {
+    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setSelectedId(id);
+  };
 
 return (
     <section id="projects" className="projects-section">
@@ -68,6 +92,7 @@ return (
         <AnimatePresence>
           {selectedProject && (
             <ProjectModal 
+              key={selectedProject.id}
               project={selectedProject} 
               onClose={() => setSelectedId(null)} 
             />

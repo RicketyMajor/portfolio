@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaTimes, FaGithub, FaExternalLinkAlt, 
@@ -9,25 +9,50 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import '../styles/projects.css';
 
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 const ProjectModal = ({ project, onClose }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const dialogRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    // Opening moves focus into the dialog. Handing it back on close is the caller's job, because
+    // this component is never unmounted (see context/decisions/log.md).
+    // preventScroll: the dialog is fixed and already covers the viewport, but the browser
+    // still scrolls the document to "reveal" the button mid layout animation without it.
+    closeButtonRef.current?.focus({ preventScroll: true });
   }, []);
 
-  // A project card can be opened from the keyboard now, so Escape has to close it again.
+  // Escape closes. Tab cycles inside, because aria-modal promises the rest of the page is
+  // unreachable and nothing else here makes the background inert.
   // Separate from the effect above so a new onClose identity does not re-run the body lock.
   useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') onClose();
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusables = [...dialogRef.current.querySelectorAll(FOCUSABLE)];
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && (active === first || !dialogRef.current.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
   const handleContentClick = (e) => e.stopPropagation();
@@ -71,8 +96,18 @@ const ProjectModal = ({ project, onClose }) => {
         className="project-modal"
         layoutId={`project-${project.id}`}
         onClick={handleContentClick}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
+        ref={dialogRef}
       >
-        <button className="modal-close-btn" onClick={onClose}>
+        <button
+          type="button"
+          className="modal-close-btn"
+          onClick={onClose}
+          aria-label="Cerrar el detalle del proyecto"
+          ref={closeButtonRef}
+        >
           <FaTimes size={18} />
         </button>
 
@@ -136,7 +171,7 @@ const ProjectModal = ({ project, onClose }) => {
         <div className="modal-content">
           
           <div style={{ marginBottom: '20px' }}>
-            <motion.h2 className="card-title" style={{ fontSize: '2rem', marginBottom: '10px' }}>
+            <motion.h2 id="project-modal-title" className="card-title" style={{ fontSize: '2rem', marginBottom: '10px' }}>
               {project.title}
             </motion.h2>
             <div className="card-tags">

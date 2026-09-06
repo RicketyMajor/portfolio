@@ -66,16 +66,19 @@ const DistributedCompute = () => {
 
   }, []);
 
+  // The worker is built from the stringified function, so there is no separate file to serve.
+  const spawnWorker = () => {
+    const blob = new Blob([`(${workerFunction.toString()})()`], { type: "application/javascript" });
+    workerRef.current = new Worker(URL.createObjectURL(blob));
+  };
+
   const startWorker = () => {
     if (workerRef.current) return; // Ya existe
 
     setIsWorking(true);
     setStatusMsg("Inicializando Worker Node...");
 
-    const code = workerFunction.toString();
-    const blob = new Blob([`(${code})()`], { type: "application/javascript" });
-    const worker = new Worker(URL.createObjectURL(blob));
-    workerRef.current = worker;
+    spawnWorker();
 
     // Iniciamos el proceso con la vista actual
     processFractal(view);
@@ -93,8 +96,8 @@ const DistributedCompute = () => {
   // MANEJO DE CLIC (ZOOM)
   const handleCanvasClick = (e) => {
     if (!isWorking) {
-        // Si no está corriendo, iniciamos primero
-        alert("Primero debes 'Donar CPU' para activar el sistema.");
+        // A native alert blocks the whole page; the panel already has a status line for this.
+        setStatusMsg("Primero debes donar CPU para activar el sistema.");
         return;
     }
 
@@ -115,12 +118,8 @@ const DistributedCompute = () => {
     // Nota: Como processFractal usa recursión, necesitamos asegurarnos de que la "tarea anterior" 
     // no siga escribiendo encima. La forma más fácil es matar y revivir el worker rápido.
     if (workerRef.current) workerRef.current.terminate();
-    
-    const code = workerFunction.toString();
-    const blob = new Blob([`(${code})()`], { type: "application/javascript" });
-    const worker = new Worker(URL.createObjectURL(blob));
-    workerRef.current = worker;
-    
+    spawnWorker();
+
     processFractal(newView);
   };
 

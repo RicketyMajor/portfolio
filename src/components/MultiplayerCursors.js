@@ -3,6 +3,7 @@ import YPartyKitProvider from "y-partykit/provider";
 import * as Y from "yjs";
 import randomColor from "randomcolor";
 import { motion, AnimatePresence } from "framer-motion";
+import { PARTYKIT_HOST } from '../utils/partykit';
 import '../styles/cursors.css';
 
 const MultiplayerCursors = () => {
@@ -11,19 +12,10 @@ const MultiplayerCursors = () => {
   const [myColor] = useState(randomColor());
 
   useEffect(() => {
-    {/* --- CONNECTION TO PARTYKIT SERVER --- */}
     const yDoc = new Y.Doc();
-    const partykitHost = process.env.NODE_ENV === 'production'
-      ? "alonso-portfolio.ricketymajor.partykit.dev" // <--- TU URL PRODUCCIÓN (sin https://)
-      : "127.0.0.1:1999";
-    
-    const provider = new YPartyKitProvider(
-      partykitHost, 
-      "portfolio-room",
-      yDoc
-    );
+    const provider = new YPartyKitProvider(PARTYKIT_HOST, "portfolio-room", yDoc);
 
-    {/* --- AWARENESS SETUP --- */}
+    // Awareness setup
     const localAwareness = provider.awareness;
     setAwareness(localAwareness);
 
@@ -36,7 +28,7 @@ const MultiplayerCursors = () => {
       }
     });
 
-    {/* --- LISTEN TO OTHER USERS CHANGES --- */}
+    // Listen to other users' changes
     localAwareness.on('change', () => {
       const states = localAwareness.getStates();
       const activeUsers = {};

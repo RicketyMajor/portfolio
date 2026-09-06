@@ -4,6 +4,7 @@ import * as Y from "yjs";
 import randomColor from "randomcolor";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTrashAlt, FaInfoCircle } from 'react-icons/fa';
+import { PARTYKIT_HOST } from '../utils/partykit';
 import '../styles/collaboration.css';
 
 const CollaborationCanvas = () => {
@@ -13,26 +14,18 @@ const CollaborationCanvas = () => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    {/* --- CONNECT TO PARTYKIT ROOM --- */}
     const yDoc = new Y.Doc();
-    const partykitHost = process.env.NODE_ENV === 'production'
-      ? "alonso-portfolio.partykit.dev" // <--- PEGA AQUÍ TU URL DE PARTYKIT (sin https://)
-      : "127.0.0.1:1999";
-    const provider = new YPartyKitProvider(
-      partykitHost, 
-      "portfolio-room", 
-      yDoc
-    );
+    const provider = new YPartyKitProvider(PARTYKIT_HOST, "portfolio-room", yDoc);
 
-    {/* --- GET SHARED ARRAY --- */}
+    // Get shared array
     const yDots = yDoc.getArray('guestbook');
     yDotsRef.current = yDots;
 
-    {/* --- SYNC INITIAL STATE --- */}
+    // Sync initial state
     setDots(yDots.toArray());
     setIsConnected(true);
 
-    {/* --- LISTEN TO CHANGES --- */}
+    // Listen to changes
     yDots.observe(() => {
       setDots(yDots.toArray());
     });

@@ -24,3 +24,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
+
+# local working files, not part of the published project
+CLAUDE.md
+/context
+/ponytail-audit.md
+CHANGELOG.md

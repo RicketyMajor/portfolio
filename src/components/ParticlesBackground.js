@@ -16,14 +16,10 @@ const ParticlesBackground = ({ theme }) => {
     });
   }, []);
 
-  const particlesLoaded = (container) => {
-    console.log(container);
-  };
   if (init) {
     return (
       <Particles
         id="tsparticles"
-        particlesLoaded={particlesLoaded}
         options={{
           background: {
             color: {
@@ -108,7 +104,7 @@ const ParticlesBackground = ({ theme }) => {
     );
   }
 
-  return <></>;
+  return null;
 };
 
 export default ParticlesBackground;

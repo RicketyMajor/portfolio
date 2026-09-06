@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { scroller } from 'react-scroll';
 import { useLocation, useNavigate } from 'react-router-dom'; // Rutas agregadas
 import { 
   FaSearch, FaProjectDiagram, FaUser, FaHistory, FaEnvelope, 
   FaSun, FaMoon, FaFileDownload, FaCopy, FaCheckCircle, FaArrowRight, FaNetworkWired, FaFlask
 } from 'react-icons/fa';
+import { navigateToSection } from '../utils/navigation';
 import '../styles/commandPalette.css';
 
 const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject }) => {
@@ -17,18 +17,9 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Función híbrida para la Paleta
   const scrollToSection = (section, path) => {
-    closeProject(); 
-    
-    if (location.pathname === path) {
-      scroller.scrollTo(section, { duration: 500, smooth: true, offset: -80 });
-    } else {
-      navigate(path);
-      setTimeout(() => {
-        scroller.scrollTo(section, { duration: 500, smooth: true, offset: -80 });
-      }, 100);
-    }
+    closeProject();
+    navigateToSection(navigate, location.pathname, path, section);
     closeModal();
   };
 
@@ -139,7 +130,7 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
         });
       }
     }
-  }, [selectedIndex, filteredCommands]);
+  }, [selectedIndex, filteredCommands.length]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {

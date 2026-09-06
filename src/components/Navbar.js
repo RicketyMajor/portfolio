@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, scroller } from 'react-scroll';
+import { Link } from 'react-scroll';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaTerminal } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
-import '../App.css';
+import { navigateToSection } from '../utils/navigation';
 
 const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,10 +47,7 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
 
   const handleCrossNav = (path, to) => {
     handleLinkClick();
-    navigate(path);
-    setTimeout(() => {
-      scroller.scrollTo(to, { smooth: true, offset: -80, duration: 500 });
-    }, 100);
+    navigateToSection(navigate, location.pathname, path, to);
   };
 
   // Función auxiliar para renderizar los enlaces (mantiene el código limpio)

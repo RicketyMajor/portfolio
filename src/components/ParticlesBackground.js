@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { useReducedMotion } from "framer-motion";
 import { loadSlim } from "@tsparticles/slim"; 
 
 const ParticlesBackground = ({ theme }) => {
   const [init, setInit] = useState(false);
+  // tsparticles draws to a canvas, so the CSS reduced-motion block cannot reach it.
+  const prefersReducedMotion = useReducedMotion();
   const bgColor = theme === 'dark' ? "#0a192f" : "#f0f4f8";
   const particleColor = theme === 'dark' ? "#64ffda" : "#486581";
   const linksColor = theme === 'dark' ? "#8892b0" : "#bcccdc";
@@ -65,7 +68,9 @@ const ParticlesBackground = ({ theme }) => {
             },
             move: {
               direction: "none",
-              enable: true,
+              // Particles stay drawn, they just stop drifting. Hover and click stay on: those are
+              // user-initiated, not the ambient motion the setting is about.
+              enable: !prefersReducedMotion,
               outModes: {
                 default: "bounce",
               },

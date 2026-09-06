@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import { useReducedMotion } from 'framer-motion';
 import useSWR from 'swr';
 import { FaGithub, FaServer, FaGlobeAmericas, FaSpotify, FaClock, FaNetworkWired } from 'react-icons/fa';
 import { getApiUrl } from '../utils/apiConfig'; // Importar
@@ -7,7 +8,16 @@ import '../styles/components.css';
 import '../styles/dashboard.css';
 
 const fetcher = (endpoint) => fetch(getApiUrl(endpoint)).then((res) => res.json());
+
+// Kept out of the component so the reduced-motion branch can render THOUGHTS[0] without repeating it.
+const THOUGHTS = [
+  'Arquitecto de Sistemas Distribuidos.', 2000,
+  'Apasionado por la Inteligencia Artificial.', 2000,
+  'Resolviendo problemas complejos con código limpio.', 2000,
+];
+
 const Terminal = () => {
+  const prefersReducedMotion = useReducedMotion();
   const { data: geoData } = useSWR('/api/geo', fetcher); 
   const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });
   const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); 
@@ -171,16 +181,16 @@ const Terminal = () => {
               <span>tail -f /dev/thoughts</span>
             </div>
             <span style={{ color: 'var(--text-primary)' }}>{'>'} </span>
-            <TypeAnimation
-              sequence={[
-                'Arquitecto de Sistemas Distribuidos.', 2000,
-                'Apasionado por la Inteligencia Artificial.', 2000,
-                'Resolviendo problemas complejos con código limpio.', 2000,
-              ]}
-              wrapper="span"
-              cursor={true}
-              repeat={Infinity}
-            />
+            {prefersReducedMotion ? (
+              <span>{THOUGHTS[0]}</span>
+            ) : (
+              <TypeAnimation
+                sequence={THOUGHTS}
+                wrapper="span"
+                cursor={true}
+                repeat={Infinity}
+              />
+            )}
           </div>
         )}
 

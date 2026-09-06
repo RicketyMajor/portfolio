@@ -26,10 +26,6 @@ html {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: var(--font-body);
   background-color: transparent;
@@ -128,4 +124,23 @@ section {
 /* --- ENSURE ALL BUTTONS & LINKS WORK --- */
 a, button, input, textarea {
   pointer-events: auto;
+}
+
+/* --- REDUCED MOTION ---
+   Covers every CSS animation, transition and keyframe in the stylesheets at once. JS-driven
+   motion (framer-motion, tsparticles, the typing effects) reads the same query in its own
+   components; this block cannot reach it. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

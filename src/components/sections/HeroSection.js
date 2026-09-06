@@ -1,11 +1,26 @@
 import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import { useReducedMotion } from 'framer-motion';
 import { Link } from 'react-scroll';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Terminal from '../Terminal';
 import '../../styles/dashboard.css';
 
+// Kept out of the component so the reduced-motion branch can render ROLES[0] without repeating it.
+const ROLES = [
+  'Estudiante de Ingeniería Civil Informática',
+  1000,
+  'Futuro Especialista en Sistemas Distribuidos',
+  1000,
+  'Desarrollador Backend & Cloud',
+  1000,
+  'Entusiasta de la Inteligencia Artificial',
+  1000
+];
+
 const HeroSection = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section id="hero-section" className="hero-section">
       
@@ -17,22 +32,17 @@ const HeroSection = () => {
           <h2 className="greeting">Hola, soy</h2>
           <h1 className="name">ALONSO VERA LARACH</h1>
           <div className="role">
-            <TypeAnimation
-              sequence={[
-                'Estudiante de Ingeniería Civil Informática',
-                1000,
-                'Futuro Especialista en Sistemas Distribuidos',
-                1000,
-                'Desarrollador Backend & Cloud',
-                1000,
-                'Entusiasta de la Inteligencia Artificial',
-                1000
-              ]}
-              wrapper="span"
-              speed={50}
-              style={{ fontSize: '1em', display: 'inline-block' }}
-              repeat={Infinity}
-            />
+            {prefersReducedMotion ? (
+              <span style={{ fontSize: '1em', display: 'inline-block' }}>{ROLES[0]}</span>
+            ) : (
+              <TypeAnimation
+                sequence={ROLES}
+                wrapper="span"
+                speed={50}
+                style={{ fontSize: '1em', display: 'inline-block' }}
+                repeat={Infinity}
+              />
+            )}
           </div>
           <p className="description">
             Explorando la arquitectura de <strong>Sistemas Distribuidos</strong> y soluciones de <strong>Inteligencia Artificial</strong>.

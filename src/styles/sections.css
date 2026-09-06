@@ -39,7 +39,6 @@
 .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
 .skill-category { background-color: var(--bg-secondary); padding: 20px; border-radius: 4px; }
 .category-title { color: var(--accent); font-family: var(--font-code); font-size: 1rem; margin-bottom: 20px; }
-.tech-item { display: flex; align-items: center; gap: 10px; color: var(--text-secondary); margin-bottom: 10px; font-size: 0.9rem; }
 .tech-icon { color: var(--accent); }
 
 /* --- ABOUT SECTION --- */
@@ -249,7 +248,7 @@
   padding: 15px 25px;
   border-radius: 8px;
   color: var(--text-secondary);
-  margin-bottom: 1;
+  margin-bottom: 10px;
   font-size: 1.1rem;
   /* It is a <button> now: undo the user-agent font and centring, keep the look unchanged. */
   font-family: inherit;

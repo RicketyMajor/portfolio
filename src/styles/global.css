@@ -2,6 +2,9 @@
 html {
   scroll-behavior: smooth;
   font-size: 80%; 
+  /* Reserve the 12px scrollbar always: the project modal hides body overflow while it is open,
+     and without the reserved gutter the whole page shifts 12px sideways underneath it. */
+  scrollbar-gutter: stable;
 }
 
 /* --- LARGE SCREEN SCALING --- */
@@ -28,7 +31,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: transparent;
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;

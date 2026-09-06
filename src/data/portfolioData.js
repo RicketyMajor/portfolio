@@ -2,13 +2,13 @@ import React from 'react';
 // Mantenemos los imports originales y agregamos algunos útiles para la nueva estructura si fuera necesario en el futuro
 import { 
   FaChalkboardTeacher, FaBriefcase, FaTrophy, FaGraduationCap, FaCertificate,
-  FaNodeJs, FaPython, FaJava, FaGitAlt, FaLinux, FaDocker, FaDatabase, FaFilePdf, FaCode
+  FaNodeJs, FaPython, FaJava, FaGitAlt, FaLinux, FaDocker, FaDatabase
 } from 'react-icons/fa';
 import { 
-  SiCplusplus, SiOracle, SiPytorch, SiTensorflow, SiReact, SiJavascript 
+  SiCplusplus, SiOracle, SiPytorch, SiTensorflow 
 } from 'react-icons/si';
 
-{/* --- PROJECTS DATA --- */}
+// Projects data
 // ESTRATEGIA FASE 1:
 // 1. Mantenemos campos 'legacy' (title, description, image) para compatibilidad con ProjectCard.
 // 2. Agregamos campos 'extended' (longDescription, gallery, technical) para el futuro Modal avanzado.
@@ -160,7 +160,7 @@ export const projects = [
   }
 ];
 
-{/* --- SKILLS DATA (Sin cambios, se mantiene igual) --- */}
+// Skills data
 export const skills = {
   "Inteligencia Artificial & Datos": [
     { 
@@ -242,7 +242,7 @@ export const skills = {
   ]
 };
 
-{/* --- TIMELINE DATA (Sin cambios) --- */}
+// Timeline data
 export const timeline = [
   {
     id: 5,

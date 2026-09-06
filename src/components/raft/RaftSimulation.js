@@ -15,7 +15,7 @@ const RaftSimulation = () => {
     return () => clearInterval(interval);
   }, [send]);
 
-  {/* --- VISUAL CONFIGURATION --- */}
+  // Visual configuration
   const centerX = 300;
   const centerY = 200;
   const radius = 140;
@@ -29,7 +29,7 @@ const RaftSimulation = () => {
     return { ...node, x, y };
   });
 
-  {/* --- STATIC CONNECTIONS --- */}
+  // Static connections
   const connections = [];
   for (let i = 0; i < nodePositions.length; i++) {
     for (let j = i + 1; j < nodePositions.length; j++) {

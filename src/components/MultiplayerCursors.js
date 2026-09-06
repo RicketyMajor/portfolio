@@ -48,7 +48,7 @@ const MultiplayerCursors = () => {
     };
   }, [myColor]);
 
-  {/* --- HANDLE MY MOUSE MOVEMENT --- */}
+  // Handle my mouse movement
 useEffect(() => {
     if (!awareness) return;
 

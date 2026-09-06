@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaServer, FaGithub, FaLinkedin } from 'react-icons/fa'; // Cambiamos Cubo por Server/Rayo
+import { FaServer, FaGithub } from 'react-icons/fa'; // Cambiamos Cubo por Server/Rayo
 import '../styles/footer.css';
 
 const Footer = () => {

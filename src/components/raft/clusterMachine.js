@@ -62,12 +62,12 @@ export const clusterMachine = createMachine({
       let nextNodes = [...context.nodes];
       let nextPackets = [...context.packets];
 
-      {/* --- MOVE PACKETS --- */}
+      // Move packets
       nextPackets = nextPackets.map(p => ({ ...p, progress: p.progress + PACKET_SPEED }));
       const arrivedPackets = nextPackets.filter(p => p.progress >= 100);
       nextPackets = nextPackets.filter(p => p.progress < 100);
 
-      {/* --- PROCESS PACKETS --- */}
+      // Process packets
       arrivedPackets.forEach(packet => {
         const targetNode = nextNodes.find(n => n.id === packet.to);
         
@@ -106,7 +106,7 @@ export const clusterMachine = createMachine({
         }
       });
 
-      {/* --- UPDATE STATES --- */}
+      // Update states
       nextNodes = nextNodes.map(node => {
         if (node.state === 'dead') return node;
 

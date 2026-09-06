@@ -77,9 +77,15 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
       return (
         <a 
           key={link.name}
+          href={link.path}
           className={className} 
-          onClick={() => handleCrossNav(link.path, link.to)}
-          style={{ cursor: 'pointer' }}
+          onClick={(e) => {
+            // A real href keeps middle-click, ctrl-click and "open in new tab" working, and lets
+            // a screen reader announce the destination. The handler takes over the plain click so
+            // the router still owns the navigation.
+            e.preventDefault();
+            handleCrossNav(link.path, link.to);
+          }}
         >
           {link.name}
         </a>

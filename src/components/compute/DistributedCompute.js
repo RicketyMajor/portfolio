@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { FaMicrochip, FaStop, FaPlay, FaSearchPlus, FaUndo } from 'react-icons/fa';
+import { FaMicrochip, FaStop, FaPlay, FaUndo } from 'react-icons/fa';
 import { workerFunction } from './workerLogic'; 
 import '../../styles/compute.css'; 
 
 const DistributedCompute = () => {
   const [isWorking, setIsWorking] = useState(false);
-  const [blockCount, setBlockCount] = useState(0);
   const [statusMsg, setStatusMsg] = useState("Sistema en espera. Dona CPU para iniciar.");
   
   // ESTADO DE VISTA (Coordenadas del Fractal)
@@ -22,12 +21,6 @@ const DistributedCompute = () => {
   // Función para procesar la imagen (reutilizable)
   const processFractal = useCallback((currentView) => {
     if (!workerRef.current) return;
-
-    // Limpiamos el canvas antes de dibujar el nuevo zoom
-    const ctx = canvasRef.current.getContext('2d');
-    // Solo limpiamos si es el primer bloque (blockCount 0), pero aquí simplificamos:
-    // ctx.clearRect(0, 0, WIDTH, HEIGHT); 
-    // (Opcional, a veces se ve mejor si se sobreescribe)
 
     let currentLine = 0;
 
@@ -61,7 +54,6 @@ const DistributedCompute = () => {
       ctx.putImageData(imageData, 0, startY);
 
       currentLine = endY;
-      setBlockCount(prev => prev + 1);
       
       const blockId = Math.floor(Math.random() * 0xFFFFFF).toString(16);
       setStatusMsg(`Computando sector ${blockId} | Zoom: x${Math.floor(currentView.zoom)}`);
@@ -78,7 +70,6 @@ const DistributedCompute = () => {
     if (workerRef.current) return; // Ya existe
 
     setIsWorking(true);
-    setBlockCount(0);
     setStatusMsg("Inicializando Worker Node...");
 
     const code = workerFunction.toString();
@@ -119,7 +110,6 @@ const DistributedCompute = () => {
     const newView = { centerX: newCenterX, centerY: newCenterY, zoom: newZoom };
     
     setView(newView);
-    setBlockCount(0); // Reiniciamos contador para la nueva tarea
     
     // Reiniciamos el worker (o mejor dicho, le mandamos nuevo trabajo)
     // Nota: Como processFractal usa recursión, necesitamos asegurarnos de que la "tarea anterior" 

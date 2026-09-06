@@ -59,7 +59,7 @@ const CollaborationCanvas = () => {
     }
   };
 
-  {/* --- CLEAR CANVAS --- */}
+  // Clear canvas
   const handleClear = (e) => {
     e.stopPropagation();
     if (yDotsRef.current) {

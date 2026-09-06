@@ -1,4 +1,11 @@
 import '@testing-library/jest-dom';
+import { TextEncoder, TextDecoder } from 'util';
+
+// --- TEXTENCODER POLYFILL ---
+// react-router 7 reaches for TextEncoder at import time. The jsdom environment Jest 27 ships with
+// does not expose it, though Node has had it for years. Drop this once the project is off CRA.
+global.TextEncoder = global.TextEncoder || TextEncoder;
+global.TextDecoder = global.TextDecoder || TextDecoder;
 
 // --- WINDOW.MATCHMEDIA MOCK ---
 window.matchMedia = (query) => ({

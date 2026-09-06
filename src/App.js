@@ -4,7 +4,6 @@ import './App.css';
 import { useTheme } from './hooks/useTheme';
 
 import Navbar from './components/Navbar';
-import ParticlesBackground from './components/ParticlesBackground';
 import ScrollToTop from './components/ScrollToTop';
 import HeroSection from './components/sections/HeroSection';
 import ProjectsSection from './components/sections/ProjectsSection';
@@ -24,6 +23,9 @@ const ArchitectureSection = lazy(() => import('./components/sections/Architectur
 // Yjs and the PartyKit provider are the heaviest dependency in the tree. The cursors stay global,
 // but they load and connect only once the browser is idle, so they never compete with first paint.
 const MultiplayerCursors = lazy(() => import('./components/MultiplayerCursors'));
+// tsparticles is the second heaviest dependency and paints decoration only. The body already
+// carries the same background colour, so nothing is missing while it loads.
+const ParticlesBackground = lazy(() => import('./components/ParticlesBackground'));
 
 // --- VISTAS LOCALES ---
 const HomeView = ({ selectedProjectId, setSelectedProjectId }) => (
@@ -73,17 +75,17 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
-  const [cursorsReady, setCursorsReady] = useState(false);
+  const [isIdle, setIsIdle] = useState(false);
   const closeProjectModal = () => setSelectedProjectId(null);
 
   useEffect(() => {
     // requestIdleCallback is still missing on older Safari; fall back to a plain timeout there,
-    // otherwise the cursor layer would never mount on those browsers.
+    // otherwise these layers would never mount on those browsers.
     if (typeof window.requestIdleCallback !== 'function') {
-      const timer = setTimeout(() => setCursorsReady(true), 2000);
+      const timer = setTimeout(() => setIsIdle(true), 2000);
       return () => clearTimeout(timer);
     }
-    const handle = window.requestIdleCallback(() => setCursorsReady(true), { timeout: 3000 });
+    const handle = window.requestIdleCallback(() => setIsIdle(true), { timeout: 3000 });
     return () => window.cancelIdleCallback(handle);
   }, []);
   
@@ -103,11 +105,15 @@ function App() {
         toggleTheme={toggleTheme} 
         closeProject={closeProjectModal}
       />
-      <ParticlesBackground theme={theme} />
-
-      {/* Multiplayer cursors run across the whole app, mounted once the browser goes idle */}
+      {/* Decoration and multiplayer both wait for the browser to go idle, so neither competes
+          with first paint */}
       <Suspense fallback={null}>
-        {cursorsReady && <MultiplayerCursors />}
+        {isIdle && (
+          <>
+            <ParticlesBackground theme={theme} />
+            <MultiplayerCursors />
+          </>
+        )}
       </Suspense>
 
       {/* --- ENRUTAMIENTO DINÁMICO --- */}

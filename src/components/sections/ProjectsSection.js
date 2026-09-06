@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import { scroller } from 'react-scroll';
 import ScrollReveal from '../ScrollReveal';
 import ProjectCard from '../ProjectCard';
-import ProjectModal from '../ProjectModal';
 import { projects } from '../../data/portfolioData';
+
+// The modal drags in react-markdown and react-syntax-highlighter, which are only needed
+// once a card is opened. Keep them out of the landing bundle.
+const loadProjectModal = () => import('../ProjectModal');
+const ProjectModal = lazy(loadProjectModal);
 
 const ProjectsSection = ({ selectedId, setSelectedId }) => {
   const [filter, setFilter] = React.useState('Todos'); // El filtro sí puede quedarse local
@@ -46,7 +50,13 @@ return (
         </div>
 
         {/* --- GRID --- */}
-        <motion.div className="projects-grid" layout>
+        {/* Warm the modal chunk on approach so opening a card does not wait on a download */}
+        <motion.div
+          className="projects-grid"
+          layout
+          onMouseEnter={loadProjectModal}
+          onFocus={loadProjectModal}
+        >
           <AnimatePresence>
             {filteredProjects.map((project) => (
               <ProjectCard 
@@ -60,14 +70,16 @@ return (
 
       </ScrollReveal>
 
-      <AnimatePresence>
-        {selectedId && (
-          <ProjectModal 
-            project={selectedProject} 
-            onClose={() => setSelectedId(null)} 
-          />
-        )}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {selectedProject && (
+            <ProjectModal 
+              project={selectedProject} 
+              onClose={() => setSelectedId(null)} 
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
     </section>
   );
 };

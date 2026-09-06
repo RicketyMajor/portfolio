@@ -3,7 +3,6 @@ import { TypeAnimation } from 'react-type-animation';
 import { Link } from 'react-scroll';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Terminal from '../Terminal';
-import LiveDashboard from '../LiveDashboard';
 import '../../styles/dashboard.css';
 
 const HeroSection = () => {

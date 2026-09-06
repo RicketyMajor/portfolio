@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom'; 
 import './App.css';
 import { useTheme } from './hooks/useTheme';
@@ -14,7 +14,6 @@ import TrajectorySection from './components/sections/TrajectorySection';
 import ContactSection from './components/sections/ContactSection';
 import CommandPalette from './components/CommandPalette';
 import './styles/commandPalette.css';
-import MultiplayerCursors from './components/MultiplayerCursors';
 import Footer from './components/Footer';
 import SkeletonLoader from './components/SkeletonLoader'; // Importamos tu loader
 
@@ -22,6 +21,9 @@ import SkeletonLoader from './components/SkeletonLoader'; // Importamos tu loade
 // Estas secciones solo se descargarán cuando el usuario visite la ruta /lab
 const DistributedLabSection = lazy(() => import('./components/sections/DistributedLabSection'));
 const ArchitectureSection = lazy(() => import('./components/sections/ArchitectureSection'));
+// Yjs and the PartyKit provider are the heaviest dependency in the tree. The cursors stay global,
+// but they load and connect only once the browser is idle, so they never compete with first paint.
+const MultiplayerCursors = lazy(() => import('./components/MultiplayerCursors'));
 
 // --- VISTAS LOCALES ---
 const HomeView = ({ selectedProjectId, setSelectedProjectId }) => (
@@ -71,7 +73,19 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [cursorsReady, setCursorsReady] = useState(false);
   const closeProjectModal = () => setSelectedProjectId(null);
+
+  useEffect(() => {
+    // requestIdleCallback is still missing on older Safari; fall back to a plain timeout there,
+    // otherwise the cursor layer would never mount on those browsers.
+    if (typeof window.requestIdleCallback !== 'function') {
+      const timer = setTimeout(() => setCursorsReady(true), 2000);
+      return () => clearTimeout(timer);
+    }
+    const handle = window.requestIdleCallback(() => setCursorsReady(true), { timeout: 3000 });
+    return () => window.cancelIdleCallback(handle);
+  }, []);
   
   return (
     <div className="App">
@@ -90,9 +104,11 @@ function App() {
         closeProject={closeProjectModal}
       />
       <ParticlesBackground theme={theme} />
-      
-      {/* El multijugador sigue activo en toda la app sin interrupciones */}
-      <MultiplayerCursors />
+
+      {/* Multiplayer cursors run across the whole app, mounted once the browser goes idle */}
+      <Suspense fallback={null}>
+        {cursorsReady && <MultiplayerCursors />}
+      </Suspense>
 
       {/* --- ENRUTAMIENTO DINÁMICO --- */}
       <Routes>

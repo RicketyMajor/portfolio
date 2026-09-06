@@ -34,17 +34,17 @@ const ContactForm = () => {
         
         <div className="form-group">
           <label htmlFor="user_name">Nombre</label>
-          <input type="text" name="user_name" required placeholder="Tu nombre" />
+          <input id="user_name" type="text" name="user_name" autoComplete="name" required placeholder="Tu nombre" />
         </div>
 
         <div className="form-group">
           <label htmlFor="user_email">Email</label>
-          <input type="email" name="user_email" required placeholder="tu@email.com" />
+          <input id="user_email" type="email" name="user_email" autoComplete="email" spellCheck={false} required placeholder="tu@email.com" />
         </div>
 
         <div className="form-group">
           <label htmlFor="message">Mensaje</label>
-          <textarea name="message" required rows="5" placeholder="Cuéntame sobre tu proyecto o idea..."></textarea>
+          <textarea id="message" name="message" required rows="5" placeholder="Cuéntame sobre tu proyecto o idea…"></textarea>
         </div>
 
         <button type="submit" className="btn btn-primary btn-submit" disabled={status === 'sending'}>

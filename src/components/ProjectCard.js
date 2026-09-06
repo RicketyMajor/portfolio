@@ -8,10 +8,24 @@ import '../App.css';
 const ProjectCard = ({ project, onClick }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // The card holds the demo and repo links, and a <button> may not contain interactive
+  // descendants, so it stays a div and Enter and Space are wired by hand. Space is prevented
+  // because its default action is scrolling the page.
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <motion.div 
       layoutId={`project-${project.id}`} 
       onClick={onClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={`Ver detalles del proyecto ${project.title}`}
       style={{ cursor: 'pointer' }}
       layout
       initial={{ opacity: 0, scale: 0.8 }}

@@ -20,6 +20,16 @@ const ProjectModal = ({ project, onClose }) => {
     };
   }, []);
 
+  // A project card can be opened from the keyboard now, so Escape has to close it again.
+  // Separate from the effect above so a new onClose identity does not re-run the body lock.
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
   const handleContentClick = (e) => e.stopPropagation();
 
   const hasExtendedData = !!project.extended;
@@ -90,13 +100,20 @@ const ProjectModal = ({ project, onClose }) => {
         {galleryImages.length > 1 && (
           <div className="gallery-thumbs">
             {galleryImages.map((img, idx) => (
-              <img 
+              <button
                 key={idx}
-                src={img.src}
-                alt="thumb"
-                className={`gallery-thumb ${idx === activeImageIndex ? 'active' : ''}`}
+                type="button"
+                className="gallery-thumb-btn"
+                aria-label={`Ver imagen ${idx + 1} de ${galleryImages.length}`}
+                aria-current={idx === activeImageIndex}
                 onClick={() => setActiveImageIndex(idx)}
-              />
+              >
+                <img 
+                  src={img.src}
+                  alt=""
+                  className={`gallery-thumb ${idx === activeImageIndex ? 'active' : ''}`}
+                />
+              </button>
             ))}
           </div>
         )}

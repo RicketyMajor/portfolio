@@ -257,6 +257,15 @@
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
+/* The image below carries the visuals; this wrapper exists only to make it focusable. */
+.gallery-thumb-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
 .gallery-thumb {
   width: 60px;
   height: 40px;

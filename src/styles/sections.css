@@ -251,6 +251,10 @@
   color: var(--text-secondary);
   margin-bottom: 1;
   font-size: 1.1rem;
+  /* It is a <button> now: undo the user-agent font and centring, keep the look unchanged. */
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.3s ease;
@@ -365,6 +369,9 @@
 
 /* --- ACCORDION BUTTON --- */
 .accordion-btn {
+  /* A <button> now; the padding reset keeps the circle the same 45px it was as a div. */
+  padding: 0;
+  cursor: pointer;
   background-color: var(--bg-primary);
   border: 1px solid var(--accent);
   width: 45px;

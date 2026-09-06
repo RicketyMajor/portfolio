@@ -190,9 +190,20 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
           >
             <div className="palette-search">
               <FaSearch className="palette-icon" />
+              {/* Arrow keys and Enter are handled here, so the items below stay out of the tab
+                  order. combobox plus aria-activedescendant is what tells a screen reader which
+                  one is currently highlighted. */}
               <input 
                 autoFocus
                 type="text" 
+                role="combobox"
+                aria-label="Buscar comandos"
+                aria-expanded="true"
+                aria-controls="palette-list"
+                aria-autocomplete="list"
+                aria-activedescendant={
+                  filteredCommands.length > 0 ? `palette-option-${selectedIndex}` : undefined
+                }
                 placeholder="¿Qué necesitas?" 
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -201,10 +212,13 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
               <span className="palette-shortcut">ESC</span>
             </div>
 
-            <ul className="palette-list" ref={listRef}>
+            <ul className="palette-list" id="palette-list" role="listbox" ref={listRef}>
               {filteredCommands.map((cmd, index) => (
                 <li 
                   key={cmd.id} 
+                  id={`palette-option-${index}`}
+                  role="option"
+                  aria-selected={index === selectedIndex}
                   className={`palette-item ${index === selectedIndex ? 'selected' : ''}`}
                   onClick={() => cmd.action()}
                   onMouseEnter={() => setSelectedIndex(index)}
@@ -224,7 +238,7 @@ const CommandPalette = ({ isOpen, setIsOpen, theme, toggleTheme, closeProject })
               ))}
               
               {filteredCommands.length === 0 && (
-                <li className="palette-item" style={{justifyContent: 'center', opacity: 0.5}}>
+                <li className="palette-item" role="presentation" style={{justifyContent: 'center', opacity: 0.5}}>
                   No se encontraron comandos.
                 </li>
               )}

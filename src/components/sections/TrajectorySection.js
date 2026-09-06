@@ -42,9 +42,20 @@ const TrajectorySection = () => {
                       <h4 className="timeline-institution">{item.institution}</h4>
                     </div>
                     
-                    <div className="accordion-btn">
+                    {/* The row stays clickable for the mouse; this is the keyboard and
+                        screen-reader entry point, so it stops the click from toggling twice. */}
+                    <button
+                      type="button"
+                      className="accordion-btn"
+                      aria-expanded={isOpen}
+                      aria-label={`${isOpen ? 'Contraer' : 'Expandir'} ${item.title}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleExpand(item.id);
+                      }}
+                    >
                       <FaChevronDown className="accordion-icon" />
-                    </div>
+                    </button>
                   </div>
 
                   <p className="timeline-description">

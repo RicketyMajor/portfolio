@@ -92,18 +92,24 @@ const Navbar = ({ theme, toggleTheme, openPalette, closeProject }) => {
       <div className="navbar-container">
         
         {/* --- LOGO SECTION --- */}
-        <div className="navbar-logo" onClick={openPalette}>
+        <button type="button" className="navbar-logo" onClick={openPalette} aria-label="Abrir la paleta de comandos">
           <span className="logo-prompt">~/AVL</span>
           <span className="logo-cursor">_</span>
           <span className="cmd-k-hint" title="Presiona Cmd+K">
              <FaTerminal size={10} /> Cmd+K
           </span>
-        </div>
+        </button>
 
         {/* --- MOBILE MENU TOGGLE --- */}
-        <div className="menu-icon" onClick={toggleMenu}>
+        <button
+          type="button"
+          className="menu-icon"
+          onClick={toggleMenu}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? 'Cerrar el menu' : 'Abrir el menu'}
+        >
           {isOpen ? <FaTimes /> : <FaBars />}
-        </div>
+        </button>
 
         {/* --- DESKTOP NAVIGATION --- */}
         <ul className="nav-menu">

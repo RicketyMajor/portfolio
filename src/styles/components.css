@@ -117,6 +117,8 @@
 
 /* --- SCROLL TO TOP BUTTON --- */
 .scroll-btn {
+  /* A <button> now; padding stays at zero so the circle keeps its 50px box. */
+  padding: 0;
   position: fixed;
   bottom: 40px;
   right: 40px;

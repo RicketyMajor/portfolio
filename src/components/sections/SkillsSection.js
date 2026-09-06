@@ -88,17 +88,19 @@ const SkillsSection = () => {
                     const isInactive = selectedSkill && !isSelected;
 
                     return (
-                      <motion.div 
-                        key={index} 
+                      <motion.button
+                        key={index}
+                        type="button"
                         className={`tech-item ${isSelected ? 'active' : ''} ${isInactive ? 'inactive' : ''}`}
                         onClick={() => handleSkillClick(tech)}
+                        aria-pressed={isSelected}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         layout
                       >
                         <span className="tech-icon">{tech.icon}</span>
                         <span className="tech-name">{tech.name}</span>
-                      </motion.div>
+                      </motion.button>
                     );
                   })}
                 </div>

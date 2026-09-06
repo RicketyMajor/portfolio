@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'; // Agregamos useLocation
 import { FaArrowUp } from 'react-icons/fa';
 import { animateScroll as scroll } from 'react-scroll';
-import '../App.css';
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);

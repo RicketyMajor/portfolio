@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import SkeletonLoader from './SkeletonLoader';
-import '../App.css'; 
 
 const ProjectCard = ({ project, onClick }) => {
   const [imageLoaded, setImageLoaded] = useState(false);

@@ -3,11 +3,10 @@ import { TypeAnimation } from 'react-type-animation';
 import { useReducedMotion } from 'framer-motion';
 import useSWR from 'swr';
 import { FaGithub, FaServer, FaGlobeAmericas, FaSpotify, FaClock, FaNetworkWired } from 'react-icons/fa';
-import { getApiUrl } from '../utils/apiConfig'; // Importar
 import '../styles/components.css'; 
 import '../styles/dashboard.css';
 
-const fetcher = (endpoint) => fetch(getApiUrl(endpoint)).then((res) => res.json());
+const fetcher = (endpoint) => fetch(endpoint).then((res) => res.json());
 
 // Kept out of the component so the reduced-motion branch can render THOUGHTS[0] without repeating it.
 const THOUGHTS = [
@@ -16,42 +15,66 @@ const THOUGHTS = [
   'Resolviendo problemas complejos con código limpio.', 2000,
 ];
 
-const Terminal = () => {
-  const prefersReducedMotion = useReducedMotion();
-  const { data: geoData } = useSWR('/api/geo', fetcher); 
-  const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });
-  const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); 
-  
-  const [loaded, setLoaded] = useState(false);
-  const [latency, setLatency] = useState(null);
+const PromptSignature = () => (
+  <div style={{ display: 'inline-block' }}>
+    <span className="prompt-user">alonso@portfolio</span>
+    <span style={{ color: 'var(--text-secondary)' }}>:</span>
+    <span className="prompt-path">~</span>
+    <span style={{ color: 'var(--text-secondary)' }}>$</span>
+  </div>
+);
+
+const formatUptime = (seconds) => `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+
+// The clock owns its own state so the 1 Hz tick repaints two text nodes instead of the whole
+// terminal: four stat cards, the network diagram and the type animation.
+const SystemChronometry = () => {
   const [time, setTime] = useState(new Date());
   const [uptime, setUptime] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => setLoaded(true), 800);
-    const start = Date.now();
-    fetch('/api/geo').then(() => setLatency(Date.now() - start));
-
     const timer = setInterval(() => {
       setTime(new Date());
-      setUptime(p => p + 1);
+      setUptime((p) => p + 1);
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const formatUptime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
-  };
-  const PromptSignature = () => (
-    <div style={{ display: 'inline-block' }}>
-      <span className="prompt-user">alonso@portfolio</span>
-      <span style={{ color: 'var(--text-secondary)' }}>:</span>
-      <span className="prompt-path">~</span>
-      <span style={{ color: 'var(--text-secondary)' }}>$</span>
+  return (
+    <div className="stat-card">
+      <div className="card-label"><FaClock /> System Chronometry</div>
+      <div className="chrono-grid">
+        <div className="chrono-item">
+          <span className="chrono-value">{time.toISOString().split('T')[1].split('.')[0]}</span>
+          <span className="node-subtext">UTC Standard</span>
+        </div>
+        <div className="chrono-item" style={{ borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
+          <span className="chrono-value">{formatUptime(uptime)}</span>
+          <span className="node-subtext">Session Uptime</span>
+        </div>
+      </div>
     </div>
   );
+};
+
+const Terminal = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const [latency, setLatency] = useState(null);
+  const { data: geoData } = useSWR('/api/geo', async (endpoint) => {
+    const start = Date.now();
+    const res = await fetch(endpoint);
+    setLatency(Date.now() - start);
+    return res.json();
+  });
+  const { data: githubData } = useSWR('/api/github', fetcher, { refreshInterval: 300000 });
+  const { data: spotifyData } = useSWR('/api/spotify', fetcher, { refreshInterval: 10000 }); 
+  
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoaded(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="terminal-window">
@@ -103,19 +126,7 @@ const Terminal = () => {
             </div>
 
             {/* --- CHRONOMETRY --- */}
-            <div className="stat-card">
-              <div className="card-label"><FaClock /> System Chronometry</div>
-              <div className="chrono-grid">
-                <div className="chrono-item">
-                  <span className="chrono-value">{time.toISOString().split('T')[1].split('.')[0]}</span>
-                  <span className="node-subtext">UTC Standard</span>
-                </div>
-                <div className="chrono-item" style={{ borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
-                  <span className="chrono-value">{formatUptime(uptime)}</span>
-                  <span className="node-subtext">Session Uptime</span>
-                </div>
-              </div>
-            </div>
+            <SystemChronometry />
 
             {/* --- SPOTIFY --- */}
             <div className="stat-card" style={{ borderColor: spotifyData?.isPlaying ? '#1db954' : 'rgba(136,146,176,0.1)' }}>

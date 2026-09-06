@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; 
-import { scroller } from 'react-scroll';
 import ScrollReveal from '../ScrollReveal';
 import ProjectCard from '../ProjectCard';
 import { projects } from '../../data/portfolioData';
@@ -21,15 +20,10 @@ const ProjectsSection = ({ selectedId, setSelectedId }) => {
 
   const selectedProject = projects.find(p => p.id === selectedId);
 
-  const handleCardClick = (id) => {
-    scroller.scrollTo('projects', {
-      duration: 500,
-      smooth: true,
-      offset: -80,
-    });
-
-    setSelectedId(id);
-  };
+  // No scrolling on open: .project-overlay is fixed and covers the viewport, so the page position
+  // behind it is invisible. Scrolling here only animated the background under a translucent blur
+  // and moved the card while framer-motion was measuring it for the shared layout transition.
+  const handleCardClick = (id) => setSelectedId(id);
 
 return (
     <section id="projects" className="projects-section">
